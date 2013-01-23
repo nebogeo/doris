@@ -284,8 +284,17 @@ public class AddReportActivity extends
 			//keep a copy of the filename for later reuse
 			Preferences.fileName = photoName;
 			Preferences.saveSettings(AddReportActivity.this);
-			showDialog(DIALOG_CHOOSE_IMAGE_METHOD);
+//			showDialog(DIALOG_CHOOSE_IMAGE_METHOD);
 
+  
+            Intent intent = new Intent(
+                android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, PhotoUtils
+                            .getPhotoUri(photoName,
+                                         AddReportActivity.this));
+            startActivityForResult(intent, REQUEST_CODE_CAMERA);
+            //dialog.dismiss();
+       
 		}
 /* 
         else if (button.getId() == R.id.add_category) {
