@@ -37,11 +37,11 @@ import com.ushahidi.android.app.R;
  */
 public class AddReportView extends View {
 
-	public EditText mIncidentTitle;
+//	public EditText mIncidentTitle;
 
 	public EditText mIncidentLocation;
 
-	public EditText mIncidentDesc;
+//	public EditText mIncidentDesc;
 
 	public ImageView mSelectedPhoto;
 
@@ -51,15 +51,15 @@ public class AddReportView extends View {
 
 	public TextView mActivityTitle;
 
-	public EditText mNews;
+//	public EditText mNews;
 
 	public Button mBtnSend;
 
-	public Button mBtnAddCategory;
+//	public Button mBtnAddCategory;
 
-	public Button mPickTime;
+//	public Button mPickTime;
 
-	public Button mPickDate;
+//	public Button mPickDate;
 
 	public Button mBtnPicture;
 	
@@ -75,18 +75,18 @@ public class AddReportView extends View {
 		super(activity);
 
 		mBtnPicture = (Button) activity.findViewById(R.id.btnPicture);
-		mBtnAddCategory = (Button) activity.findViewById(R.id.add_category);
-		mPickDate = (Button) activity.findViewById(R.id.pick_date);
-		mPickTime = (Button) activity.findViewById(R.id.pick_time);
+//		mBtnAddCategory = (Button) activity.findViewById(R.id.add_category);
+//		mPickDate = (Button) activity.findViewById(R.id.pick_date);
+//		mPickTime = (Button) activity.findViewById(R.id.pick_time);
 		mDeleteReport = (Button) activity.findViewById(R.id.delete_report);
 		mLatitude = (EditText) activity.findViewById(R.id.incident_latitude);
 		mLongitude = (EditText) activity.findViewById(R.id.incident_longitude);
 		gallery = (Gallery) activity.findViewById(R.id.gallery);
-		mIncidentTitle = (EditText) activity.findViewById(R.id.incident_title);
+//		mIncidentTitle = (EditText) activity.findViewById(R.id.incident_title);
 		mIncidentLocation = (EditText) activity
 				.findViewById(R.id.incident_location);
-		mIncidentDesc = (EditText) activity.findViewById(R.id.incident_desc);
-		mNews = (EditText) activity.findViewById(R.id.report_news);
+//		mIncidentDesc = (EditText) activity.findViewById(R.id.incident_desc);
+//		mNews = (EditText) activity.findViewById(R.id.report_news);
 		mSwitcher = (ImageSwitcher) activity
 				.findViewById(R.id.sel_image_switcher);
 		mSwitcher.setInAnimation(AnimationUtils.loadAnimation(activity,

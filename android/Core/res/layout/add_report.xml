@@ -23,7 +23,7 @@
         android:padding="10dip" >
 
         <!-- Title layout begins -->
-
+<!--
         <LinearLayout
             style="@style/LinearLayout.Vertical.Wrap"
             android:paddingBottom="10dp" >
@@ -38,10 +38,6 @@
                 style="@style/EditText.CapWords"
                 android:hint="@string/empty_report_title" />
         </LinearLayout>
-        <!-- Title layout ends. -->
-
-
-        <!-- Description layout starts -->
 
         <LinearLayout
             style="@style/LinearLayout.Vertical"
@@ -57,10 +53,6 @@
                 style="@style/EditText.Multiline"
                 android:hint="@string/empty_report_description" />
         </LinearLayout>
-        <!-- Description layout ends. -->
-
-
-        <!-- Categories layout starts -->
 
         <LinearLayout
             style="@style/LinearLayout.Vertical"
@@ -76,10 +68,6 @@
                 style="@style/Button.Select"
                 android:text="@string/select_category" />
         </LinearLayout>
-        <!-- Categories layout ends. -->
-
-
-        <!-- Date layout starts. -->
 
         <LinearLayout
             style="@style/LinearLayout.Vertical"
@@ -107,8 +95,8 @@
                     android:text="@string/change_time" />
             </LinearLayout>
         </LinearLayout>
-        <!-- Date layout ends. -->
-
+ 
+-->
 
         <!-- Location layout starts. -->
 
@@ -199,7 +187,7 @@
 
 
         <!-- News layout starts. -->
-
+<!--
         <LinearLayout
             style="@style/LinearLayout.Vertical"
             android:paddingBottom="10dp" >
@@ -213,9 +201,9 @@
                 style="@style/EditText.URL"
                 android:hint="@string/enter_news_url" />
         </LinearLayout>
-        <!-- News layout ends. -->
+   
 
-
+-->
         <!-- Delete layout starts. -->
 
         <LinearLayout style="@style/LinearLayout.Horizontal" >

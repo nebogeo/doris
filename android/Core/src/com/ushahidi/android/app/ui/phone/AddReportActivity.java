@@ -153,9 +153,9 @@ public class AddReportActivity extends
 		view.mLongitude.addTextChangedListener(latLonTextWatcher);
 		mapController = view.mapView.getController();
 		view.mBtnPicture.setOnClickListener(this);
-		view.mBtnAddCategory.setOnClickListener(this);
-		view.mPickDate.setOnClickListener(this);
-		view.mPickTime.setOnClickListener(this);
+//		view.mBtnAddCategory.setOnClickListener(this);
+//		view.mPickDate.setOnClickListener(this);
+//		view.mPickTime.setOnClickListener(this);
 		mCalendar = Calendar.getInstance();
 		pendingPhoto = new UploadPhotoAdapter(this);
 		view.gallery.setAdapter(pendingPhoto);
@@ -286,7 +286,9 @@ public class AddReportActivity extends
 			Preferences.saveSettings(AddReportActivity.this);
 			showDialog(DIALOG_CHOOSE_IMAGE_METHOD);
 
-		} else if (button.getId() == R.id.add_category) {
+		}
+/* 
+        else if (button.getId() == R.id.add_category) {
 			showDialog(DIALOG_MULTIPLE_CATEGORY);
 		} else if (button.getId() == R.id.pick_date) {
 			showDialog(DATE_DIALOG_ID);
@@ -295,7 +297,7 @@ public class AddReportActivity extends
 		} else if (button.getId() == R.id.delete_report) {
 			showDialog(DIALOG_SHOW_DELETE_PROMPT);
 		}
-
+*/
 	}
 
 	private void validateReports() {
@@ -311,25 +313,27 @@ public class AddReportActivity extends
 		// @inoran
 		// validate the title field
 		mErrorMessage = "";
-		if (TextUtils.isEmpty(view.mIncidentTitle.getText())) {
-			mErrorMessage = getString(R.string.title) + "\n";
-			required = true;
+//		if (TextUtils.isEmpty(view.mIncidentTitle.getText())) {
+//			mErrorMessage = getString(R.string.title) + "\n";
+//			//required = true;
+//
+//		} else if (view.mIncidentTitle.getText().length() < 3
+//				|| view.mIncidentTitle.getText().length() > 200) {
+//			mErrorMessage = getString(R.string.less_report_title) + "\n";
+//			//mError = true;
+//		}
 
-		} else if (view.mIncidentTitle.getText().length() < 3
-				|| view.mIncidentTitle.getText().length() > 200) {
-			mErrorMessage = getString(R.string.less_report_title) + "\n";
-			mError = true;
-		}
-
-		if (TextUtils.isEmpty(view.mIncidentDesc.getText())) {
-			mErrorMessage += getString(R.string.description) + "\n";
-			required = true;
-		}
+//		if (TextUtils.isEmpty(view.mIncidentDesc.getText())) {
+//			mErrorMessage += getString(R.string.description) + "\n";
+			//required = true;
+//		}
 
 		// Dipo Fix
 		if (mVectorCategories.size() == 0) {
 			mErrorMessage += getString(R.string.category) + "\n";
-			required = true;
+			//required = true;
+
+            mVectorCategories.add("1");
 		}
 
 		// validate lat long
@@ -409,10 +413,22 @@ public class AddReportActivity extends
 
 		Report report = new Report();
 
-		report.setTitle(view.mIncidentTitle.getText().toString());
-		report.setDescription(view.mIncidentDesc.getText().toString());
-		report.setLatitude(view.mLatitude.getText().toString());
-		report.setLongitude(view.mLongitude.getText().toString());
+//		if (TextUtils.isEmpty(view.mIncidentTitle.getText())) {
+            report.setTitle("no title");
+//        }
+//        else {
+//            report.setTitle(view.mIncidentTitle.getText().toString());
+//        }
+        
+//		if (TextUtils.isEmpty(view.mIncidentTitle.getText())) {
+            report.setDescription("no description");
+//		}
+//        else {
+//            report.setDescription(view.mIncidentDesc.getText().toString());
+//		}
+
+        report.setLatitude(view.mLatitude.getText().toString());
+        report.setLongitude(view.mLongitude.getText().toString());
 		report.setLocationName(view.mIncidentLocation.getText().toString());
 		report.setReportDate(mDateToSubmit);
 		report.setMode(String.valueOf(0));
@@ -422,7 +438,7 @@ public class AddReportActivity extends
 		if (id == 0) {
 			// Add a new pending report
 			if (model.addPendingReport(report, mVectorCategories,
-					pendingPhotos, view.mNews.getText().toString())) {
+                                       pendingPhotos, "")) { //view.mNews.getText().toString())) {
 				// move saved photos
 				log("Moving photos to fetched folder");
 				ImageManager.movePendingPhotos(this);
@@ -437,7 +453,7 @@ public class AddReportActivity extends
 				photos.add(pendingPhoto.getItem(i));
 			}
 			if (model.updatePendingReport(id, report, mVectorCategories,
-					photos, view.mNews.getText().toString())) {
+                                          photos, "")) { //view.mNews.getText().toString())) {
 				// move saved photos
 				log("Moving photos to fetched folder");
 				ImageManager.movePendingPhotos(this);
@@ -464,8 +480,8 @@ public class AddReportActivity extends
 		// set text part of reports
 		Report report = model.fetchPendingReportById(reportId);
 		if (report != null) {
-			view.mIncidentTitle.setText(report.getTitle());
-			view.mIncidentDesc.setText(report.getDescription());
+//			view.mIncidentTitle.setText(report.getTitle());
+//			view.mIncidentDesc.setText(report.getDescription());
 			view.mLongitude.setText(report.getLongitude());
 			view.mLatitude.setText(report.getLatitude());
 			view.mIncidentLocation.setText(report.getLocationName());
@@ -490,21 +506,21 @@ public class AddReportActivity extends
 		// set news
 		List<Media> newsMedia = model.fetchReportNews(reportId);
 		if (newsMedia != null && newsMedia.size() > 0) {
-			view.mNews.setText(newsMedia.get(0).getLink());
+			//view.mNews.setText(newsMedia.get(0).getLink());
 		}
 
 		mIsReportEditable = mOgsDao.getReportState(id) != IOpenGeoSmsSchema.STATE_SENT;
 
 		if(!mIsReportEditable ){
 			View views[] = new View[]{
-					view.mBtnAddCategory,
-					view.mIncidentDesc,
-					view.mIncidentLocation,
-					view.mIncidentTitle,
+//					view.mBtnAddCategory,
+//					view.mIncidentDesc,
+//					view.mIncidentLocation,
+//					view.mIncidentTitle,
 					view.mLatitude,
-					view.mLongitude,
-					view.mPickDate,
-					view.mPickTime
+					view.mLongitude
+//					view.mPickDate,
+//					view.mPickTime
 			};
 			for(View v: views){
 				v.setEnabled(false);
@@ -816,10 +832,10 @@ public class AddReportActivity extends
 		Date date = mCalendar.getTime();
 		if (date != null) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-			view.mPickDate.setText(dateFormat.format(date));
+//			view.mPickDate.setText(dateFormat.format(date));
 
 			SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-			view.mPickTime.setText(timeFormat.format(date));
+//			view.mPickTime.setText(timeFormat.format(date));
 
 			// Because the API doesn't support dates in diff Locale mode, force
 			// it to show time in US
@@ -827,8 +843,8 @@ public class AddReportActivity extends
 					"yyy-MM-dd kk:mm:ss", Locale.US);
 			mDateToSubmit = submitFormat.format(date);
 		} else {
-			view.mPickDate.setText(R.string.change_date);
-			view.mPickTime.setText(R.string.change_time);
+//			view.mPickDate.setText(R.string.change_date);
+//			view.mPickTime.setText(R.string.change_time);
 			mDateToSubmit = null;
 		}
 	}
@@ -846,10 +862,10 @@ public class AddReportActivity extends
 				if (date != null) {
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 							"MMMM dd, yyyy");
-					view.mPickDate.setText(simpleDateFormat.format(date));
+					//view.mPickDate.setText(simpleDateFormat.format(date));
 
 					SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-					view.mPickTime.setText(timeFormat.format(date));
+					//view.mPickTime.setText(timeFormat.format(date));
 
 					// Because the API doesn't support dates in diff Locale
 					// mode,
@@ -859,8 +875,8 @@ public class AddReportActivity extends
 							"yyy-MM-dd kk:mm:ss", Locale.US);
 					mDateToSubmit = submitFormat.format(date);
 				} else {
-					view.mPickDate.setText(R.string.change_date);
-					view.mPickTime.setText(R.string.change_time);
+					//view.mPickDate.setText(R.string.change_date);
+					//view.mPickTime.setText(R.string.change_time);
 					mDateToSubmit = null;
 				}
 
@@ -897,8 +913,8 @@ public class AddReportActivity extends
 		showCategories();
 
 		// clear
-		view.mBtnAddCategory.setText(R.string.select_category);
-		if (aSelectedCategories.size() > 0) {
+/*		view.mBtnAddCategory.setText(R.string.select_category);
+        if (aSelectedCategories.size() > 0) {
 			StringBuilder categories = new StringBuilder();
 			for (String category : aSelectedCategories) {
 				if (categories.length() > 0) {
@@ -914,8 +930,8 @@ public class AddReportActivity extends
 			} else {
 				view.mBtnAddCategory.setText(R.string.select_category);
 			}
-		}
-	}
+        } */
+    }
 
 	/**
 	 * Get check selected categories
@@ -991,7 +1007,7 @@ public class AddReportActivity extends
 				CharSequence text = intent
 						.getCharSequenceExtra(Intent.EXTRA_TEXT);
 				if (text != null) {
-					view.mIncidentDesc.setText(text);
+//					view.mIncidentDesc.setText(text);
 				}
 			}
 		}

@@ -26,6 +26,7 @@ import java.util.List;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.ushahidi.android.app.entities.Report;
 
@@ -369,7 +370,15 @@ public class ReportDao extends DbContentProvider implements IReportDao,
 			if (cursor.getColumnIndex(INCIDENT_IMAGE) != -1) {
 				imageIndex = cursor.getColumnIndexOrThrow(INCIDENT_IMAGE);
 				report.setImage(cursor.getString(imageIndex));
+
+                Log.i("DORIS",cursor.getString(imageIndex));
+
 			}
+            else
+            {
+                Log.i("DORIS","no image");
+
+            }
 
 			if (cursor.getColumnIndex(INCIDENT_LOC_LATITUDE) != -1) {
 				latitudeIndex = cursor

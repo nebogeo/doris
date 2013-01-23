@@ -102,8 +102,13 @@ public class PhotoUtils {
 		new Util().log("getPhotoPath");
 		File path = new File(Environment.getExternalStorageDirectory(),
 				activity.getPackageName() + PENDING);
-		return path.exists() ? path.getAbsolutePath() : null;
 
+        Log.i("DORIS",""+path.getAbsolutePath());
+        if (!path.exists()) {
+            path.mkdir();
+        }
+
+		return path.getAbsolutePath();
 	}
 
 	public static boolean imageExist(String filename, Activity activity) {
@@ -232,6 +237,8 @@ public class PhotoUtils {
 	public static synchronized Bitmap scaleBitmapByWidth(
 			BitmapFactory.Options options, int width, String filePath) {
 		// check dimensions
+
+        Log.i("DORIS","scaling bitmap");
 
 		if (options != null) {
 			float ratio = (float) options.outHeight / (float) options.outWidth;
