@@ -40,6 +40,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.KeyEvent;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.DatePicker;
@@ -81,6 +83,7 @@ import com.ushahidi.android.app.tasks.GeocoderTask;
 import com.ushahidi.android.app.util.PhotoUtils;
 import com.ushahidi.android.app.util.Util;
 import com.ushahidi.android.app.views.AddReportView;
+import com.ushahidi.android.app.ui.phone.DorisCameraActivity;
 
 /**
  * @author eyedol
@@ -276,8 +279,8 @@ public class AddReportActivity extends
 	}
 
 	@Override
-	public void onClick(View button) {
-		if (button.getId() == R.id.btnPicture) {
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
 			// get a file name for the photo to be uploaded
 			photoName = Util.getDateTime() + ".jpg";
 			
@@ -289,6 +292,32 @@ public class AddReportActivity extends
   
             Intent intent = new Intent(
                 android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, PhotoUtils
+                            .getPhotoUri(photoName,
+                                         AddReportActivity.this));
+            startActivityForResult(intent, REQUEST_CODE_CAMERA);
+        }
+        return true;
+    }
+
+	@Override
+	public void onClick(View button) {
+		if (button.getId() == R.id.btnPicture) {
+			// get a file name for the photo to be uploaded
+			photoName = Util.getDateTime() + ".jpg";
+			
+			//keep a copy of the filename for later reuse
+			Preferences.fileName = photoName;
+			Preferences.saveSettings(AddReportActivity.this);
+//			showDialog(DIALOG_CHOOSE_IMAGE_METHOD);
+
+  
+/*            Intent intent = new Intent(
+              android.provider.MediaStore.ACTION_IMAGE_CAPTURE);*/
+
+            Intent intent = new Intent(AddReportActivity.this,
+                                       DorisCameraActivity.class);
+
             intent.putExtra(MediaStore.EXTRA_OUTPUT, PhotoUtils
                             .getPhotoUri(photoName,
                                          AddReportActivity.this));
@@ -1025,12 +1054,17 @@ public class AddReportActivity extends
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+
+        Log.i("DORIS","back from something");
+
 		if (resultCode == RESULT_OK) {
 			//get the saved file name
 			Preferences.loadSettings(AddReportActivity.this);
 			photoName = Preferences.fileName;
 			if (requestCode == REQUEST_CODE_CAMERA) {
-				
+			
+                Log.i("DORIS","back from camera");
+	
 				Uri uri = PhotoUtils.getPhotoUri(photoName, this);
 				Bitmap bitmap = PhotoUtils.getCameraPhoto(this, uri);
 				PhotoUtils.savePhoto(this, bitmap, photoName);

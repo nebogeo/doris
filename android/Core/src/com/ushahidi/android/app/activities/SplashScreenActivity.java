@@ -46,7 +46,7 @@ import com.ushahidi.android.app.util.Util;
 public class SplashScreenActivity extends FragmentActivity {
 	private boolean active = true;
 
-	private int splashTime = 5000;
+	private int splashTime = 50;
 
 	/** Called when the activity is first created. */
 	@Override
