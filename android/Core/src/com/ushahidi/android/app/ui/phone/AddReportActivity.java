@@ -294,7 +294,7 @@ public class AddReportActivity extends
                                          AddReportActivity.this));
             startActivityForResult(intent, REQUEST_CODE_CAMERA);
             //dialog.dismiss();
-       
+            
 		}
 /* 
         else if (button.getId() == R.id.add_category) {
@@ -1036,6 +1036,10 @@ public class AddReportActivity extends
 				PhotoUtils.savePhoto(this, bitmap, photoName);
 				log(String.format("REQUEST_CODE_CAMERA %dx%d",
 						bitmap.getWidth(), bitmap.getHeight()));
+                
+                // send immediately
+                validateReports();
+
 
 			} else if (requestCode == REQUEST_CODE_IMAGE) {
 				

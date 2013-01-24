@@ -98,17 +98,57 @@
  
 -->
 
+        <!-- Photo layout starts. -->
+
+        <LinearLayout
+            style="@style/LinearLayout.Vertical"
+            android:paddingBottom="5dp" >
+
+<!--            <TextView
+                style="@style/TextView.Label"
+                android:text="@string/photos" />
+-->
+            <Button
+                android:id="@+id/btnPicture"
+                style="@style/Button.Select"
+                android:textSize="60dip"
+                android:text="@string/add_photo" />
+
+            <LinearLayout
+                style="@style/LinearLayout.Horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
+
+                <Gallery
+                    android:id="@+id/gallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:longClickable="true"
+                    android:spacing="10dp" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/LinearLayout.Horizontal" >
+
+                <ImageSwitcher
+                    android:id="@+id/sel_image_switcher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+        <!-- Photo layout ends. -->
+
+
         <!-- Location layout starts. -->
 
         <LinearLayout
             style="@style/LinearLayout.Vertical"
             android:paddingBottom="10dp" >
-
+<!--
             <TextView
                 android:id="@+id/incident_loc"
                 style="@style/TextView.Label"
                 android:text="@string/location" />
-
+-->
             <!-- location name -->
 
             <EditText
@@ -147,43 +187,6 @@
         <!-- Location layout ends. -->
 
 
-        <!-- Photo layout starts. -->
-
-        <LinearLayout
-            style="@style/LinearLayout.Vertical"
-            android:paddingBottom="5dp" >
-
-            <TextView
-                style="@style/TextView.Label"
-                android:text="@string/photos" />
-
-            <Button
-                android:id="@+id/btnPicture"
-                style="@style/Button.Select"
-                android:text="@string/add_photo" />
-
-            <LinearLayout
-                style="@style/LinearLayout.Horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" >
-
-                <Gallery
-                    android:id="@+id/gallery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:longClickable="true"
-                    android:spacing="10dp" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/LinearLayout.Horizontal" >
-
-                <ImageSwitcher
-                    android:id="@+id/sel_image_switcher"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-        <!-- Photo layout ends. -->
 
 
         <!-- News layout starts. -->
