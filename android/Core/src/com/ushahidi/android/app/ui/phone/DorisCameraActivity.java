@@ -43,6 +43,7 @@ import android.content.pm.ActivityInfo;
 import android.hardware.Camera.PictureCallback;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import android.view.KeyEvent;
 
 
 public class DorisCameraActivity extends Activity {
@@ -67,6 +68,15 @@ public class DorisCameraActivity extends Activity {
                 mCamera.takePicture(null, null, mPicture);
             }
         });
+    }
+
+
+	@Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            mCamera.takePicture(null, null, mPicture);
+        }
+        return true;
     }
 
     /**
