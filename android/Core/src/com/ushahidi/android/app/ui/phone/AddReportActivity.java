@@ -289,9 +289,10 @@ public class AddReportActivity extends
 			Preferences.saveSettings(AddReportActivity.this);
 //			showDialog(DIALOG_CHOOSE_IMAGE_METHOD);
 
+            Intent intent = new Intent(this,DorisCameraActivity.class);
   
-            Intent intent = new Intent(
-                android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//            Intent intent = new Intent(
+//                android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, PhotoUtils
                             .getPhotoUri(photoName,
                                          AddReportActivity.this));
@@ -405,7 +406,7 @@ public class AddReportActivity extends
 		// validate location
 		if (TextUtils.isEmpty(view.mIncidentLocation.getText())) {
 			mErrorMessage += getString(R.string.location);
-			required = true;
+			//required = true;
 		}
 
 		if (required) {
@@ -467,8 +468,16 @@ public class AddReportActivity extends
 
         report.setLatitude(view.mLatitude.getText().toString());
         report.setLongitude(view.mLongitude.getText().toString());
-		report.setLocationName(view.mIncidentLocation.getText().toString());
-		report.setReportDate(mDateToSubmit);
+        
+        if (TextUtils.isEmpty(view.mIncidentLocation.getText())) {
+            Log.i("DORIS","SETTING LOCATION NAME TO SOMETHING");
+            report.setLocationName("no location set");
+        }
+        else {
+            report.setLocationName(view.mIncidentLocation.getText().toString());
+		}
+        
+        report.setReportDate(mDateToSubmit);
 		report.setMode(String.valueOf(0));
 		report.setVerified(String.valueOf(0));
 		report.setPending(1);

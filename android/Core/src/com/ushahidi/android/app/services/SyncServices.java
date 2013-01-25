@@ -105,6 +105,8 @@ public abstract class SyncServices extends IntentService {
                 pm.setComponentEnabledSetting(connectivityReceiver,
                         PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                         PackageManager.DONT_KILL_APP);
+                // added so boot works when disconnected
+                executeTask(intent);
 
             } else {
 

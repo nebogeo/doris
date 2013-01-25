@@ -30,6 +30,7 @@ import java.util.Map.Entry;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.entity.mime.MultipartEntity;
@@ -38,6 +39,8 @@ import org.apache.http.entity.mime.content.StringBody;
 
 import android.content.Context;
 import android.text.TextUtils;
+import com.google.gson.JsonSyntaxException;
+import android.util.Log;
 
 import com.ushahidi.android.app.ImageManager;
 import com.ushahidi.android.app.Preferences;
@@ -179,9 +182,11 @@ public class ReportsHttpClient extends MainHttpClient {
 				httpost.setEntity(entity);
 
 				HttpResponse response = httpClient.execute(httpost);
-				Preferences.httpRunning = false;
+				Preferences.httpRunning = false;				
+                HttpEntity respEntity = response.getEntity();
 
-				HttpEntity respEntity = response.getEntity();
+                //Log.i("DORIS",EntityUtils.toString(respEntity));
+
 				if (respEntity != null) {
 					UshahidiApiResponse resp = GsonHelper.fromStream(respEntity.getContent(), UshahidiApiResponse.class);				
 					return resp.getErrorCode() == 0;
@@ -207,6 +212,10 @@ public class ReportsHttpClient extends MainHttpClient {
 			log("IOException", e);
 			// timeout
 			return false;
+        }
+        catch (JsonSyntaxException e) {
+			log("JsonSyntaxException", e);
+            return false;
 		}
 		return false;
 	}

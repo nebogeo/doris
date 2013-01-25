@@ -54,7 +54,7 @@ public abstract class ProgressTask extends Task<String, String, Boolean> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		dialog.show();
+		//dialog.show();
 	}
 
 	@Override
