@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.util.Log;
 
 import com.ushahidi.android.app.R;
 import com.ushahidi.android.app.adapters.BaseListAdapter;
@@ -101,6 +102,9 @@ public abstract class BaseListActivity<V extends View, M extends Model, L extend
 			listView.setAdapter(adapter);
 			listView.setFocusable(true);
 		}
+
+        Log.i("DORIS","baselistactivity create");
+
 	}
 
 	/**

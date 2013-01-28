@@ -43,6 +43,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.util.Log;
 
 import com.ushahidi.android.app.ImageManager;
 import com.ushahidi.android.app.Preferences;
@@ -135,7 +136,6 @@ public class ListReportFragment
 			mPositionChecked = savedInstanceState.getInt("curChoice", 0);
 			mPositionShown = savedInstanceState.getInt("shownChoice", -1);
 		}
-
 	}
 
 	private View pendingHeader() {
@@ -782,6 +782,9 @@ public class ListReportFragment
 	 * Launch Activity for adding new report
 	 */
 	private void launchAddReport(int id) {
+        
+        Log.i("DORIS","ADAHSDASDSADSADAS");
+
 		Intent i = new Intent(getActivity(), AddReportActivity.class);
 		i.putExtra("id", id);
 		startActivityForResult(i, 2);

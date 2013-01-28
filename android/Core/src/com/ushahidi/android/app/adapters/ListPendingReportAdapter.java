@@ -29,19 +29,21 @@ public class ListPendingReportAdapter extends BaseListAdapter<ListReportModel>
 			this.thumbnail = (ImageView) view
 					.findViewById(R.id.report_thumbnail);
 			this.title = (TextView) view.findViewById(R.id.report_title);
-			this.description = (TextView) view
-					.findViewById(R.id.report_description);
+//			this.description = (TextView) view
+//					.findViewById(R.id.report_description);
+//			this.id = (TextView) view.findViewById(R.id.report_id);
 			this.date = (TextView) view.findViewById(R.id.report_date);
-			this.iLocation = (TextView) view.findViewById(R.id.report_location);
+//			this.iLocation = (TextView) view.findViewById(R.id.report_location);
 			this.categories = (TextView) view
 					.findViewById(R.id.report_categories);
 			this.status = (TextView) view.findViewById(R.id.report_status);
 			this.arrow = (ImageView) view.findViewById(R.id.report_arrow);
 		}
+//		TextView id;
 
 		TextView title;
 
-		TextView iLocation;
+//		TextView iLocation;
 
 		TextView date;
 
@@ -49,7 +51,7 @@ public class ListPendingReportAdapter extends BaseListAdapter<ListReportModel>
 
 		TextView categories;
 
-		TextView description;
+//		TextView description;
 
 		ImageView thumbnail;
 
@@ -106,7 +108,7 @@ public class ListPendingReportAdapter extends BaseListAdapter<ListReportModel>
 			if (category.getCategoryTitle().length() > 0) {
 				categories.append(category.getCategoryTitle() + " |");
 			}
-
+            
 		}
 
 		// delete the last |
@@ -115,7 +117,7 @@ public class ListPendingReportAdapter extends BaseListAdapter<ListReportModel>
 		}
 		return categories.toString();
 	}
-
+    
 	public String fetchCategoriesId(int reportId) {
 		StringBuilder categories = new StringBuilder();
 		for (Category category : mListReportModel
@@ -156,15 +158,16 @@ public class ListPendingReportAdapter extends BaseListAdapter<ListReportModel>
 		
 		widgets.title.setText(getItem(position).getTitle());
 		widgets.date.setText(getItem(position).getDate());
-		widgets.description.setText(Util.capitalizeString(getItem(position)
-				.getDesc()));
+        //widgets.id.setText(""+getItem(position).getId());
+		//widgets.description.setText(Util.capitalizeString(getItem(position)
+		//		.getDesc()));
 
 		// FIXME: do this properly.
 		widgets.categories.setText(Util.capitalizeString(Util.limitString(
 				fetchCategories((int) getItem(position).getId()), 100)));
 
-		widgets.iLocation.setText(Util.capitalizeString(getItem(position)
-				.getLocation()));
+		//widgets.iLocation.setText(Util.capitalizeString(getItem(position)
+		//		.getLocation()));
 		// change the status color
 
 		if (getItem(position).getStatus().equalsIgnoreCase(

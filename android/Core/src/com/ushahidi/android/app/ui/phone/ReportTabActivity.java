@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.FragmentMapActivity;
 import android.text.TextUtils;
+import android.util.Log;
+import android.content.Intent;
 
 import com.ushahidi.android.app.Preferences;
 import com.ushahidi.android.app.R;
@@ -12,6 +14,8 @@ import com.ushahidi.android.app.helpers.ReportViewPager;
 import com.ushahidi.android.app.helpers.TabsAdapter;
 import com.ushahidi.android.app.ui.tablet.ListReportFragment;
 import com.ushahidi.android.app.ui.tablet.MapFragment;
+import com.ushahidi.android.app.ui.phone.AddReportActivity;
+import android.view.KeyEvent;
 
 public class ReportTabActivity extends FragmentMapActivity {
 
@@ -58,6 +62,18 @@ public class ReportTabActivity extends FragmentMapActivity {
 			getSupportActionBar().setTitle(Preferences.activeMapName);
 		}
 	}
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(this,AddReportActivity.class);            
+            startActivityForResult(intent, 2);
+            overridePendingTransition(R.anim.home_enter,
+                                      R.anim.home_exit);
+            return true;
+        }
+        return false;
+    }
 
     @Override
     protected boolean isRouteDisplayed() {

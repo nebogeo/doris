@@ -27,10 +27,11 @@ public class ListFetchedReportAdapter extends BaseListAdapter<ListReportModel>
 			this.thumbnail = (ImageView) view
 					.findViewById(R.id.report_thumbnail);
 			this.title = (TextView) view.findViewById(R.id.report_title);
-			this.description = (TextView) view
-					.findViewById(R.id.report_description);
+//			this.description = (TextView) view
+//					.findViewById(R.id.report_description);
+//			this.id = (TextView) view.findViewById(R.id.report_id);
 			this.date = (TextView) view.findViewById(R.id.report_date);
-			this.iLocation = (TextView) view.findViewById(R.id.report_location);
+//			this.iLocation = (TextView) view.findViewById(R.id.report_location);
 			this.categories = (TextView) view
 					.findViewById(R.id.report_categories);
 			this.status = (TextView) view.findViewById(R.id.report_status);
@@ -39,7 +40,9 @@ public class ListFetchedReportAdapter extends BaseListAdapter<ListReportModel>
 
 		TextView title;
 
-		TextView iLocation;
+//		TextView iLocation;
+
+//		TextView id;
 
 		TextView date;
 
@@ -47,7 +50,7 @@ public class ListFetchedReportAdapter extends BaseListAdapter<ListReportModel>
 
 		TextView categories;
 
-		TextView description;
+//		TextView description;
 
 		ImageView thumbnail;
 
@@ -142,16 +145,19 @@ public class ListFetchedReportAdapter extends BaseListAdapter<ListReportModel>
 			getPhoto(getItem(position).getThumbnail(), widgets.thumbnail);
 
 		}
+
+
+//		widgets.id.setText(""+getItem(position).getId());
 		widgets.title.setText(getItem(position).getTitle());
 		widgets.date.setText(getItem(position).getDate());
-		widgets.description.setText(Util.capitalizeString(getItem(position)
-				.getDesc()));
+//		widgets.description.setText(Util.capitalizeString(getItem(position)
+//				.getDesc()));
 
 		// FIXME: do this properly.
 		widgets.categories.setText(Util.capitalizeString(Util.limitString(
 				fetchCategories((int) getItem(position).getReportId()), 100)));
-		widgets.iLocation.setText(Util.capitalizeString(getItem(position)
-				.getLocation()));
+//		widgets.iLocation.setText(Util.capitalizeString(getItem(position)
+//				.getLocation()));
 		// change the status color
 
 		if (getItem(position).getStatus().equalsIgnoreCase(

@@ -20,6 +20,8 @@ public class Preferences {
 
 	public static int AutoUpdateDelay = 0;
 
+	public static int LobsterId = 0;
+
 	public static final int NOTIFICATION_ID = 1;
 
 	public static final String PREFS_NAME = "UshahidiService";

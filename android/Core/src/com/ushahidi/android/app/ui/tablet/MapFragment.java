@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -329,6 +330,9 @@ public class MapFragment<ReportMapItemOverlay> extends BaseFragment {
 
 	public void launchAddReport() {
 		Intent i = new Intent(getActivity(), AddReportActivity.class);
+
+        Log.i("DORIS","XXXXXXXXXXXXXXXXX");
+
 		i.putExtra("id", 0);
 		startActivityForResult(i, 2);
 		getActivity().overridePendingTransition(R.anim.home_enter,

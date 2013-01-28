@@ -108,10 +108,17 @@
                 style="@style/TextView.Label"
                 android:text="@string/photos" />
 -->
+            <EditText
+                android:id="@+id/incident_id"
+                android:textSize="60dip"
+                style="@style/EditText.CapWords"
+                android:hint="@string/hint_location"
+                android:paddingBottom="2dip" />
+
             <Button
                 android:id="@+id/btnPicture"
                 style="@style/Button.Select"
-                android:textSize="60dip"
+                android:textSize="30dip"
                 android:text="@string/add_photo" />
 
             <LinearLayout

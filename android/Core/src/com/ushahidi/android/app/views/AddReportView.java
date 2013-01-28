@@ -41,6 +41,8 @@ public class AddReportView extends View {
 
 	public EditText mIncidentLocation;
 
+	public EditText mIncidentId;
+
 //	public EditText mIncidentDesc;
 
 	public ImageView mSelectedPhoto;
@@ -83,6 +85,8 @@ public class AddReportView extends View {
 		mLongitude = (EditText) activity.findViewById(R.id.incident_longitude);
 		gallery = (Gallery) activity.findViewById(R.id.gallery);
 //		mIncidentTitle = (EditText) activity.findViewById(R.id.incident_title);
+		mIncidentId = (EditText) activity
+            .findViewById(R.id.incident_id);
 		mIncidentLocation = (EditText) activity
 				.findViewById(R.id.incident_location);
 //		mIncidentDesc = (EditText) activity.findViewById(R.id.incident_desc);

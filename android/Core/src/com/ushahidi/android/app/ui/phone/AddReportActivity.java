@@ -166,6 +166,7 @@ public class AddReportActivity extends
 		view.mSwitcher.setFactory(this);
 		if (getIntent().getExtras() != null) {
 			this.id = getIntent().getExtras().getInt("id", 0);
+			view.mIncidentId.setText(""+this.id);
 		}
 		mOgsDao = Database.mOpenGeoSmsDao;
 		// edit existing report
@@ -280,7 +281,7 @@ public class AddReportActivity extends
 
 	@Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_MENU) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
 			// get a file name for the photo to be uploaded
 			photoName = Util.getDateTime() + ".jpg";
 			
@@ -297,8 +298,9 @@ public class AddReportActivity extends
                             .getPhotoUri(photoName,
                                          AddReportActivity.this));
             startActivityForResult(intent, REQUEST_CODE_CAMERA);
+            return true;
         }
-        return true;
+        return false;
     }
 
 	@Override
@@ -453,7 +455,7 @@ public class AddReportActivity extends
 		Report report = new Report();
 
 //		if (TextUtils.isEmpty(view.mIncidentTitle.getText())) {
-            report.setTitle("no title");
+            report.setTitle(Preferences.firstname+"-"+Preferences.LobsterId);
 //        }
 //        else {
 //            report.setTitle(view.mIncidentTitle.getText().toString());
@@ -532,6 +534,7 @@ public class AddReportActivity extends
 			view.mLongitude.setText(report.getLongitude());
 			view.mLatitude.setText(report.getLatitude());
 			view.mIncidentLocation.setText(report.getLocationName());
+			view.mIncidentId.setText(""+reportId);
 
 			// set date and time
 			setDateAndTime(report.getReportDate());

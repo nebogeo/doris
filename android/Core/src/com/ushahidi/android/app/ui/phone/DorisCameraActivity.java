@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import android.view.KeyEvent;
 
+import com.ushahidi.android.app.Preferences;
 
 public class DorisCameraActivity extends Activity {
     private Camera mCamera;
@@ -73,10 +74,12 @@ public class DorisCameraActivity extends Activity {
 
 	@Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_MENU) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Preferences.LobsterId++;
             mCamera.takePicture(null, null, mPicture);
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**

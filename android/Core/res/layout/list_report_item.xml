@@ -26,6 +26,7 @@
         android:adjustViewBounds="true"
         android:paddingRight="5dip" />
 
+
     <TextView
         android:id="@+id/report_title"
         android:layout_width="wrap_content"
@@ -37,6 +38,7 @@
         android:textColor="@color/date_color"
         android:textStyle="bold" />
 
+<!--
     <TextView
         android:id="@+id/report_description"
         android:layout_width="wrap_content"
@@ -48,31 +50,36 @@
         android:padding="3dip"
         android:lines="1"
         android:textColor="@color/date_color"/>
-    
+    -->
+
+<!--<TextView
+    android:id="@+id/report_id"
+    android:textSize="30dip"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/report_title"
+    android:layout_toLeftOf="@+id/report_arrow"
+    android:layout_toRightOf="@+id/report_thumbnail"
+    android:ellipsize="end"
+    android:padding="3dip"
+    android:lines="1"
+    android:textColor="@color/date_color"/>-->
+
     <TextView
         android:id="@+id/report_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/report_description"
+        android:layout_below="@+id/report_title"
         android:layout_toLeftOf="@+id/report_arrow"
         android:layout_toRightOf="@+id/report_thumbnail"
         android:paddingLeft="3dip"
         android:textColor="@color/gray_color" />
 
     <TextView
-        android:id="@+id/report_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/report_date"
-        android:layout_toLeftOf="@+id/report_arrow"
-        android:layout_toRightOf="@+id/report_thumbnail"
-        android:paddingLeft="3dip"
-        android:textColor="@color/gray_color" />
-    <TextView
         android:id="@+id/report_categories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/report_location"
+        android:layout_below="@+id/report_date"
         android:layout_toRightOf="@+id/report_thumbnail"
         android:padding="5dip"
         android:ellipsize="end"

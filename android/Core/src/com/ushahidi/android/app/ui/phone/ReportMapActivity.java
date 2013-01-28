@@ -3,6 +3,8 @@ package com.ushahidi.android.app.ui.phone;
 import android.os.Bundle;
 import android.support.v4.app.FragmentMapActivity;
 import android.support.v4.view.MenuItem;
+import android.util.Log;
+import android.view.KeyEvent;
 
 import com.ushahidi.android.app.R;
 
