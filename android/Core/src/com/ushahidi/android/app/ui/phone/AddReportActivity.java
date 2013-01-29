@@ -64,6 +64,19 @@ import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.ViewSwitcher;
 
+// things for camera
+import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.PictureCallback;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.net.URI;
+import android.net.Uri;
+import android.widget.FrameLayout;
+import android.content.pm.ActivityInfo;
+import android.widget.Button;
+
 import com.ushahidi.android.app.ImageManager;
 import com.ushahidi.android.app.Preferences;
 import com.ushahidi.android.app.R;
@@ -94,54 +107,33 @@ public class AddReportActivity extends
 		DialogInterface.OnClickListener {
 
 	private ReverseGeocoderTask reverseGeocoderTask;
-
 	private static final int DIALOG_ERROR_NETWORK = 0;
-
 	private static final int DIALOG_ERROR_SAVING = 1;
-
 	private static final int DIALOG_CHOOSE_IMAGE_METHOD = 2;
-
 	private static final int DIALOG_MULTIPLE_CATEGORY = 3;
-
 	private static final int TIME_DIALOG_ID = 4;
-
 	private static final int DATE_DIALOG_ID = 5;
-
 	private static final int DIALOG_SHOW_MESSAGE = 6;
-
 	private static final int DIALOG_SHOW_REQUIRED = 7;
-
 	private static final int DIALOG_SHOW_PROMPT = 8;
-
 	private static final int DIALOG_SHOW_DELETE_PROMPT = 9;
-
 	private static final int REQUEST_CODE_CAMERA = 0;
-
 	private static final int REQUEST_CODE_IMAGE = 1;
-
 	private Calendar mCalendar;
-
 	private String mDateToSubmit = "";
-
 	private int mCategoryLength;
-
 	private Vector<String> mVectorCategories = new Vector<String>();
-
 	private Vector<String> mCategoriesId = new Vector<String>();
-
 	private HashMap<String, String> mCategoriesTitle = new HashMap<String, String>();
-
 	private boolean mError = false;
-
 	private int id = 0;
-
 	private UploadPhotoAdapter pendingPhoto;
-
 	private String mErrorMessage;
-
 	private String photoName;
-
 	private AddReportModel model;
+    private Camera mCamera;
+    private CameraPreview mCameraPreview;
+
 
 	public AddReportActivity() {
 		super(AddReportView.class, R.layout.add_report, R.menu.add_report,
@@ -152,29 +144,49 @@ public class AddReportActivity extends
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        Log.i("DORIS","onCreate");
+
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        mCamera = getCameraInstance();
+        mCameraPreview = new CameraPreview(this, mCamera);
+        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+        preview.addView(mCameraPreview);
+
+        Button captureButton = (Button) findViewById(R.id.button_capture);
+        captureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCamera.takePicture(null, null, mPicture);
+            }
+        });
+
+
+
 		view.mLatitude.addTextChangedListener(latLonTextWatcher);
 		view.mLongitude.addTextChangedListener(latLonTextWatcher);
-		mapController = view.mapView.getController();
-		view.mBtnPicture.setOnClickListener(this);
-//		view.mBtnAddCategory.setOnClickListener(this);
-//		view.mPickDate.setOnClickListener(this);
-//		view.mPickTime.setOnClickListener(this);
+//		mapController = view.mapView.getController();
+//		view.mBtnPicture.setOnClickListener(this);
+
+///		view.mBtnAddCategory.setOnClickListener(this);
+///		view.mPickDate.setOnClickListener(this);
+///		view.mPickTime.setOnClickListener(this);
 		mCalendar = Calendar.getInstance();
 		pendingPhoto = new UploadPhotoAdapter(this);
-		view.gallery.setAdapter(pendingPhoto);
-		view.gallery.setOnItemClickListener(this);
-		view.mSwitcher.setFactory(this);
+//		view.gallery.setAdapter(pendingPhoto);
+//		view.gallery.setOnItemClickListener(this);
+//		view.mSwitcher.setFactory(this);
 		if (getIntent().getExtras() != null) {
 			this.id = getIntent().getExtras().getInt("id", 0);
-			view.mIncidentId.setText(""+this.id);
+//			view.mIncidentId.setText(""+this.id);
 		}
 		mOgsDao = Database.mOpenGeoSmsDao;
 		// edit existing report
 		if (id > 0) {
 
 			// make the delete button visible because we're editing
-			view.mDeleteReport.setOnClickListener(this);
-			view.mDeleteReport.setVisibility(View.VISIBLE);
+//			view.mDeleteReport.setOnClickListener(this);
+//			view.mDeleteReport.setVisibility(View.VISIBLE);
 			setSavedReport(id);
 		} else {
 			// add a new report
@@ -182,23 +194,57 @@ public class AddReportActivity extends
 			pendingPhoto.refresh();
 		}
 
-		registerForContextMenu(view.gallery);
+//		registerForContextMenu(view.gallery);
 		createSendMethodDialog();
 
 	}
 
+    protected void grabCamera() {
+        Log.i("DORIS","grabCamera");
+        if (mCamera==null) { 
+            mCamera = getCameraInstance();
+            mCameraPreview.attachCamera(mCamera);
+        }
+    }
+
+    protected void ungrabCamera() {    
+        Log.i("DORIS","ungrabCamera");
+        if (mCamera!=null) {
+            mCameraPreview.detachCamera();
+            mCamera=null;
+        }
+    }
+
 	@Override
 	protected void onStart() {
+        Log.i("DORIS","onStart");
 		super.onStart();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+        Log.i("DORIS","onPause");
+        //ungrabCamera();    
+
 		if (reverseGeocoderTask != null) {
 			reverseGeocoderTask.cancel(true);
 		}
 	}
+
+	@Override
+    protected void onStop() {
+        super.onPause();
+        Log.i("DORIS","onStop");
+        //ungrabCamera();    
+    }
+
+	@Override
+	protected void onDestroy() {
+        Log.i("DORIS","onDestroy");
+        super.onDestroy();
+        //ungrabCamera();            
+    }
 
 	/**
 	 * Upon being resumed we can retrieve the current state. This allows us to
@@ -206,8 +252,9 @@ public class AddReportActivity extends
 	 */
 	@Override
 	protected void onResume() {
-		getSharedText();
 		super.onResume();
+		getSharedText();
+        //grabCamera();
 	}
 
 	// Context Menu Stuff
@@ -281,23 +328,9 @@ public class AddReportActivity extends
 
 	@Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-			// get a file name for the photo to be uploaded
-			photoName = Util.getDateTime() + ".jpg";
-			
-			//keep a copy of the filename for later reuse
-			Preferences.fileName = photoName;
-			Preferences.saveSettings(AddReportActivity.this);
-//			showDialog(DIALOG_CHOOSE_IMAGE_METHOD);
-
-            Intent intent = new Intent(this,DorisCameraActivity.class);
-  
-//            Intent intent = new Intent(
-//                android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, PhotoUtils
-                            .getPhotoUri(photoName,
-                                         AddReportActivity.this));
-            startActivityForResult(intent, REQUEST_CODE_CAMERA);
+        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+            Preferences.LobsterId++;
+            mCamera.takePicture(null, null, mPicture);
             return true;
         }
         return false;
@@ -404,13 +437,13 @@ public class AddReportActivity extends
 				mError = true;
 			}
 		}
-
+/*
 		// validate location
 		if (TextUtils.isEmpty(view.mIncidentLocation.getText())) {
 			mErrorMessage += getString(R.string.location);
 			//required = true;
 		}
-
+*/
 		if (required) {
 			showDialog(DIALOG_SHOW_REQUIRED);
 		} else if (mError) {
@@ -471,13 +504,13 @@ public class AddReportActivity extends
         report.setLatitude(view.mLatitude.getText().toString());
         report.setLongitude(view.mLongitude.getText().toString());
         
-        if (TextUtils.isEmpty(view.mIncidentLocation.getText())) {
+//        if (TextUtils.isEmpty(view.mIncidentLocation.getText())) {
             Log.i("DORIS","SETTING LOCATION NAME TO SOMETHING");
             report.setLocationName("no location set");
-        }
-        else {
-            report.setLocationName(view.mIncidentLocation.getText().toString());
-		}
+//        }
+            //       else {
+//            report.setLocationName(view.mIncidentLocation.getText().toString());
+//		}
         
         report.setReportDate(mDateToSubmit);
 		report.setMode(String.valueOf(0));
@@ -533,8 +566,8 @@ public class AddReportActivity extends
 //			view.mIncidentDesc.setText(report.getDescription());
 			view.mLongitude.setText(report.getLongitude());
 			view.mLatitude.setText(report.getLatitude());
-			view.mIncidentLocation.setText(report.getLocationName());
-			view.mIncidentId.setText(""+reportId);
+			//view.mIncidentLocation.setText(report.getLocationName());
+			//view.mIncidentId.setText(""+reportId);
 
 			// set date and time
 			setDateAndTime(report.getReportDate());
@@ -1109,7 +1142,7 @@ public class AddReportActivity extends
 		if ( !mIsReportEditable){
 			return;
 		}
-		updateMarker(latitude, longitude, true);
+//	updateMarker(latitude, longitude, true);
 		if (!view.mLatitude.hasFocus() && !view.mLongitude.hasFocus()) {
 			view.mLatitude.setText(String.valueOf(latitude));
 			view.mLongitude.setText(String.valueOf(longitude));
@@ -1134,8 +1167,8 @@ public class AddReportActivity extends
 		protected void onPostExecute(String result) {
 			log(getClass().getSimpleName(),
 					String.format("onPostExecute %s", result));
-			if (TextUtils.isEmpty(view.mIncidentLocation.getText().toString()))
-				view.mIncidentLocation.setText(result);
+			//if (TextUtils.isEmpty(view.mIncidentLocation.getText().toString()))
+			//	view.mIncidentLocation.setText(result);
 			executing = false;
 		}
 	}
@@ -1217,9 +1250,9 @@ public class AddReportActivity extends
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		this.view.mSwitcher.setImageDrawable(ImageManager.getPendingDrawables(
-				this, pendingPhoto.getItem(position).getPhoto(),
-				Util.getScreenWidth(this)));
+//		this.view.mSwitcher.setImageDrawable(ImageManager.getPendingDrawables(
+//				this, pendingPhoto.getItem(position).getPhoto(),
+//				Util.getScreenWidth(this)));
 
 	}
 
@@ -1250,5 +1283,55 @@ public class AddReportActivity extends
 		deleteExistingPhoto();
 		return true;
 	}
+
+
+    private Camera getCameraInstance() {
+        Log.i("DORIS","getCameraInstance");
+
+        Camera camera = null;
+        try {
+            camera = Camera.open();
+        } catch (Exception e) {
+            // cannot get camera or does not exist
+            Log.i("DORIS","camera not opened");
+        }
+        return camera;
+    }
+
+    PictureCallback mPicture = new PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+			// get a file name for the photo to be uploaded
+			photoName = Util.getDateTime() + ".jpg";			
+			//keep a copy of the filename for later reuse
+			Preferences.fileName = photoName;
+			Preferences.saveSettings(AddReportActivity.this);
+
+            Uri uri = PhotoUtils.getPhotoUri(photoName,AddReportActivity.this);
+
+            try {
+                File pictureFile = new File(new URI(uri.toString()));
+
+                if (pictureFile == null) {
+                    return;
+                }
+                try {
+                    FileOutputStream fos = new FileOutputStream(pictureFile);
+                    fos.write(data);
+                    fos.close();
+                } catch (FileNotFoundException e) {
+                    
+                } catch (IOException e) {
+                }
+            } catch (Exception e) {
+            }
+
+            // send immediately
+            validateReports();
+            //setResult(RESULT_OK);
+            //finish();
+        }
+    };
+
 
 }

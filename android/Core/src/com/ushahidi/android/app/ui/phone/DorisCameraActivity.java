@@ -74,7 +74,7 @@ public class DorisCameraActivity extends Activity {
 
 	@Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
             Preferences.LobsterId++;
             mCamera.takePicture(null, null, mPicture);
             return true;

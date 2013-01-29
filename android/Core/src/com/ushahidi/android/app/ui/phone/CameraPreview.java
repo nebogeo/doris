@@ -27,6 +27,9 @@ public class CameraPreview extends SurfaceView implements
     public CameraPreview(Context context, Camera camera) {
         super(context);
         this.mCamera = camera;
+
+        Log.i("DORIS","CameraPreview ctr");
+
         this.mSurfaceHolder = this.getHolder();
         this.mSurfaceHolder.addCallback(this);
         this.mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -34,6 +37,8 @@ public class CameraPreview extends SurfaceView implements
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        Log.i("DORIS","CameraPreview surface created");
+
         try {
             mCamera.setPreviewDisplay(surfaceHolder);
             mCamera.startPreview();
@@ -42,8 +47,29 @@ public class CameraPreview extends SurfaceView implements
         }
     }
 
+    public void attachCamera(Camera camera) {
+        Log.i("DORIS","preview attachCamera");
+
+        this.mCamera = camera;
+        try {
+            mCamera.setPreviewDisplay(mSurfaceHolder);
+            mCamera.startPreview();
+        } catch (IOException e) {
+            // left blank for now
+        }
+    }
+    
+    public void detachCamera() {
+        Log.i("DORIS","preview detachCamera");
+        mCamera.stopPreview();
+        mCamera.release();
+        mCamera=null;
+    }
+
+
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        Log.i("DORIS","preview surfaceDestroyed");
         mCamera.stopPreview();
         mCamera.release();
     }
@@ -51,6 +77,7 @@ public class CameraPreview extends SurfaceView implements
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format,
             int width, int height) {
+        Log.i("DORIS","preview surfacechanged");
         // start preview with new settings
         try {
             mCamera.setPreviewDisplay(surfaceHolder);

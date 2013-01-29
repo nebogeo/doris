@@ -65,7 +65,7 @@ public class ReportTabActivity extends FragmentMapActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
             Intent intent = new Intent(this,AddReportActivity.class);            
             startActivityForResult(intent, 2);
             overridePendingTransition(R.anim.home_enter,

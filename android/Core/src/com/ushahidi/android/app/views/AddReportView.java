@@ -39,23 +39,23 @@ public class AddReportView extends View {
 
 //	public EditText mIncidentTitle;
 
-	public EditText mIncidentLocation;
+//	public EditText mIncidentLocation;
 
-	public EditText mIncidentId;
+//	public EditText mIncidentId;
 
 //	public EditText mIncidentDesc;
 
-	public ImageView mSelectedPhoto;
+//	public ImageView mSelectedPhoto;
 
 	public EditText mLatitude;
 
 	public EditText mLongitude;
 
-	public TextView mActivityTitle;
+//	public TextView mActivityTitle;
 
 //	public EditText mNews;
 
-	public Button mBtnSend;
+//	public Button mBtnSend;
 
 //	public Button mBtnAddCategory;
 
@@ -63,41 +63,41 @@ public class AddReportView extends View {
 
 //	public Button mPickDate;
 
-	public Button mBtnPicture;
+//	public Button mBtnPicture;
 	
-	public Button mDeleteReport;
+//	public Button mDeleteReport;
 
-	public MapView mapView;
+//	public MapView mapView;
 
-	public Gallery gallery;
+//	public Gallery gallery;
 
-	public ImageSwitcher mSwitcher;
+//	public ImageSwitcher mSwitcher;
 
 	public AddReportView(Activity activity) {
 		super(activity);
 
-		mBtnPicture = (Button) activity.findViewById(R.id.btnPicture);
+//		mBtnPicture = (Button) activity.findViewById(R.id.btnPicture);
 //		mBtnAddCategory = (Button) activity.findViewById(R.id.add_category);
 //		mPickDate = (Button) activity.findViewById(R.id.pick_date);
 //		mPickTime = (Button) activity.findViewById(R.id.pick_time);
-		mDeleteReport = (Button) activity.findViewById(R.id.delete_report);
+//		mDeleteReport = (Button) activity.findViewById(R.id.delete_report);
 		mLatitude = (EditText) activity.findViewById(R.id.incident_latitude);
 		mLongitude = (EditText) activity.findViewById(R.id.incident_longitude);
-		gallery = (Gallery) activity.findViewById(R.id.gallery);
+//		gallery = (Gallery) activity.findViewById(R.id.gallery);
 //		mIncidentTitle = (EditText) activity.findViewById(R.id.incident_title);
-		mIncidentId = (EditText) activity
-            .findViewById(R.id.incident_id);
-		mIncidentLocation = (EditText) activity
-				.findViewById(R.id.incident_location);
+//		mIncidentId = (EditText) activity
+//            .findViewById(R.id.incident_id);
+//		mIncidentLocation = (EditText) activity
+//				.findViewById(R.id.incident_location);
 //		mIncidentDesc = (EditText) activity.findViewById(R.id.incident_desc);
 //		mNews = (EditText) activity.findViewById(R.id.report_news);
-		mSwitcher = (ImageSwitcher) activity
-				.findViewById(R.id.sel_image_switcher);
-		mSwitcher.setInAnimation(AnimationUtils.loadAnimation(activity,
-				android.R.anim.fade_in));
-		mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(activity,
-				android.R.anim.fade_out));
-		this.mapView = (MapView) activity.findViewById(R.id.location_map);
+//		mSwitcher = (ImageSwitcher) activity
+//				.findViewById(R.id.sel_image_switcher);
+//		mSwitcher.setInAnimation(AnimationUtils.loadAnimation(activity,
+//				android.R.anim.fade_in));
+//		mSwitcher.setOutAnimation(AnimationUtils.loadAnimation(activity,
+//				android.R.anim.fade_out));
+//		this.mapView = (MapView) activity.findViewById(R.id.location_map);
 	}
 
 }
