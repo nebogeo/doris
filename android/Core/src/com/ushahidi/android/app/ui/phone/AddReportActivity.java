@@ -338,7 +338,7 @@ public class AddReportActivity extends
 
 	@Override
 	public void onClick(View button) {
-		if (button.getId() == R.id.btnPicture) {
+		if (button.getId() == R.id.button_capture) {
 			// get a file name for the photo to be uploaded
 			photoName = Util.getDateTime() + ".jpg";
 			
@@ -348,11 +348,11 @@ public class AddReportActivity extends
 //			showDialog(DIALOG_CHOOSE_IMAGE_METHOD);
 
   
-/*            Intent intent = new Intent(
-              android.provider.MediaStore.ACTION_IMAGE_CAPTURE);*/
+            Intent intent = new Intent(
+              android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
-            Intent intent = new Intent(AddReportActivity.this,
-                                       DorisCameraActivity.class);
+/*            Intent intent = new Intent(AddReportActivity.this,
+              DorisCameraActivity.class);*/
 
             intent.putExtra(MediaStore.EXTRA_OUTPUT, PhotoUtils
                             .getPhotoUri(photoName,
