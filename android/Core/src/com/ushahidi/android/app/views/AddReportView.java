@@ -47,9 +47,9 @@ public class AddReportView extends View {
 
 //	public ImageView mSelectedPhoto;
 
-	public EditText mLatitude;
+//	public EditText mLatitude;
 
-	public EditText mLongitude;
+//	public EditText mLongitude;
 
 //	public TextView mActivityTitle;
 
@@ -81,8 +81,8 @@ public class AddReportView extends View {
 //		mPickDate = (Button) activity.findViewById(R.id.pick_date);
 //		mPickTime = (Button) activity.findViewById(R.id.pick_time);
 //		mDeleteReport = (Button) activity.findViewById(R.id.delete_report);
-		mLatitude = (EditText) activity.findViewById(R.id.incident_latitude);
-		mLongitude = (EditText) activity.findViewById(R.id.incident_longitude);
+//		mLatitude = (EditText) activity.findViewById(R.id.incident_latitude);
+//		mLongitude = (EditText) activity.findViewById(R.id.incident_longitude);
 //		gallery = (Gallery) activity.findViewById(R.id.gallery);
 //		mIncidentTitle = (EditText) activity.findViewById(R.id.incident_title);
 //		mIncidentId = (EditText) activity

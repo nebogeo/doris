@@ -134,6 +134,8 @@ public class AddReportActivity extends
     private Camera mCamera;
     private CameraPreview mCameraPreview;
 
+    private String mLatitude;
+    private String mLongitude;
 
 	public AddReportActivity() {
 		super(AddReportView.class, R.layout.add_report, R.menu.add_report,
@@ -188,8 +190,8 @@ public class AddReportActivity extends
 
 
 
-		view.mLatitude.addTextChangedListener(latLonTextWatcher);
-		view.mLongitude.addTextChangedListener(latLonTextWatcher);
+//		view.mLatitude.addTextChangedListener(latLonTextWatcher);
+//		view.mLongitude.addTextChangedListener(latLonTextWatcher);
 //		mapController = view.mapView.getController();
 //		view.mBtnPicture.setOnClickListener(this);
 
@@ -436,7 +438,7 @@ public class AddReportActivity extends
 		}
 
 		// validate lat long
-		if (TextUtils.isEmpty(view.mLatitude.getText().toString())) {
+/*		if (TextUtils.isEmpty(view.mLatitude.getText().toString())) {
 			mErrorMessage += getString(R.string.latitude) + "\n";
 			required = true;
 		} else {
@@ -448,9 +450,9 @@ public class AddReportActivity extends
 				mError = true;
 			}
 		}
-
+*/
 		// validate lat long
-		if (TextUtils.isEmpty(view.mLongitude.getText().toString())) {
+/*		if (TextUtils.isEmpty(view.mLongitude.getText().toString())) {
 			mErrorMessage += getString(R.string.longitude) + "\n";
 			mError = true;
 		} else {
@@ -462,6 +464,7 @@ public class AddReportActivity extends
 				mError = true;
 			}
 		}
+*/
 /*
 		// validate location
 		if (TextUtils.isEmpty(view.mIncidentLocation.getText())) {
@@ -526,8 +529,10 @@ public class AddReportActivity extends
 //            report.setDescription(view.mIncidentDesc.getText().toString());
 //		}
 
-        report.setLatitude(view.mLatitude.getText().toString());
-        report.setLongitude(view.mLongitude.getText().toString());
+//        report.setLatitude(view.mLatitude.getText().toString());
+//        report.setLongitude(view.mLongitude.getText().toString());
+            report.setLatitude(mLatitude);
+            report.setLongitude(mLongitude);
         
 //        if (TextUtils.isEmpty(view.mIncidentLocation.getText())) {
             Log.i("DORIS","SETTING LOCATION NAME TO SOMETHING");
@@ -589,8 +594,8 @@ public class AddReportActivity extends
 		if (report != null) {
 //			view.mIncidentTitle.setText(report.getTitle());
 //			view.mIncidentDesc.setText(report.getDescription());
-			view.mLongitude.setText(report.getLongitude());
-			view.mLatitude.setText(report.getLatitude());
+//			view.mLongitude.setText(report.getLongitude());
+//			view.mLatitude.setText(report.getLatitude());
 			//view.mIncidentLocation.setText(report.getLocationName());
 			//view.mIncidentId.setText(""+reportId);
 
@@ -625,8 +630,8 @@ public class AddReportActivity extends
 //					view.mIncidentDesc,
 //					view.mIncidentLocation,
 //					view.mIncidentTitle,
-					view.mLatitude,
-					view.mLongitude
+//					view.mLatitude,
+//					view.mLongitude
 //					view.mPickDate,
 //					view.mPickTime
 			};
@@ -1169,10 +1174,13 @@ public class AddReportActivity extends
 			return;
 		}
 //	updateMarker(latitude, longitude, true);
-		if (!view.mLatitude.hasFocus() && !view.mLongitude.hasFocus()) {
-			view.mLatitude.setText(String.valueOf(latitude));
-			view.mLongitude.setText(String.valueOf(longitude));
-		}
+//		if (!view.mLatitude.hasFocus() && !view.mLongitude.hasFocus()) {
+//			view.mLatitude.setText(String.valueOf(latitude));
+//			view.mLongitude.setText(String.valueOf(longitude));          
+            mLatitude=String.valueOf(latitude);
+            mLongitude=String.valueOf(longitude);
+
+//		}
 		if (reverseGeocoderTask == null || !reverseGeocoderTask.isExecuting()) {
 			reverseGeocoderTask = new ReverseGeocoderTask(this);
 			reverseGeocoderTask.execute(latitude, longitude);
@@ -1209,15 +1217,15 @@ public class AddReportActivity extends
 
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
-			try {
-				if (view.mLatitude.hasFocus() || view.mLongitude.hasFocus()) {
-					locationChanged(Double.parseDouble(view.mLatitude.getText()
-							.toString()), Double.parseDouble(view.mLongitude
-							.getText().toString()));
-				}
-			} catch (Exception ex) {
-				log("TextWatcher", ex);
-			}
+//			try {
+//				if (view.mLatitude.hasFocus() || view.mLongitude.hasFocus()) {
+//					locationChanged(Double.parseDouble(view.mLatitude.getText()
+//							.toString()), Double.parseDouble(view.mLongitude
+//							.getText().toString()));
+//				}
+//			} catch (Exception ex) {
+//				log("TextWatcher", ex);
+//			}
 		}
 	};
 

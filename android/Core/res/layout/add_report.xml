@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="Better camera" />
 
-    <EditText
+<!--    <EditText
         android:id="@+id/incident_latitude"
         style="@style/EditText.Title"
         android:layout_width="wrap_content"
@@ -52,5 +52,5 @@
         android:layout_weight="1"
         android:hint="@string/longitude"
         android:inputType="numberDecimal|numberSigned" />
-   
+   -->
 </LinearLayout>
