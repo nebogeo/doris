@@ -157,7 +157,32 @@ public class AddReportActivity extends
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCamera.takePicture(null, null, mPicture);
+                ungrabCamera();    
+
+                // get a file name for the photo to be uploaded
+                photoName = Util.getDateTime() + ".jpg";
+                
+                //keep a copy of the filename for later reuse
+                Preferences.fileName = photoName;
+                Preferences.saveSettings(AddReportActivity.this);
+//			showDialog(DIALOG_CHOOSE_IMAGE_METHOD);
+                
+                
+                Intent intent = new Intent(
+                    android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+/*            Intent intent = new Intent(AddReportActivity.this,
+              DorisCameraActivity.class);*/
+                
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, PhotoUtils
+                                .getPhotoUri(photoName,
+                                             AddReportActivity.this));
+                startActivityForResult(intent, REQUEST_CODE_CAMERA);
+                //dialog.dismiss();
+                
+                
+
+
             }
         });
 
@@ -1109,7 +1134,8 @@ public class AddReportActivity extends
 			if (requestCode == REQUEST_CODE_CAMERA) {
 			
                 Log.i("DORIS","back from camera");
-	
+                grabCamera();    
+
 				Uri uri = PhotoUtils.getPhotoUri(photoName, this);
 				Bitmap bitmap = PhotoUtils.getCameraPhoto(this, uri);
 				PhotoUtils.savePhoto(this, bitmap, photoName);

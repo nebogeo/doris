@@ -61,17 +61,18 @@ public class CameraPreview extends SurfaceView implements
     
     public void detachCamera() {
         Log.i("DORIS","preview detachCamera");
-        mCamera.stopPreview();
-        mCamera.release();
-        mCamera=null;
+        if (mCamera!=null) {
+            mCamera.stopPreview();
+            mCamera.release();
+            mCamera=null;
+        }
     }
 
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         Log.i("DORIS","preview surfaceDestroyed");
-        mCamera.stopPreview();
-        mCamera.release();
+        detachCamera();
     }
 
     @Override
