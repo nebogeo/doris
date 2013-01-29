@@ -95,7 +95,8 @@ public abstract class BaseEditMapActivity<V extends View, M extends Model>
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			log("onBackPressed");
-			showDialog();
+			//showDialog();
+            finish();
 			return false;
 		}
 		return super.onKeyDown(keyCode, event);
