@@ -37,8 +37,10 @@
         android:layout_height="wrap_content"
         android:text="Better camera" />
 
-    <TextView
-        android:id="@+id/incident_id" />
+  <!--  <TextView
+        android:id="@+id/incident_id" 
+        style="@style/TextView.Empty"
+        android:text="TESTING" /> -->
     
 
 <!--    <EditText

@@ -188,6 +188,7 @@ public class AddReportActivity extends
             }
         });
 
+//		view.mID.setText(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
 
 
 //		view.mLatitude.addTextChangedListener(latLonTextWatcher);
