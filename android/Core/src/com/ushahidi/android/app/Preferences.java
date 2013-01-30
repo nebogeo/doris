@@ -22,7 +22,7 @@ public class Preferences {
 
 	public static int LobsterId = 0;
 
-	public static int StringId = 0;
+	public static int StringId = 1;
 
 	public static final int NOTIFICATION_ID = 1;
 
@@ -92,7 +92,7 @@ public class Preferences {
 		email = settings.getString("Email", "");
 		countries = settings.getInt("Countries", 0);
 		LobsterId = settings.getInt("LobsterId", 0);
-		StringId = settings.getInt("StringId", 0);
+		StringId = settings.getInt("StringId", 1);
 		AutoUpdateDelay = settings.getInt("AutoUpdateDelay", 5);
 		AutoFetch = settings.getBoolean("AutoFetch", false);
 		totalReports = settings.getString("TotalReports", "20");

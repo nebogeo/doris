@@ -160,6 +160,8 @@ public class ListReportFragment
 		ViewGroup viewGroup = (ViewGroup) inflater.inflate(
 				R.layout.list_report_header, getListView(), false);
 
+        mID = (TextView) viewGroup.findViewById(R.id.incident_next_id);
+
 		TextView textView = (TextView) viewGroup
 				.findViewById(R.id.filter_report);
 		textView.addTextChangedListener(new TextWatcher() {
@@ -198,6 +200,10 @@ public class ListReportFragment
 	@Override
 	public void onResume() {
 		super.onResume();
+
+        if (Preferences.LobsterId==0 &&
+            Preferences.StringId==1) mID.setText("No ID yet");
+        else mID.setText(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
 
 		if (filterCategory == 0) {
 			refreshReportLists();
@@ -422,11 +428,6 @@ public class ListReportFragment
 				.findViewById(R.id.refresh_report_btn);
 		filterReport = (ImageButton) mRootView
 				.findViewById(R.id.filter_by_category);
-
-        mID = (TextView) mRootView.findViewById(R.id.incident_next_id);
-
-		mID.setText(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
-
 
 		if (addReport != null) {
 			addReport.setOnClickListener(new OnClickListener() {
