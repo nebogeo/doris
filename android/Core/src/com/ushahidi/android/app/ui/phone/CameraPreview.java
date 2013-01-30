@@ -38,12 +38,13 @@ public class CameraPreview extends SurfaceView implements
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         Log.i("DORIS","CameraPreview surface created");
-
-        try {
-            mCamera.setPreviewDisplay(surfaceHolder);
-            mCamera.startPreview();
-        } catch (IOException e) {
-            // left blank for now
+        if (mCamera!=null) {
+            try {
+                mCamera.setPreviewDisplay(surfaceHolder);
+                mCamera.startPreview();
+            } catch (IOException e) {
+                // left blank for now
+            }
         }
     }
 
