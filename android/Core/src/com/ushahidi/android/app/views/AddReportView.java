@@ -37,40 +37,26 @@ import com.ushahidi.android.app.R;
  */
 public class AddReportView extends View {
 
+	public TextView mID;
+
+
 //	public EditText mIncidentTitle;
-
 //	public EditText mIncidentLocation;
-
 //	public EditText mIncidentId;
-
 //	public EditText mIncidentDesc;
-
 //	public ImageView mSelectedPhoto;
-
 //	public EditText mLatitude;
-
 //	public EditText mLongitude;
-
 //	public TextView mActivityTitle;
-
 //	public EditText mNews;
-
 //	public Button mBtnSend;
-
 //	public Button mBtnAddCategory;
-
 //	public Button mPickTime;
-
 //	public Button mPickDate;
-
 //	public Button mBtnPicture;
-	
 //	public Button mDeleteReport;
-
 //	public MapView mapView;
-
 //	public Gallery gallery;
-
 //	public ImageSwitcher mSwitcher;
 
 	public AddReportView(Activity activity) {

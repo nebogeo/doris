@@ -185,7 +185,7 @@ public class ReportsHttpClient extends MainHttpClient {
 				Preferences.httpRunning = false;				
                 HttpEntity respEntity = response.getEntity();
 
-                //Log.i("DORIS",EntityUtils.toString(respEntity));
+                //        Log.i("DORIS",EntityUtils.toString(respEntity));
 
 				if (respEntity != null) {
 					UshahidiApiResponse resp = GsonHelper.fromStream(respEntity.getContent(), UshahidiApiResponse.class);				

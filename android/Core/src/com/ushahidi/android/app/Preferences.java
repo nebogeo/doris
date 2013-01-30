@@ -22,6 +22,8 @@ public class Preferences {
 
 	public static int LobsterId = 0;
 
+	public static int StringId = 0;
+
 	public static final int NOTIFICATION_ID = 1;
 
 	public static final String PREFS_NAME = "UshahidiService";
@@ -34,7 +36,7 @@ public class Preferences {
 
 	public static String domain = "";
 
-	public static String firstname = "";
+	public static String firstname = "boat";
 
 	public static String lastname = "";
 
@@ -52,7 +54,7 @@ public class Preferences {
 
 	public static String activeMapName = "";
 
-	public static int photoWidth = 200;
+	public static int photoWidth = 1024;
 
 	public static String deploymentLatitude = "0.0";
 
@@ -85,10 +87,12 @@ public class Preferences {
 
 		domain = settings.getString("Domain", Preferences.domain);
 		fileName = settings.getString("FileName", "");
-		firstname = settings.getString("Firstname", "");
+		firstname = settings.getString("Firstname", "boat");
 		lastname = settings.getString("Lastname", "");
 		email = settings.getString("Email", "");
 		countries = settings.getInt("Countries", 0);
+		LobsterId = settings.getInt("LobsterId", 0);
+		StringId = settings.getInt("StringId", 0);
 		AutoUpdateDelay = settings.getInt("AutoUpdateDelay", 5);
 		AutoFetch = settings.getBoolean("AutoFetch", false);
 		totalReports = settings.getString("TotalReports", "20");
@@ -97,7 +101,7 @@ public class Preferences {
 		activeMapName = settings.getString("ActiveMapName", "");
 		deploymentLatitude = settings.getString("DeploymentLatitude", "0.0");
 		deploymentLongitude = settings.getString("DeploymentLongitude", "0.0");
-		photoWidth = settings.getInt("PhotoWidth", 200);
+		photoWidth = settings.getInt("PhotoWidth", 1024);
 		appRunsFirstTime = settings
 				.getInt("AppRunsFirstTime", appRunsFirstTime);
 		username = settings.getString("username", "");
@@ -140,6 +144,8 @@ public class Preferences {
 		editor.putInt("SelectedDistance", selectedDistance);
 		editor.putString("Phonenumber", phonenumber);
 		editor.putString("OgsPluginVersion", ogsPluginVersion);
+		editor.putInt("LobsterId", LobsterId);
+		editor.putInt("StringId", StringId);
 		editor.commit();
 	}
 }

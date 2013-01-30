@@ -37,6 +37,10 @@
         android:layout_height="wrap_content"
         android:text="Better camera" />
 
+    <TextView
+        android:id="@+id/incident_id" />
+    
+
 <!--    <EditText
         android:id="@+id/incident_latitude"
         style="@style/EditText.Title"

@@ -360,6 +360,12 @@ public class AddReportActivity extends
             mCamera.takePicture(null, null, mPicture);
             return true;
         }
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            Preferences.LobsterId=0;
+            Preferences.StringId++;
+            mCamera.takePicture(null, null, mPicture);
+            return true;
+        }
         return false;
     }
 
@@ -516,7 +522,7 @@ public class AddReportActivity extends
 		Report report = new Report();
 
 //		if (TextUtils.isEmpty(view.mIncidentTitle.getText())) {
-            report.setTitle(Preferences.firstname+"-"+Preferences.LobsterId);
+            report.setTitle(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
 //        }
 //        else {
 //            report.setTitle(view.mIncidentTitle.getText().toString());
