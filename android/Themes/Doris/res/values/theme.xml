@@ -5,7 +5,7 @@
     <string name="app_name">Doris</string>
     <string name="google_map_api_key">0TfsDcb5kkmu-cjEBaoTvz9JVCOalpcgYEzK9sg</string>
 
-    <string name="deployment_url">http://144.173.72.193/doris</string>
+    <string name="deployment_url">http://dorismap.exeter.ac.uk</string>
     <string name="team_url">http://ushahidi.com/about-us/team</string>
     <string name="media_url">http://www.ushahidi.com</string>
     <string name="twitter_url">http://twitter.com/ushahidi</string>
