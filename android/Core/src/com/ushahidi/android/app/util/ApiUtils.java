@@ -248,7 +248,7 @@ public class ApiUtils extends MainHttpClient {
 			// save changes
 			Preferences.saveSettings(context);
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			log(CLASS_TAG, e);
 		}
 	}

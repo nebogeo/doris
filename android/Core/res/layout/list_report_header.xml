@@ -23,14 +23,9 @@
         android:hint="@string/search_reports" />
 
     <TextView
-        android:id="@+id/id_text" 
-        style="@style/TextView.Title"
-        android:text="Last photo ID:" />
-
-    <TextView
         android:id="@+id/incident_next_id" 
-        android:textSize="60dip"
+        android:textSize="20dip"
         style="@style/TextView.Title"
-        android:text="TESTING" />
+        android:text="Last photo ID: No ID yet" />
 
 </LinearLayout>

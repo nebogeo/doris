@@ -1341,36 +1341,51 @@ public class AddReportActivity extends
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
 			// get a file name for the photo to be uploaded
-			photoName = Util.getDateTime() + ".jpg";			
+        
+            String datetime=Util.getDateTime();
+			photoName = datetime + ".jpg";			
+			String dataName = datetime + ".txt";			
+
 			//keep a copy of the filename for later reuse
 			Preferences.fileName = photoName;
 			Preferences.saveSettings(AddReportActivity.this);
 
+            String bakdata=
+                Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId+":"+
+                mLatitude+":"+
+                mLongitude+":"+
+                datetime;
+
             Uri uri = PhotoUtils.getPhotoUri(photoName,AddReportActivity.this);
 
-            try {
-                File pictureFile = new File(new URI(uri.toString()));
+//            Uri backup_photo_uri = PhotoUtils.getBackupUri(photoName,AddReportActivity.this);
+//            Uri backup_text_uri  = PhotoUtils.getBackupUri(dataName,AddReportActivity.this);
 
-                if (pictureFile == null) {
-                    return;
-                }
-                try {
-                    FileOutputStream fos = new FileOutputStream(pictureFile);
-                    fos.write(data);
-                    fos.close();
-                } catch (FileNotFoundException e) {
-                    
-                } catch (IOException e) {
-                }
-            } catch (Exception e) {
-            }
+            SaveData(uri,data);
 
             // send immediately
             validateReports();
             //setResult(RESULT_OK);
             //finish();
-        }
-    };
+        }    };
 
+
+    private void SaveData(Uri uri, byte[] data) {
+        try {
+            File file = new File(new URI(uri.toString()));
+            
+            if (file == null) {
+                return;
+            }
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(data);
+                fos.close();
+            } catch (FileNotFoundException e) {           
+            } catch (IOException e) {
+            }
+        } catch (Exception e) {
+        }
+    }
 
 }

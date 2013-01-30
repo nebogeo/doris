@@ -202,8 +202,8 @@ public class ListReportFragment
 		super.onResume();
 
         if (Preferences.LobsterId==0 &&
-            Preferences.StringId==1) mID.setText("No ID yet");
-        else mID.setText(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
+            Preferences.StringId==1) mID.setText("Last photo ID: No ID yet");
+        else mID.setText("Last photo ID: "+Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
 
 		if (filterCategory == 0) {
 			refreshReportLists();

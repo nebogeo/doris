@@ -59,6 +59,7 @@ public class PhotoUtils {
 
 	// folder to save pending photos.
 	private static final String PENDING = "/pending";
+	private static final String BACKUP = "/backup";
 
 	public static int getScreenOrientation(Activity context) {
 		Display display = context.getWindowManager().getDefaultDisplay();
@@ -88,6 +89,16 @@ public class PhotoUtils {
 
 		return path;
 	}
+
+	public static Uri getBackupUri(String filename, Activity activity) {
+		File path = new File(Environment.getExternalStorageDirectory(),
+				activity.getPackageName() + BACKUP);
+		if (!path.exists() && path.mkdir()) {
+			return Uri.fromFile(new File(path, filename));
+		}
+		return Uri.fromFile(new File(path, filename));
+	}
+
 
 	public static Uri getPhotoUri(String filename, Activity activity) {
 		File path = new File(Environment.getExternalStorageDirectory(),
