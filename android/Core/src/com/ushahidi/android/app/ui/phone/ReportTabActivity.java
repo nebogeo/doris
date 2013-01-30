@@ -16,6 +16,7 @@ import com.ushahidi.android.app.ui.tablet.ListReportFragment;
 import com.ushahidi.android.app.ui.tablet.MapFragment;
 import com.ushahidi.android.app.ui.phone.AddReportActivity;
 import android.view.KeyEvent;
+import android.widget.TextView;
 
 public class ReportTabActivity extends FragmentMapActivity {
 

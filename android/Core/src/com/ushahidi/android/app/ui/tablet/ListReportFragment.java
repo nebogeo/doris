@@ -110,6 +110,8 @@ public class ListReportFragment
 
 	private ListPendingReportAdapter pendingReportAdapter;
 
+    private TextView mID;
+
 	public ListReportFragment() {
 		super(ListReportView.class, ListReportAdapter.class,
 				R.layout.list_report, R.menu.list_report, android.R.id.list);
@@ -157,6 +159,7 @@ public class ListReportFragment
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		ViewGroup viewGroup = (ViewGroup) inflater.inflate(
 				R.layout.list_report_header, getListView(), false);
+
 		TextView textView = (TextView) viewGroup
 				.findViewById(R.id.filter_report);
 		textView.addTextChangedListener(new TextWatcher() {
@@ -419,6 +422,11 @@ public class ListReportFragment
 				.findViewById(R.id.refresh_report_btn);
 		filterReport = (ImageButton) mRootView
 				.findViewById(R.id.filter_by_category);
+
+        mID = (TextView) mRootView.findViewById(R.id.incident_next_id);
+
+		mID.setText(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
+
 
 		if (addReport != null) {
 			addReport.setOnClickListener(new OnClickListener() {

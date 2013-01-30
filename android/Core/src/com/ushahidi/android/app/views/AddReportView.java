@@ -37,9 +37,6 @@ import com.ushahidi.android.app.R;
  */
 public class AddReportView extends View {
 
-//	public TextView mID;
-
-
 //	public EditText mIncidentTitle;
 //	public EditText mIncidentLocation;
 //	public EditText mIncidentId;
@@ -61,9 +58,6 @@ public class AddReportView extends View {
 
 	public AddReportView(Activity activity) {
 		super(activity);
-
-//		mID = (TextView) activity.findViewById(R.id.incident_id);
-
 
 //		mBtnPicture = (Button) activity.findViewById(R.id.btnPicture);
 //		mBtnAddCategory = (Button) activity.findViewById(R.id.add_category);
