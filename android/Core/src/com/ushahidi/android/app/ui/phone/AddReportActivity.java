@@ -436,7 +436,7 @@ public class AddReportActivity extends
 
 		// Dipo Fix
 		if (mVectorCategories.size() == 0) {
-			mErrorMessage += getString(R.string.category) + "\n";
+            //	mErrorMessage += getString(R.string.category) + "\n";
 			//required = true;
 
             mVectorCategories.add("1");
@@ -477,6 +477,36 @@ public class AddReportActivity extends
 			//required = true;
 		}
 */
+
+		// validate lat long
+		if (TextUtils.isEmpty(mLatitude)) {
+			mErrorMessage += getString(R.string.latitude) + "\n";
+			required = true;
+		} else {
+
+			try {
+				Double.parseDouble(mLatitude);
+			} catch (NumberFormatException ex) {
+				mErrorMessage += getString(R.string.invalid_latitude) + "\n";
+				mError = true;
+			}
+		}
+
+		// validate lat long
+		if (TextUtils.isEmpty(mLongitude)) {
+			mErrorMessage += getString(R.string.longitude) + "\n";
+			mError = true;
+		} else {
+
+			try {
+				Double.parseDouble(mLongitude);
+			} catch (NumberFormatException ex) {
+				mErrorMessage += getString(R.string.invalid_longitude) + "\n";
+				mError = true;
+			}
+		}
+
+
 		if (required) {
 			showDialog(DIALOG_SHOW_REQUIRED);
 		} else if (mError) {
@@ -1357,11 +1387,10 @@ public class AddReportActivity extends
                 datetime;
 
             Uri uri = PhotoUtils.getPhotoUri(photoName,AddReportActivity.this);
+// //            Uri backup_photo_uri = PhotoUtils.getBackupUri(photoName,AddReportActivity.this);
+// //            Uri backup_text_uri  = PhotoUtils.getBackupUri(dataName,AddReportActivity.this);
 
-//            Uri backup_photo_uri = PhotoUtils.getBackupUri(photoName,AddReportActivity.this);
-//            Uri backup_text_uri  = PhotoUtils.getBackupUri(dataName,AddReportActivity.this);
-
-            SaveData(uri,data);
+//             SaveData(uri,data);
 
             // send immediately
             validateReports();
