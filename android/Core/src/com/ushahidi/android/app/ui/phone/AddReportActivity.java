@@ -68,6 +68,7 @@ import android.widget.ViewSwitcher;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.ShutterCallback;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
@@ -352,17 +353,33 @@ public class AddReportActivity extends
 
 	}
 
+
+    // disable volume graphic
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) 
+    { 
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || 
+            keyCode == KeyEvent.KEYCODE_VOLUME_UP) { 
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event); 
+        }
+    }
+
 	@Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
             Preferences.LobsterId++;
-            mCamera.takePicture(null, null, mPicture);
+            Log.i("DORIS","TAKING PICTURE -------->");
+            mCamera.setPreviewCallback(null);
+            mCamera.takePicture(mShutterPicture, mRawPicture, mPostViewPicture, mPicture);
             return true;
         }
-        if (keyCode == KeyEvent.KEYCODE_MENU) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             Preferences.LobsterId=0;
             Preferences.StringId++;
-            mCamera.takePicture(null, null, mPicture);
+            mCamera.setPreviewCallback(null);
+            mCamera.takePicture(mShutterPicture, mRawPicture, mPostViewPicture, mPicture);
             return true;
         }
         return false;
@@ -1367,11 +1384,34 @@ public class AddReportActivity extends
         return camera;
     }
 
+    ShutterCallback mShutterPicture = new ShutterCallback() {
+        @Override
+        public void onShutter() {
+            Log.i("DORIS","ON SHUTTER PICTURE TAKEN");
+        }    
+    };
+
+    PictureCallback mRawPicture = new PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            Log.i("DORIS","ON RAW PICTURE TAKEN");
+        }    
+    };
+
+    PictureCallback mPostViewPicture = new PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            Log.i("DORIS","ON POST PICTURE TAKEN");
+        }    
+    };
+
     PictureCallback mPicture = new PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
 			// get a file name for the photo to be uploaded
         
+            Log.i("DORIS","ON PICTURE TAKEN");
+
             String datetime=Util.getDateTime();
 			photoName = datetime + ".jpg";			
 			String dataName = datetime + ".txt";			
@@ -1380,11 +1420,15 @@ public class AddReportActivity extends
 			Preferences.fileName = photoName;
 			Preferences.saveSettings(AddReportActivity.this);
 
+            Log.i("DORIS","ON PICTURE TAKEN2");
+
             String bakdata=
                 Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId+":"+
                 mLatitude+":"+
                 mLongitude+":"+
                 datetime;
+
+            Log.i("DORIS","ON PICTURE TAKEN3");
 
             Uri uri = PhotoUtils.getPhotoUri(photoName,AddReportActivity.this);
 // //            Uri backup_photo_uri = PhotoUtils.getBackupUri(photoName,AddReportActivity.this);
@@ -1392,8 +1436,14 @@ public class AddReportActivity extends
 
 //             SaveData(uri,data);
 
+            Log.i("DORIS","ON PICTURE TAKEN4");
+
+
             // send immediately
             validateReports();
+
+            Log.i("DORIS","ON PICTURE TAKEN5");
+
             //setResult(RESULT_OK);
             //finish();
         }    };

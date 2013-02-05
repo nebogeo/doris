@@ -131,9 +131,9 @@ public class ReportsHttpClient extends MainHttpClient {
 	 * data, 8 - api disabled, 9 - no task found, 10 - json is wrong
 	 */
 	public boolean PostFileUpload(String URL, HashMap<String, String> params)
-			throws IOException {
+        throws IOException {
 		log("PostFileUpload(): upload file to server.");
-
+        
 		apiUtils.updateDomain();
 		entity = new MultipartEntity();
 		// Dipo Fix
@@ -185,7 +185,7 @@ public class ReportsHttpClient extends MainHttpClient {
 				Preferences.httpRunning = false;				
                 HttpEntity respEntity = response.getEntity();
 
-                //        Log.i("DORIS",EntityUtils.toString(respEntity));
+//                Log.i("DORIS",EntityUtils.toString(respEntity));
 
 				if (respEntity != null) {
 					UshahidiApiResponse resp = GsonHelper.fromStream(respEntity.getContent(), UshahidiApiResponse.class);				
@@ -212,11 +212,10 @@ public class ReportsHttpClient extends MainHttpClient {
 			log("IOException", e);
 			// timeout
 			return false;
-        }
-        catch (JsonSyntaxException e) {
+        } catch (JsonSyntaxException e) {
 			log("JsonSyntaxException", e);
             return false;
-		}
+		} 
 		return false;
 	}
 }

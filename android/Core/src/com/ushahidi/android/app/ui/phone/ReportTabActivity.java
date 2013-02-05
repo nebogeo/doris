@@ -64,9 +64,21 @@ public class ReportTabActivity extends FragmentMapActivity {
 		}
 	}
 
+    // disable volume graphic
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) 
+    { 
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || 
+            keyCode == KeyEvent.KEYCODE_VOLUME_UP) { 
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event); 
+        }
+    }
+
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
             Intent intent = new Intent(this,AddReportActivity.class);            
             startActivityForResult(intent, 2);
             overridePendingTransition(R.anim.home_enter,
