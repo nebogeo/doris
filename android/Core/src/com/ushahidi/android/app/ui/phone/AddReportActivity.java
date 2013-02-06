@@ -467,6 +467,8 @@ public class AddReportActivity extends
             //	mErrorMessage += getString(R.string.category) + "\n";
 			//required = true;
 
+            Log.i("DORIS","adding fake category");
+
             mVectorCategories.add("1");
 		}
 
