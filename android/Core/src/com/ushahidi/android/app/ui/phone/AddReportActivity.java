@@ -69,6 +69,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
+import android.hardware.Camera.ErrorCallback;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
@@ -141,6 +142,7 @@ public class AddReportActivity extends
 	public AddReportActivity() {
 		super(AddReportView.class, R.layout.add_report, R.menu.add_report,
 				R.id.location_map);
+        Log.i("DORIS","addreportact ctr");
 		model = new AddReportModel();
 	}
 
@@ -152,6 +154,7 @@ public class AddReportActivity extends
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         mCamera = getCameraInstance();
+        mCamera.setErrorCallback(mErrorPicture);
         mCameraPreview = new CameraPreview(this, mCamera);
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mCameraPreview);
@@ -254,9 +257,9 @@ public class AddReportActivity extends
         Log.i("DORIS","onPause");
         //ungrabCamera();    
 
-		if (reverseGeocoderTask != null) {
-			reverseGeocoderTask.cancel(true);
-		}
+//		if (reverseGeocoderTask != null) {
+//			reverseGeocoderTask.cancel(true);
+//		}
 	}
 
 	@Override
@@ -279,6 +282,7 @@ public class AddReportActivity extends
 	 */
 	@Override
 	protected void onResume() {
+        Log.i("DORIS","on resume");
 		super.onResume();
 		getSharedText();
         //grabCamera();
@@ -368,18 +372,25 @@ public class AddReportActivity extends
 
 	@Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+
+
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
             Preferences.LobsterId++;
             Log.i("DORIS","TAKING PICTURE -------->");
-            mCamera.setPreviewCallback(null);
-            mCamera.takePicture(mShutterPicture, mRawPicture, mPostViewPicture, mPicture);
+            
+            mCamera.takePicture(null, null, mPicture);
+
+            Log.i("DORIS","TAKEN PICTURE <--------");
+
+            
+
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             Preferences.LobsterId=0;
             Preferences.StringId++;
-            mCamera.setPreviewCallback(null);
-            mCamera.takePicture(mShutterPicture, mRawPicture, mPostViewPicture, mPicture);
+
+            mCamera.takePicture(null, null, mPicture);
             return true;
         }
         return false;
@@ -856,6 +867,7 @@ public class AddReportActivity extends
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							dialog.cancel();
+                            finish();
 						}
 					});
 
@@ -1233,10 +1245,10 @@ public class AddReportActivity extends
             mLongitude=String.valueOf(longitude);
 
 //		}
-		if (reverseGeocoderTask == null || !reverseGeocoderTask.isExecuting()) {
-			reverseGeocoderTask = new ReverseGeocoderTask(this);
-			reverseGeocoderTask.execute(latitude, longitude);
-		}
+//		if (reverseGeocoderTask == null || !reverseGeocoderTask.isExecuting()) {
+//			reverseGeocoderTask = new ReverseGeocoderTask(this);
+//			reverseGeocoderTask.execute(latitude, longitude);
+//		}
 
 	}
 
@@ -1384,6 +1396,13 @@ public class AddReportActivity extends
         return camera;
     }
 
+    ErrorCallback mErrorPicture = new ErrorCallback() {
+        @Override
+        public void onError(int error, Camera camera) {
+            Log.i("DORIS","ON ERROR "+error);
+        }    
+    };
+
     ShutterCallback mShutterPicture = new ShutterCallback() {
         @Override
         public void onShutter() {
@@ -1434,7 +1453,7 @@ public class AddReportActivity extends
 // //            Uri backup_photo_uri = PhotoUtils.getBackupUri(photoName,AddReportActivity.this);
 // //            Uri backup_text_uri  = PhotoUtils.getBackupUri(dataName,AddReportActivity.this);
 
-//             SaveData(uri,data);
+            SaveData(uri,data);
 
             Log.i("DORIS","ON PICTURE TAKEN4");
 

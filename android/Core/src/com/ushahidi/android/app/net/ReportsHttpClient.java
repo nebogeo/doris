@@ -182,14 +182,24 @@ public class ReportsHttpClient extends MainHttpClient {
 				httpost.setEntity(entity);
 
 				HttpResponse response = httpClient.execute(httpost);
+
 				Preferences.httpRunning = false;				
                 HttpEntity respEntity = response.getEntity();
 
-//                Log.i("DORIS",EntityUtils.toString(respEntity));
+                String res = EntityUtils.toString(respEntity);
+                Log.i("DORIS",res);
 
 				if (respEntity != null) {
-					UshahidiApiResponse resp = GsonHelper.fromStream(respEntity.getContent(), UshahidiApiResponse.class);				
-					return resp.getErrorCode() == 0;
+
+                    try{
+                        UshahidiApiResponse resp = GsonHelper.fromString(res, UshahidiApiResponse.class);				
+                        return resp.getErrorCode() == 0;
+                        
+                    } catch (JsonSyntaxException e) {
+                        log("JsonSyntaxException", e);
+                        return false;
+                    } 
+
 				}
 			}
 
@@ -212,10 +222,7 @@ public class ReportsHttpClient extends MainHttpClient {
 			log("IOException", e);
 			// timeout
 			return false;
-        } catch (JsonSyntaxException e) {
-			log("JsonSyntaxException", e);
-            return false;
-		} 
+        }
 		return false;
 	}
 }

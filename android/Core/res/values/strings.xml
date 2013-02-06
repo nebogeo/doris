@@ -205,7 +205,7 @@
     <string name="remove">Remove</string>
     <string name="delete_report">Delete report</string>
     <string name="want_to_delete">Are you sure you want to delete?</string>
-    <string name="failed">Failed</string>
+    <string name="failed">Failed to upload</string>
     <string name="connection_timeout">Connection time</string>
     <string name="unknown">Unknown</string>
     <string name="all_users">All Users</string>

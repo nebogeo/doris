@@ -27,17 +27,13 @@ public class CameraPreview extends SurfaceView implements
     public CameraPreview(Context context, Camera camera) {
         super(context);
         this.mCamera = camera;
-
         Log.i("DORIS","CameraPreview ctr");
-
         this.mSurfaceHolder = this.getHolder();
         this.mSurfaceHolder.addCallback(this);
         this.mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
-    @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        Log.i("DORIS","CameraPreview surface created");
+    private void startup(SurfaceHolder surfaceHolder) {
         if (mCamera!=null) {
             try {
                 mCamera.setPreviewDisplay(surfaceHolder);
@@ -48,16 +44,17 @@ public class CameraPreview extends SurfaceView implements
         }
     }
 
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        Log.i("DORIS","CameraPreview surface created");
+        mSurfaceHolder=surfaceHolder;
+        startup(surfaceHolder);
+    }
+
     public void attachCamera(Camera camera) {
         Log.i("DORIS","preview attachCamera");
-
         this.mCamera = camera;
-        try {
-            mCamera.setPreviewDisplay(mSurfaceHolder);
-            mCamera.startPreview();
-        } catch (IOException e) {
-            // left blank for now
-        }
+        startup(mSurfaceHolder);
     }
     
     public void detachCamera() {
@@ -69,7 +66,6 @@ public class CameraPreview extends SurfaceView implements
         }
     }
 
-
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         Log.i("DORIS","preview surfaceDestroyed");
@@ -80,12 +76,7 @@ public class CameraPreview extends SurfaceView implements
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format,
             int width, int height) {
         Log.i("DORIS","preview surfacechanged");
-        // start preview with new settings
-        try {
-            mCamera.setPreviewDisplay(surfaceHolder);
-            mCamera.startPreview();
-        } catch (Exception e) {
-            // intentionally left blank for a test
-        }
+        mSurfaceHolder=surfaceHolder;
+        startup(surfaceHolder);
     }
 }

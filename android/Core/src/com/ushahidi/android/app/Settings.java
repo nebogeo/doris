@@ -38,7 +38,7 @@ public class Settings extends PreferenceActivity implements
 
 	private EditTextPreference firstNamePref;
 
-	private EditTextPreference lastNamePref;
+//	private EditTextPreference lastNamePref;
 
 	private EditTextPreference emailAddressPref;
 
@@ -69,7 +69,7 @@ public class Settings extends PreferenceActivity implements
 
 		firstNamePref = new EditTextPreference(this);
 
-		lastNamePref = new EditTextPreference(this);
+//		lastNamePref = new EditTextPreference(this);
 
 		emailAddressPref = new EditTextPreference(this);
 
@@ -128,7 +128,7 @@ public class Settings extends PreferenceActivity implements
 		firstNamePref.getEditText().setInputType(
 				InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
 		basicPrefCat.addPreference(firstNamePref);
-
+/*
 		// Last name entry field
 		lastNamePref.setDialogTitle(R.string.txt_last_name);
 		lastNamePref.setKey("last_name_preference");
@@ -137,7 +137,7 @@ public class Settings extends PreferenceActivity implements
 		lastNamePref.getEditText().setInputType(
 				InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
 		basicPrefCat.addPreference(lastNamePref);
-
+*/
 		// Email name entry field
 		emailAddressPref.setDialogTitle(R.string.txt_email);
 		emailAddressPref.setKey("email_address_preference");
@@ -176,7 +176,7 @@ public class Settings extends PreferenceActivity implements
 
 		editor.putString("Domain", Preferences.domain);
 		editor.putString("Firstname", firstNamePref.getText());
-		editor.putString("Lastname", lastNamePref.getText());
+//		editor.putString("Lastname", lastNamePref.getText());
 		editor.putString("Email", emailAddressPref.getText());
 		editor.putString("Phonenumber", phoneNumberPref.getText());
 		editor.putString("TotalReports", totalReports);
