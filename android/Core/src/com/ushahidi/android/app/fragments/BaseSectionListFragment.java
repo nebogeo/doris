@@ -223,23 +223,31 @@ public abstract class BaseSectionListFragment<V extends View, M extends Model, L
 	}
 
 	protected void toastLong(String message) {
-		Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-	}
+        if (getActivity()!=null) {
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        }
+    }
 
 	protected void toastLong(int message) {
-		Toast.makeText(getActivity(), getText(message), Toast.LENGTH_LONG)
+        if (getActivity()!=null) {
+            Toast.makeText(getActivity(), getText(message), Toast.LENGTH_LONG)
 				.show();
-	}
-
+        }
+    }
+    
 	protected void toastShort(int message) {
-		Toast.makeText(getActivity(), getText(message), Toast.LENGTH_SHORT)
+        if (getActivity()!=null) {
+            Toast.makeText(getActivity(), getText(message), Toast.LENGTH_SHORT)
 				.show();
-	}
-
+        }
+    }
+    
 	protected void toastShort(CharSequence message) {
-		Toast.makeText(getActivity(), message.toString(), Toast.LENGTH_SHORT)
+        if (getActivity()!=null) {
+            Toast.makeText(getActivity(), message.toString(), Toast.LENGTH_SHORT)
 				.show();
-	}
+        }
+    }
 
 	@SuppressWarnings("unchecked")
 	protected <T> T createInstance(Class<?> type, Class<?> constructor,
