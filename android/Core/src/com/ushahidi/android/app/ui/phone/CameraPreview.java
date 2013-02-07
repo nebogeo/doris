@@ -20,8 +20,8 @@ import com.ushahidi.android.app.ui.phone.PictureTaker;
 
 public class CameraPreview extends SurfaceView implements
         SurfaceHolder.Callback {
-    private SurfaceHolder mSurfaceHolder;
 
+    private SurfaceHolder mSurfaceHolder;
     PictureTaker mPictureTaker;
 
     // Constructor that obtains context and camera
@@ -29,53 +29,22 @@ public class CameraPreview extends SurfaceView implements
     public CameraPreview(Context context, PictureTaker picturetaker) {
         super(context);
         mPictureTaker=picturetaker;
-
         Log.i("DORIS","CameraPreview ctr");
         this.mSurfaceHolder = this.getHolder();
         this.mSurfaceHolder.addCallback(this);
         this.mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
-    private void startup(SurfaceHolder surfaceHolder) {
-//        if (mCamera!=null) {
-//            try {
-//                mCamera.setPreviewDisplay(surfaceHolder);
-//                mCamera.startPreview();
-//            } catch (IOException e) {
-//                // left blank for now
-//            }
-//        }
-    }
-
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         Log.i("DORIS","CameraPreview surface created");
-
-        mPictureTaker.Startup(this);
-
         mSurfaceHolder=surfaceHolder;
-        startup(surfaceHolder);
-    }
-
-    public void attachCamera(Camera camera) {
-        Log.i("DORIS","preview attachCamera");
-//        this.mCamera = camera;
-        startup(mSurfaceHolder);
-    }
-    
-    public void detachCamera() {
-        Log.i("DORIS","preview detachCamera");
-/*        if (mCamera!=null) {
-            mCamera.stopPreview();
-            mCamera.release();
-            mCamera=null;
-            }*/
+        mPictureTaker.Startup(this);
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         Log.i("DORIS","preview surfaceDestroyed");
-        detachCamera();
     }
 
     @Override
@@ -83,6 +52,5 @@ public class CameraPreview extends SurfaceView implements
             int width, int height) {
         Log.i("DORIS","preview surfacechanged");
         mSurfaceHolder=surfaceHolder;
-        startup(surfaceHolder);
     }
 }
