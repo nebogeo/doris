@@ -21,6 +21,10 @@ class PictureTaker
         OpenCamera(view);
     }
 
+    public void Shutdown() {
+        CloseCamera();
+    }
+
     private void OpenCamera(SurfaceView view) {
         try {
             mCam = Camera.open();
@@ -38,9 +42,11 @@ class PictureTaker
     }
 
     private void CloseCamera() {
-        mCam.stopPreview();
-        mCam.release();
-        mCam = null;
+        if (mCam!=null) {
+            mCam.stopPreview();
+            mCam.release();
+            mCam = null;
+        }
     }
 
     public void TakePicture(SurfaceView view, PictureCallback picture)

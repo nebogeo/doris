@@ -88,13 +88,13 @@ public class Preferences {
 
 		domain = settings.getString("Domain", Preferences.domain);
 		fileName = settings.getString("FileName", "");
-		firstname = settings.getString("Firstname", "xxx");
+		firstname = settings.getString("Firstname", "Trip001");
 		lastname = settings.getString("Lastname", "");
 		email = settings.getString("Email", "");
 		countries = settings.getInt("Countries", 0);
 
-		LobsterId = settings.getString("LobsterId", "999");
-		StringId = settings.getString("StringId", "999");
+		LobsterId = settings.getString("LobsterId", "0");
+		StringId = settings.getString("StringId", "0");
 		AutoUpdateDelay = settings.getInt("AutoUpdateDelay", 5);
 		AutoFetch = settings.getBoolean("AutoFetch", false);
 		totalReports = settings.getString("TotalReports", "20");

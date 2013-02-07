@@ -625,17 +625,24 @@ public class ListReportFragment
 
 		// make sure it's an existing report
 		AddReportModel model = new AddReportModel();
-		UploadPhotoAdapter pendingPhoto = new UploadPhotoAdapter(getActivity());
-		if (reportId > 0) {
-			if (model.deleteReport(reportId)) {
-				// delete images
-				for (int i = 0; i < pendingPhoto.getCount(); i++) {
-					ImageManager.deletePendingPhoto(getActivity(), "/"
-							+ pendingPhoto.getItem(i).getPhoto());
-				}
-				// return to report listing page.
-			}
-		}
+        try {
+            UploadPhotoAdapter pendingPhoto = new UploadPhotoAdapter(getActivity());
+        
+            if (reportId > 0) {
+                if (model.deleteReport(reportId)) {
+                    // delete images
+                    for (int i = 0; i < pendingPhoto.getCount(); i++) {
+                        ImageManager.deletePendingPhoto(getActivity(), "/"
+                                                        + pendingPhoto.getItem(i).getPhoto());
+                    }
+                    // return to report listing page.
+                }
+            }
+        } catch (Exception e) {
+            Log.i("DORIS","deletePending report: caught "+e);
+            return;
+        } 
+
 	}
 
 	private void deleteFetchedReport() {

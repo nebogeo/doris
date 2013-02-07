@@ -213,12 +213,14 @@ public class AddReportActivity extends
 	@Override
 	protected void onPause() {
 		super.onPause();
+        mPictureTaker.Shutdown();
         Log.i("DORIS","onPause");
 	}
 
 	@Override
     protected void onStop() {
         super.onPause();
+        mPictureTaker.Shutdown();
         Log.i("DORIS","onStop");
      }
 
