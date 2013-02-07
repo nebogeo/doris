@@ -329,6 +329,12 @@ public class AddReportActivity extends
 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
 
+            // increment the id
+            int id=Integer.parseInt(Preferences.LobsterId);
+            id++;
+            Preferences.LobsterId=""+id;
+
+
             Log.i("DORIS","TAKING PICTURE -------->");
             mPictureTaker.TakePicture(mCameraPreview,mPicture);
             Log.i("DORIS","TAKEN PICTURE <--------");
@@ -337,11 +343,12 @@ public class AddReportActivity extends
         }
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
 
-            mPictureTaker.TakePicture(mCameraPreview,mPicture);
-
             int id=Integer.parseInt(Preferences.StringId);
             id++;
             Preferences.StringId=""+id;
+            Preferences.LobsterId="1";
+
+            mPictureTaker.TakePicture(mCameraPreview,mPicture);
 
             return true;
         }
@@ -1188,11 +1195,6 @@ public class AddReportActivity extends
 
             Log.i("DORIS","ON PICTURE TAKEN4");
 
-
-            // increment the id
-            int id=Integer.parseInt(Preferences.LobsterId);
-            id++;
-            Preferences.LobsterId=""+id;
             Preferences.saveSettings(AddReportActivity.this);
 
             // send immediately

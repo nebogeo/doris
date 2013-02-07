@@ -201,7 +201,7 @@ public class ListReportFragment
 	public void onResume() {
 		super.onResume();
 
-        mID.setText("Next ID: "+Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
+        mID.setText("Last ID: "+Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
 
 		if (filterCategory == 0) {
 			refreshReportLists();

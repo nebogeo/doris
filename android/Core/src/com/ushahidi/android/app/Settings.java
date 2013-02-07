@@ -131,7 +131,7 @@ public class Settings extends PreferenceActivity implements
 		firstNamePref.setSummary(R.string.hint_first_name);
 		firstNamePref.getEditText().setInputType(
 				InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-        firstNamePref.setText("boat");
+        firstNamePref.setText("Trip001");
 		basicPrefCat.addPreference(firstNamePref);
 
 		// First name entry field
