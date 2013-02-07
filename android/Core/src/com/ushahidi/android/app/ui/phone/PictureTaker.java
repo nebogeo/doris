@@ -10,38 +10,34 @@ import android.util.Log;
 class PictureTaker 
 {
     private Camera mCam;
+    private Boolean mTakingPicture;
 
-    public PictureTaker()
-    {
+    public PictureTaker() {
+        mTakingPicture=false;
     }
 
-    public void Startup(SurfaceView view)
-    {
+    public void Startup(SurfaceView view) {
+        mTakingPicture=false;
         OpenCamera(view);
     }
 
-    private void OpenCamera(SurfaceView view) 
-    {
-        try
-        {
+    private void OpenCamera(SurfaceView view) {
+        try {
             mCam = Camera.open();
-            if (mCam == null)
-            {
+            if (mCam == null) {
                 Log.i("DORIS","Camera is null!");
                 return;
             }
             mCam.setPreviewDisplay(view.getHolder());
             mCam.startPreview();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             Log.i("DORIS","Problem opening camera! " + e);
             return;
         }
     }
 
-    private void CloseCamera() 
-    {
+    private void CloseCamera() {
         mCam.stopPreview();
         mCam.release();
         mCam = null;
@@ -49,16 +45,20 @@ class PictureTaker
 
     public void TakePicture(SurfaceView view, PictureCallback picture)
     {
-        CloseCamera();
-        OpenCamera(view);
-
-        try
-        {
-            mCam.takePicture(null, null, picture);
+        if (!mTakingPicture) {
+            mTakingPicture=true;
+            CloseCamera();
+            OpenCamera(view);
+            
+            try {
+                mCam.takePicture(null, null, picture);
+            }
+            catch (Exception e) {
+                Log.i("DORIS","Problem taking picture: " + e);
+            }
         }
-        catch (Exception e)
-        {
-            Log.i("DORIS","Problem taking picture: " + e);
-        }
+        else {
+            Log.i("DORIS","Picture already being taken");
+        }   
     }
 }
