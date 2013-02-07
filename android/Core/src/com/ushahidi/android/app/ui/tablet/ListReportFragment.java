@@ -201,9 +201,7 @@ public class ListReportFragment
 	public void onResume() {
 		super.onResume();
 
-        if (Preferences.LobsterId==0 &&
-            Preferences.StringId==1) mID.setText("Last photo ID: No ID yet");
-        else mID.setText("Last photo ID: "+Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
+        mID.setText("Next ID: "+Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
 
 		if (filterCategory == 0) {
 			refreshReportLists();
@@ -590,7 +588,11 @@ public class ListReportFragment
 				mParams.put("incident_minute", time[1]);
 				mParams.put("incident_ampm", dates[2].toLowerCase());
 
-				mParams.put("incident_category", report.getCategories());
+// problem...
+                Log.i("DORIS","categories hack");
+//				mParams.put("incident_category", report.getCategories());
+				mParams.put("incident_category", "1");                
+
 				mParams.put("latitude", report.getLatitude());
 				mParams.put("longitude", report.getLongitude());
 				mParams.put("location_name", report.getLocation());

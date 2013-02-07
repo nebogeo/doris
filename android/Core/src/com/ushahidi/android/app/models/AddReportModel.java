@@ -22,6 +22,7 @@ package com.ushahidi.android.app.models;
 import java.io.File;
 import java.util.List;
 import java.util.Vector;
+import android.util.Log;
 
 import com.ushahidi.android.app.database.Database;
 import com.ushahidi.android.app.database.IMediaSchema;
@@ -41,6 +42,9 @@ public class AddReportModel extends Model {
 			File[] pendingPhotos, String news) {
 		boolean status;
 		// add pending reports
+
+        Log.i("DORIS","add pending report");
+
 		status = Database.mReportDao.addReport(report);
 		int id = Database.mReportDao.fetchPendingReportIdByDate(report
 				.getReportDate());
@@ -49,6 +53,7 @@ public class AddReportModel extends Model {
 		if (status) {
 			if (category != null && category.size() > 0) {
 				for (String cat : category) {
+                    Log.i("DORIS","adding category "+cat+" to model");
 					ReportCategory reportCategory = new ReportCategory();
 					reportCategory.setCategoryId(Util.toInt(cat));
 					reportCategory.setReportId(id);
@@ -97,6 +102,8 @@ public class AddReportModel extends Model {
 		// update pending reports
 		status = Database.mReportDao.updatePendingReport(reportId, report);
 
+        Log.i("DORIS","update pending report");
+
 		// update category
 		if (status) {
 			if (category != null && category.size() > 0) {
@@ -105,6 +112,8 @@ public class AddReportModel extends Model {
 						.deleteReportCategoryByReportId(reportId);
 
 				for (String cat : category) {
+                    Log.i("DORIS","adding category "+cat+" to model");
+
 					ReportCategory reportCategory = new ReportCategory();
 					reportCategory.setCategoryId(Util.toInt(cat));
 					reportCategory.setReportId(reportId);

@@ -16,17 +16,20 @@ import java.io.IOException;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.content.Context;
+import com.ushahidi.android.app.ui.phone.PictureTaker;
 
 public class CameraPreview extends SurfaceView implements
         SurfaceHolder.Callback {
     private SurfaceHolder mSurfaceHolder;
-    private Camera mCamera;
+
+    PictureTaker mPictureTaker;
 
     // Constructor that obtains context and camera
     @SuppressWarnings("deprecation")
-    public CameraPreview(Context context, Camera camera) {
+    public CameraPreview(Context context, PictureTaker picturetaker) {
         super(context);
-        this.mCamera = camera;
+        mPictureTaker=picturetaker;
+
         Log.i("DORIS","CameraPreview ctr");
         this.mSurfaceHolder = this.getHolder();
         this.mSurfaceHolder.addCallback(this);
@@ -34,36 +37,39 @@ public class CameraPreview extends SurfaceView implements
     }
 
     private void startup(SurfaceHolder surfaceHolder) {
-        if (mCamera!=null) {
-            try {
-                mCamera.setPreviewDisplay(surfaceHolder);
-                mCamera.startPreview();
-            } catch (IOException e) {
-                // left blank for now
-            }
-        }
+//        if (mCamera!=null) {
+//            try {
+//                mCamera.setPreviewDisplay(surfaceHolder);
+//                mCamera.startPreview();
+//            } catch (IOException e) {
+//                // left blank for now
+//            }
+//        }
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         Log.i("DORIS","CameraPreview surface created");
+
+        mPictureTaker.Startup(this);
+
         mSurfaceHolder=surfaceHolder;
         startup(surfaceHolder);
     }
 
     public void attachCamera(Camera camera) {
         Log.i("DORIS","preview attachCamera");
-        this.mCamera = camera;
+//        this.mCamera = camera;
         startup(mSurfaceHolder);
     }
     
     public void detachCamera() {
         Log.i("DORIS","preview detachCamera");
-        if (mCamera!=null) {
+/*        if (mCamera!=null) {
             mCamera.stopPreview();
             mCamera.release();
             mCamera=null;
-        }
+            }*/
     }
 
     @Override

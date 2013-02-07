@@ -1,0 +1,64 @@
+package com.ushahidi.android.app.ui.phone;
+
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.PictureCallback;
+import android.util.Log;
+
+class PictureTaker 
+{
+    private Camera mCam;
+
+    public PictureTaker()
+    {
+    }
+
+    public void Startup(SurfaceView view)
+    {
+        OpenCamera(view);
+    }
+
+    private void OpenCamera(SurfaceView view) 
+    {
+        try
+        {
+            mCam = Camera.open();
+            if (mCam == null)
+            {
+                Log.i("DORIS","Camera is null!");
+                return;
+            }
+            mCam.setPreviewDisplay(view.getHolder());
+            mCam.startPreview();
+        }
+        catch (Exception e)
+        {
+            Log.i("DORIS","Problem opening camera! " + e);
+            return;
+        }
+    }
+
+    private void CloseCamera() 
+    {
+        mCam.stopPreview();
+        mCam.release();
+        mCam = null;
+    }
+
+    public void TakePicture(SurfaceView view, PictureCallback picture)
+    {
+        CloseCamera();
+        OpenCamera(view);
+
+        try
+        {
+            mCam.takePicture(null, null, picture);
+        }
+        catch (Exception e)
+        {
+            Log.i("DORIS","Problem taking picture: " + e);
+        }
+    }
+}

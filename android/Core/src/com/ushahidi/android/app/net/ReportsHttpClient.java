@@ -176,15 +176,23 @@ public class ReportsHttpClient extends MainHttpClient {
 					}
 				}
 
+                Log.i("DORIS","1");
+
 				// NEED THIS NOW TO FIX ERROR 417
 				httpost.getParams().setBooleanParameter(
 						"http.protocol.expect-continue", false);
+
+                Log.i("DORIS","2");
+
 				httpost.setEntity(entity);
 
+                Log.i("DORIS","3");
 				HttpResponse response = httpClient.execute(httpost);
+                Log.i("DORIS","4");
 
 				Preferences.httpRunning = false;				
                 HttpEntity respEntity = response.getEntity();
+                Log.i("DORIS","5");
 
                 String res = EntityUtils.toString(respEntity);
                 Log.i("DORIS",res);

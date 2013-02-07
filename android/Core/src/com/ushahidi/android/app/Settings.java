@@ -40,13 +40,17 @@ public class Settings extends PreferenceActivity implements
 
 //	private EditTextPreference lastNamePref;
 
-	private EditTextPreference emailAddressPref;
+//	private EditTextPreference emailAddressPref;
 
 	private EditTextPreference phoneNumberPref;
 
 	private ListPreference totalReportsPref;
 
 	private SeekBarPreference photoSizePref;
+
+	public EditTextPreference lobsterIdPref;
+
+	public EditTextPreference stringIdPref;
 
 	private SharedPreferences settings;
 
@@ -69,9 +73,9 @@ public class Settings extends PreferenceActivity implements
 
 		firstNamePref = new EditTextPreference(this);
 
-//		lastNamePref = new EditTextPreference(this);
+		stringIdPref = new EditTextPreference(this);
 
-		emailAddressPref = new EditTextPreference(this);
+		lobsterIdPref = new EditTextPreference(this);
 
 		phoneNumberPref = new EditTextPreference(this);
 
@@ -127,7 +131,29 @@ public class Settings extends PreferenceActivity implements
 		firstNamePref.setSummary(R.string.hint_first_name);
 		firstNamePref.getEditText().setInputType(
 				InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        firstNamePref.setText("boat");
 		basicPrefCat.addPreference(firstNamePref);
+
+		// First name entry field
+		lobsterIdPref.setDialogTitle(R.string.txt_lobster_id);
+		lobsterIdPref.setKey("lobster_id_preference");
+		lobsterIdPref.setTitle(R.string.txt_lobster_id);
+		lobsterIdPref.setSummary(R.string.hint_lobster_id);
+		lobsterIdPref.getEditText().setInputType(
+				InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        lobsterIdPref.setText("1");
+		basicPrefCat.addPreference(lobsterIdPref);
+
+		// First name entry field
+		stringIdPref.setDialogTitle(R.string.txt_string_id);
+		stringIdPref.setKey("string_id_preference");
+		stringIdPref.setTitle(R.string.txt_string_id);
+		stringIdPref.setSummary(R.string.hint_string_id);
+		stringIdPref.getEditText().setInputType(
+            InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        stringIdPref.setText("1");
+		basicPrefCat.addPreference(stringIdPref);
+
 /*
 		// Last name entry field
 		lastNamePref.setDialogTitle(R.string.txt_last_name);
@@ -138,7 +164,7 @@ public class Settings extends PreferenceActivity implements
 				InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
 		basicPrefCat.addPreference(lastNamePref);
 */
-		// Email name entry field
+/*		// Email name entry field
 		emailAddressPref.setDialogTitle(R.string.txt_email);
 		emailAddressPref.setKey("email_address_preference");
 		emailAddressPref.setTitle(R.string.txt_email);
@@ -146,7 +172,7 @@ public class Settings extends PreferenceActivity implements
 		emailAddressPref.getEditText().setInputType(
 				InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 		basicPrefCat.addPreference(emailAddressPref);
-
+*/
 		// phone number entry field
 		phoneNumberPref.setDialogTitle(R.string.txt_phonenumber);
 		phoneNumberPref.setKey("phone_number_preference");
@@ -176,8 +202,10 @@ public class Settings extends PreferenceActivity implements
 
 		editor.putString("Domain", Preferences.domain);
 		editor.putString("Firstname", firstNamePref.getText());
+		editor.putString("LobsterId", lobsterIdPref.getText());
+		editor.putString("StringId", stringIdPref.getText());
 //		editor.putString("Lastname", lastNamePref.getText());
-		editor.putString("Email", emailAddressPref.getText());
+//		editor.putString("Email", emailAddressPref.getText());
 		editor.putString("Phonenumber", phoneNumberPref.getText());
 		editor.putString("TotalReports", totalReports);
 		editor.putInt("CheckinEnabled", Preferences.isCheckinEnabled);
@@ -217,7 +245,7 @@ public class Settings extends PreferenceActivity implements
 
 			}
 		}
-
+/*
 		// validate email address
 		if (key.equals(EMAIL_ADDRESS_PREFERENCE)) {
 			if (!Util.validateEmail(sharedPreferences.getString(
@@ -225,7 +253,7 @@ public class Settings extends PreferenceActivity implements
 				Util.showToast(this, R.string.invalid_email_address);
 			}
 		}
-
+*/
 		// save changes
 		this.saveSettings();
 

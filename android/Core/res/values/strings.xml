@@ -185,7 +185,7 @@
     <string name="search_maps">Search maps...</string>
     <string name="pending_upload">Pending Upload</string>
     <string name="fetched">Fetched</string>
-    <string name="required_fields">Required Fields</string>
+    <string name="required_fields">Missing info</string>
     <string name="title">Title</string>
     <string name="category">Category</string>
     <string name="location">Location</string>
@@ -238,8 +238,12 @@
     <string name="location_disabled">Location detection disabled</string>
     <string name="location_reenable">Would you like to visit Location &amp; Security settings to re-enable location detection?</string>
     <string name="basic_settings">Basic settings</string>
-    <string name="txt_first_name">First name</string>
-    <string name="hint_first_name">For attribution when submitting a report (optional).</string>
+    <string name="txt_first_name">Trip name/ID</string>
+    <string name="hint_first_name">Prepended onto the ID.</string>
+    <string name="txt_lobster_id">Lobster ID</string>
+    <string name="hint_lobster_id">Used per-lobster</string>
+    <string name="txt_string_id">String ID</string>
+    <string name="hint_string_id">Used per-string</string>
     <string name="txt_last_name">Last name</string>
     <string name="hint_last_name">Also for attribution when submitting a report (optional).</string>
     <string name="txt_email">E-mail address</string>

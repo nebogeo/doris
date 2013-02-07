@@ -32,9 +32,9 @@ public class ListFetchedReportAdapter extends BaseListAdapter<ListReportModel>
 //			this.id = (TextView) view.findViewById(R.id.report_id);
 			this.date = (TextView) view.findViewById(R.id.report_date);
 //			this.iLocation = (TextView) view.findViewById(R.id.report_location);
-			this.categories = (TextView) view
-					.findViewById(R.id.report_categories);
-			this.status = (TextView) view.findViewById(R.id.report_status);
+//			this.categories = (TextView) view
+//					.findViewById(R.id.report_categories);
+//			this.status = (TextView) view.findViewById(R.id.report_status);
 			this.arrow = (ImageView) view.findViewById(R.id.report_arrow);
 		}
 
@@ -46,9 +46,9 @@ public class ListFetchedReportAdapter extends BaseListAdapter<ListReportModel>
 
 		TextView date;
 
-		TextView status;
+//		TextView status;
 
-		TextView categories;
+//		TextView categories;
 
 //		TextView description;
 
@@ -108,19 +108,20 @@ public class ListFetchedReportAdapter extends BaseListAdapter<ListReportModel>
 
 	public String fetchCategories(int reportId) {
 		StringBuilder categories = new StringBuilder();
-		for (Category category : mListReportModel
+		/*for (Category category : mListReportModel
 				.getCategoriesByReportId(reportId)) {
 			if (category.getCategoryTitle().length() > 0) {
 				categories.append(category.getCategoryTitle() + " |");
 			}
 
-		}
+        }
 
 		// delete the last |
 		if (categories.length() > 0) {
 			categories.deleteCharAt(categories.length() - 1);
 		}
-		return categories.toString();
+		return categories.toString(); */
+        return "";
 	}
 
 	public View getView(int position, View view, ViewGroup viewGroup) {
@@ -154,13 +155,13 @@ public class ListFetchedReportAdapter extends BaseListAdapter<ListReportModel>
 //				.getDesc()));
 
 		// FIXME: do this properly.
-		widgets.categories.setText(Util.capitalizeString(Util.limitString(
-				fetchCategories((int) getItem(position).getReportId()), 100)));
+//		widgets.categories.setText(Util.capitalizeString(Util.limitString(
+//				fetchCategories((int) getItem(position).getReportId()), 100)));
 //		widgets.iLocation.setText(Util.capitalizeString(getItem(position)
 //				.getLocation()));
 		// change the status color
 
-		if (getItem(position).getStatus().equalsIgnoreCase(
+/*		if (getItem(position).getStatus().equalsIgnoreCase(
 				context.getString(R.string.verified))) {
 			widgets.status.setTextColor(context.getResources().getColor(
 					R.color.verified_text_color)); // green
@@ -171,7 +172,7 @@ public class ListFetchedReportAdapter extends BaseListAdapter<ListReportModel>
 
 		widgets.status.setText(Util.capitalizeString(getItem(position)
 				.getStatus()));
-
+*/
 		widgets.arrow.setImageDrawable(getItem(position).getArrow());
 
 		return row;

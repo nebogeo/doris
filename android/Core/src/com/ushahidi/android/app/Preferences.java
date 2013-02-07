@@ -4,6 +4,7 @@ import java.io.File;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class Preferences {
 	public static boolean httpRunning = false;
@@ -20,9 +21,9 @@ public class Preferences {
 
 	public static int AutoUpdateDelay = 0;
 
-	public static int LobsterId = 0;
+	public static String LobsterId = "0";
 
-	public static int StringId = 1;
+	public static String StringId = "1";
 
 	public static final int NOTIFICATION_ID = 1;
 
@@ -87,12 +88,13 @@ public class Preferences {
 
 		domain = settings.getString("Domain", Preferences.domain);
 		fileName = settings.getString("FileName", "");
-		firstname = settings.getString("Firstname", "boat");
+		firstname = settings.getString("Firstname", "xxx");
 		lastname = settings.getString("Lastname", "");
 		email = settings.getString("Email", "");
 		countries = settings.getInt("Countries", 0);
-		LobsterId = settings.getInt("LobsterId", 0);
-		StringId = settings.getInt("StringId", 1);
+
+		LobsterId = settings.getString("LobsterId", "999");
+		StringId = settings.getString("StringId", "999");
 		AutoUpdateDelay = settings.getInt("AutoUpdateDelay", 5);
 		AutoFetch = settings.getBoolean("AutoFetch", false);
 		totalReports = settings.getString("TotalReports", "20");
@@ -144,8 +146,8 @@ public class Preferences {
 		editor.putInt("SelectedDistance", selectedDistance);
 		editor.putString("Phonenumber", phonenumber);
 		editor.putString("OgsPluginVersion", ogsPluginVersion);
-		editor.putInt("LobsterId", LobsterId);
-		editor.putInt("StringId", StringId);
+		editor.putString("LobsterId", LobsterId);
+		editor.putString("StringId", StringId);
 		editor.commit();
 	}
 }

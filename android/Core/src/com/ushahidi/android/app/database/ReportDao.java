@@ -374,11 +374,6 @@ public class ReportDao extends DbContentProvider implements IReportDao,
                 Log.i("DORIS",cursor.getString(imageIndex));
 
 			}
-            else
-            {
-                Log.i("DORIS","no image");
-
-            }
 
 			if (cursor.getColumnIndex(INCIDENT_LOC_LATITUDE) != -1) {
 				latitudeIndex = cursor

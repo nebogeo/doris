@@ -74,7 +74,7 @@
         android:layout_toRightOf="@+id/report_thumbnail"
         android:paddingLeft="3dip"
         android:textColor="@color/gray_color" />
-
+<!--
     <TextView
         android:id="@+id/report_categories"
         android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
         android:paddingLeft="3dip"
         android:textStyle="bold"
         android:textColor="@color/verified_text_color" />
-
+-->
     <ImageView
         android:id="@+id/report_arrow"
         android:layout_width="wrap_content"
