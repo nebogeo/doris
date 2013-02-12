@@ -137,6 +137,9 @@ public class AddReportActivity extends
     private String mLatitude;
     private String mLongitude;
 
+    private long mStartTime=0;
+    private Boolean mKeyPressed=false;
+
 	public AddReportActivity() {
 		super(AddReportView.class, R.layout.add_report, R.menu.add_report,
 				R.id.location_map);
@@ -317,6 +320,13 @@ public class AddReportActivity extends
     { 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || 
             keyCode == KeyEvent.KEYCODE_VOLUME_UP) { 
+
+            if (!mKeyPressed) {
+                Log.i("DORIS","keydown");
+                mKeyPressed = true;
+                mStartTime = System.currentTimeMillis();
+            }
+
             return true;
         } else {
             return super.onKeyDown(keyCode, event); 
@@ -326,30 +336,35 @@ public class AddReportActivity extends
 	@Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP || 
+            keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
 
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            if (!mPictureTaker.mTakingPicture && mKeyPressed) {
 
-            // increment the id
-            int id=Integer.parseInt(Preferences.LobsterId);
-            id++;
-            Preferences.LobsterId=""+id;
+                mKeyPressed=false;
+                long elapsed = System.currentTimeMillis() - mStartTime;
 
+                Log.i("DORIS","elapsed:"+elapsed);
 
-            Log.i("DORIS","TAKING PICTURE -------->");
-            mPictureTaker.TakePicture(mCameraPreview,mPicture);
-            Log.i("DORIS","TAKEN PICTURE <--------");
-
-            return true;
-        }
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-
-            int id=Integer.parseInt(Preferences.StringId);
-            id++;
-            Preferences.StringId=""+id;
-            Preferences.LobsterId="1";
-
-            mPictureTaker.TakePicture(mCameraPreview,mPicture);
-
+                if (elapsed>1000) {
+                    // increment string id
+                    int id=Integer.parseInt(Preferences.StringId);
+                    id++;
+                    Preferences.StringId=""+id;
+                    Preferences.LobsterId="1";
+                } 
+                else
+                {
+                    // increment the lobster id
+                    int id=Integer.parseInt(Preferences.LobsterId);
+                    id++;
+                    Preferences.LobsterId=""+id;
+                }
+   
+                Log.i("DORIS","TAKING PICTURE -------->");
+                mPictureTaker.TakePicture(mCameraPreview,mPicture);
+                Log.i("DORIS","TAKEN PICTURE <--------");
+            }
             return true;
         }
         return false;

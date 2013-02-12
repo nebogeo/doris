@@ -233,9 +233,10 @@ public class PhotoUtils {
 
 		if (options != null) {
 			float ratio = (float) options.outHeight / (float) options.outWidth;
-			int width = Preferences.photoWidth > 0 ? Preferences.photoWidth
-					: 500;
-			new Util().log("Scaling image to " + width + " x " + ratio);
+			//int width = Preferences.photoWidth > 0 ? Preferences.photoWidth
+			//		: 500;
+            int width = 200;//options.outWidth;
+			new Util().log("1 Scaling image to " + width + " x " + ratio);
 			options.inSampleSize = calculateInSampleSize(options, width,
 					(int) (width * ratio));
 			options.inJustDecodeBounds = false;
@@ -254,7 +255,7 @@ public class PhotoUtils {
 		if (options != null) {
 			float ratio = (float) options.outHeight / (float) options.outWidth;
 
-			new Util().log("Scaling image to " + width + " x " + ratio);
+			new Util().log("2 Scaling image to " + width + " x " + ratio);
 			int w = width > 0 ? width : 500;
 			// calculate inSampleSize
 			options.inSampleSize = calculateInSampleSize(options, w,

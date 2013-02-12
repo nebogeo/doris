@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/incident_next_id" 
-        android:textSize="20dip"
+        android:textSize="40dip"
         style="@style/TextView.Title"
         android:text="Last photo ID: No ID yet" />
 

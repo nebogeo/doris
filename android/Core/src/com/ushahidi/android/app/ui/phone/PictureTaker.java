@@ -10,7 +10,7 @@ import android.util.Log;
 class PictureTaker 
 {
     private Camera mCam;
-    private Boolean mTakingPicture;
+    public Boolean mTakingPicture;
 
     public PictureTaker() {
         mTakingPicture=false;

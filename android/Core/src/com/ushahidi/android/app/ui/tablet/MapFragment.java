@@ -385,7 +385,7 @@ public class MapFragment<ReportMapItemOverlay> extends BaseFragment {
 				// check if there is internet
 				if (apiUtils.isConnected()) {
 					// delete everything before updating with a new one
-					deleteFetchedReport();
+					//deleteFetchedReport();
 
 					// fetch categories -- assuming everything will go just
 					// right!

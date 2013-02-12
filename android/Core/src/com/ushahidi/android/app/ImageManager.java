@@ -34,7 +34,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
-
+import android.util.Log;
 import com.ushahidi.android.app.net.MainHttpClient;
 import com.ushahidi.android.app.util.PhotoUtils;
 
@@ -53,6 +53,8 @@ public class ImageManager {
 
 		if (options != null) {
 			// scale image
+            Log.i("DORIS","getDrawables");
+
 			Bitmap scaled = PhotoUtils.scaleBitmap(options,
 					getPhotoPath(context) + fileName);
 			return new BitmapDrawable(scaled);
@@ -62,12 +64,16 @@ public class ImageManager {
 	}
 
 	public static Bitmap getBitmaps(Context context, String fileName) {
+        Log.i("DORIS","getBitmaps");
 
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(getPhotoPath(context) + fileName, options);
 		if (options != null) {
 			// scale image
+            options.outWidth=200;
+            options.outHeight=150;
+            Log.i("DORIS","check");
 			return PhotoUtils.scaleBitmap(options, getPhotoPath(context)
 					+ fileName);
 		}
@@ -83,6 +89,7 @@ public class ImageManager {
 	 * @return
 	 */
 	public static Drawable getDrawables2(Context context, String pathfileName) {
+        Log.i("DORIS","getDrawables2");
 
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -102,6 +109,7 @@ public class ImageManager {
 
 	public static Drawable getDrawables(Context context, String fileName,
 			int width) {
+        Log.i("DORIS","getDrawables3");
 
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -118,6 +126,7 @@ public class ImageManager {
 	}
 
 	public static Bitmap getBitmaps(Context context, String fileName, int width) {
+        Log.i("DORIS","getBitmaps2");
 
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -133,6 +142,7 @@ public class ImageManager {
 	}
 
 	public static Drawable getPendingDrawables(Context context, String fileName) {
+        Log.i("DORIS","getPendingDrawables");
 
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -149,6 +159,8 @@ public class ImageManager {
 
 	public static Drawable getPendingDrawables(Context context,
 			String fileName, int width) {
+        Log.i("DORIS","getPendingDrawables2");
+
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(getPhotoPath(context) + fileName, options);

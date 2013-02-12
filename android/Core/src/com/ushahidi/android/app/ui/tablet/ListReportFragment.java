@@ -201,7 +201,7 @@ public class ListReportFragment
 	public void onResume() {
 		super.onResume();
 
-        mID.setText("Last ID: "+Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
+        mID.setText(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
 
 		if (filterCategory == 0) {
 			refreshReportLists();
@@ -212,12 +212,13 @@ public class ListReportFragment
 		}
 
 		// upload pending report
-		executeUploadTask();
+//		executeUploadTask();
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
+        mID.setText(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
 	}
 
 	@Override
@@ -325,17 +326,19 @@ public class ListReportFragment
 
 		pendingReportAdapter.refresh();
 		fetchedReportAdapter.refresh();
-		adapter = new ListReportAdapter(getActivity());
-		if (!pendingReportAdapter.isEmpty()) {
-			adapter.addView(pendingHeader());
-			adapter.addAdapter(pendingReportAdapter);
-			// add fetched report
-			adapter.addView(fetchedHeader());
-			adapter.addAdapter(fetchedReportAdapter);
-		} else {
-			adapter.addAdapter(fetchedReportAdapter);
-		}
-		listView.setAdapter(adapter);
+        if (getActivity()!=null) {
+            adapter = new ListReportAdapter(getActivity());
+            if (!pendingReportAdapter.isEmpty()) {
+                adapter.addView(pendingHeader());
+                adapter.addAdapter(pendingReportAdapter);
+                // add fetched report
+                adapter.addView(fetchedHeader());
+                adapter.addAdapter(fetchedReportAdapter);
+            } else {
+                adapter.addAdapter(fetchedReportAdapter);
+            }
+            listView.setAdapter(adapter);
+        }
 	}
 
 	private void filterReportList() {
@@ -561,9 +564,12 @@ public class ListReportFragment
 		String time[];
 		StringBuilder urlBuilder = new StringBuilder(Preferences.domain);
 		urlBuilder.append("/api");
-		if (mPendingReports != null) {
+        Log.i("DORIS","uploadPendingReports");
+
+		if (mPendingReports != null && getActivity()!=null) {
 			for (ListReportModel report : mPendingReports) {
-				long rid = report.getId();
+                Log.i("DORIS","uploading a report");
+                long rid = report.getId();
 				int state = Database.mOpenGeoSmsDao.getReportState(rid);
 				if (state != IOpenGeoSmsSchema.STATE_NOT_OPENGEOSMS ){
 					if ( !sendOpenGeoSmsReport(report, state)){
@@ -681,10 +687,8 @@ public class ListReportFragment
 
 		@Override
 		protected Boolean doInBackground(String... args) {
-
 			// delete pending reports
 			return uploadPendingReports();
-
 		}
 
 		@Override
@@ -696,7 +700,7 @@ public class ListReportFragment
 				toastLong(R.string.failed);
 			}
 			refreshReportLists();
-			showCategories();
+			showCategories(); 
 		}
 	}
 
@@ -717,6 +721,12 @@ public class ListReportFragment
 		protected void onPreExecute() {
 			super.onPreExecute();
 			dialog.cancel();
+
+            Log.i("DORIS","uploading");
+
+            // upload pending report
+            executeUploadTask();
+
 			refreshState = true;
 			updateRefreshStatus();
 		}
@@ -732,7 +742,7 @@ public class ListReportFragment
 					}
 
 					// delete everything before updating with a new one
-					deleteFetchedReport();
+					//deleteFetchedReport();
 
 					// fetch categories -- assuming everything will go just
 					// right!
@@ -742,15 +752,13 @@ public class ListReportFragment
 					status = new ReportsHttpClient(getActivity())
 							.getAllReportFromWeb();
 					return true;
-				}
-
+				}                
 				Thread.sleep(1000);
 				return false;
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				return false;
 			}
-
 		}
 
 		@Override

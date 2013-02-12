@@ -78,15 +78,18 @@ public class ReportTabActivity extends FragmentMapActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP ||
-            keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP 
+            || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
+            ) {
             Intent intent = new Intent(this,AddReportActivity.class);            
             startActivityForResult(intent, 2);
             overridePendingTransition(R.anim.home_enter,
                                       R.anim.home_exit);
             return true;
         }
-        return false;
+        else {
+            return super.onKeyUp(keyCode, event); 
+        }
     }
 
     @Override
