@@ -68,8 +68,8 @@ public class ReportTabActivity extends FragmentMapActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) 
     { 
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || 
-            keyCode == KeyEvent.KEYCODE_VOLUME_UP) { 
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN  
+            /*keyCode == KeyEvent.KEYCODE_VOLUME_UP*/) { 
             return true;
         } else {
             return super.onKeyDown(keyCode, event); 
@@ -78,8 +78,8 @@ public class ReportTabActivity extends FragmentMapActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP 
-            || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
+        if (//keyCode == KeyEvent.KEYCODE_VOLUME_UP ||
+            keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
             ) {
             Intent intent = new Intent(this,AddReportActivity.class);            
             startActivityForResult(intent, 2);

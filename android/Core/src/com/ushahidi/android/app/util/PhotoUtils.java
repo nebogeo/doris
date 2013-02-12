@@ -99,6 +99,14 @@ public class PhotoUtils {
 		return Uri.fromFile(new File(path, filename));
 	}
 
+	public static Uri getIDUri(String filename) {
+		File path = new File(Environment.getExternalStorageDirectory(),
+				"com.ushahidi.android.app/" + "IDS");
+		if (!path.exists() && path.mkdir()) {
+			return Uri.fromFile(new File(path, filename));
+		}
+		return Uri.fromFile(new File(path, filename));
+	}
 
 	public static Uri getPhotoUri(String filename, Activity activity) {
 		File path = new File(Environment.getExternalStorageDirectory(),

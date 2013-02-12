@@ -146,8 +146,8 @@ public class Preferences {
 		editor.putInt("SelectedDistance", selectedDistance);
 		editor.putString("Phonenumber", phonenumber);
 		editor.putString("OgsPluginVersion", ogsPluginVersion);
-		editor.putString("LobsterId", LobsterId);
-		editor.putString("StringId", StringId);
+//		editor.putString("LobsterId", LobsterId);
+//		editor.putString("StringId", StringId);
 		editor.commit();
 	}
 }

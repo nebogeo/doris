@@ -201,7 +201,7 @@ public class ListReportFragment
 	public void onResume() {
 		super.onResume();
 
-        mID.setText(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
+        mID.setText(AddReportActivity.GetIDString());
 
 		if (filterCategory == 0) {
 			refreshReportLists();
@@ -218,7 +218,7 @@ public class ListReportFragment
 	@Override
 	public void onStart() {
 		super.onStart();
-        mID.setText(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
+        mID.setText(AddReportActivity.GetIDString());
 	}
 
 	@Override

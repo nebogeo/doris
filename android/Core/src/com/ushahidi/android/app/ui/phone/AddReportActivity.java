@@ -69,6 +69,7 @@ import android.widget.ViewSwitcher;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.net.URI;
@@ -159,7 +160,7 @@ public class AddReportActivity extends
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mCameraPreview);
 
-        Button captureButton = (Button) findViewById(R.id.button_capture);
+/*        Button captureButton = (Button) findViewById(R.id.button_capture);
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,8 +174,8 @@ public class AddReportActivity extends
                 Intent intent = new Intent(
                     android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
-/*            Intent intent = new Intent(AddReportActivity.this,
-              DorisCameraActivity.class);*/
+//            Intent intent = new Intent(AddReportActivity.this,
+//              DorisCameraActivity.class);
                 
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, PhotoUtils
                                 .getPhotoUri(photoName,
@@ -183,7 +184,7 @@ public class AddReportActivity extends
                 //dialog.dismiss();
             }
         });
-
+*/
 
 		mCalendar = Calendar.getInstance();
 		pendingPhoto = new UploadPhotoAdapter(this);
@@ -318,8 +319,9 @@ public class AddReportActivity extends
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) 
     { 
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || 
-            keyCode == KeyEvent.KEYCODE_VOLUME_UP) { 
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN //|| 
+            //keyCode == KeyEvent.KEYCODE_VOLUME_UP
+            ) { 
 
             if (!mKeyPressed) {
                 Log.i("DORIS","keydown");
@@ -336,7 +338,7 @@ public class AddReportActivity extends
 	@Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP || 
+        if (//keyCode == KeyEvent.KEYCODE_VOLUME_UP || 
             keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
 
             if (!mPictureTaker.mTakingPicture && mKeyPressed) {
@@ -348,17 +350,20 @@ public class AddReportActivity extends
 
                 if (elapsed>1000) {
                     // increment string id
-                    int id=Integer.parseInt(Preferences.StringId);
+                    IncString();
+/*                    int id=Integer.parseInt(Preferences.StringId);
                     id++;
                     Preferences.StringId=""+id;
-                    Preferences.LobsterId="1";
+                    Preferences.LobsterId="1";*/
                 } 
                 else
                 {
                     // increment the lobster id
-                    int id=Integer.parseInt(Preferences.LobsterId);
+                    IncLobster();
+
+/*                    int id=Integer.parseInt(Preferences.LobsterId);
                     id++;
-                    Preferences.LobsterId=""+id;
+                    Preferences.LobsterId=""+id;*/
                 }
    
                 Log.i("DORIS","TAKING PICTURE -------->");
@@ -493,7 +498,7 @@ public class AddReportActivity extends
 		Report report = new Report();
 
         // build title from id numbers
-        report.setTitle(Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId);
+        report.setTitle(GetIDString());
         report.setDescription("no description");
         report.setLatitude(mLatitude);
         report.setLongitude(mLongitude);
@@ -1193,7 +1198,7 @@ public class AddReportActivity extends
             Log.i("DORIS","ON PICTURE TAKEN2");
 
             String bakdata=
-                Preferences.firstname+"-"+Preferences.StringId+"-"+Preferences.LobsterId+"\n"+
+                GetIDString()+
                 mLatitude+"\n"+
                 mLongitude+"\n"+
                 datetime;
@@ -1222,7 +1227,56 @@ public class AddReportActivity extends
         }    };
 
 
-    private void SaveData(Uri uri, byte[] data) {
+    static public String GetIDString() {
+        Uri LobsterUri = PhotoUtils.getIDUri("Lobster.txt");
+        Uri StringUri = PhotoUtils.getIDUri("String.txt");
+
+        return Preferences.firstname+"-"+GetID(LobsterUri)+"-"+GetID(StringUri);
+    }
+
+    static private void IncLobster() {
+        Uri LobsterUri = PhotoUtils.getIDUri("Lobster.txt");
+        IncID(LobsterUri);
+    }
+
+    static private void IncString() {
+        Uri StringUri = PhotoUtils.getIDUri("String.txt");
+        IncID(StringUri);
+    }
+
+
+    static private int GetID(Uri uri) {
+        String sid=LoadData(uri);
+        if (sid=="") {
+            Log.i("DORIS","get id firsttime");
+            SaveData(uri,"1\0".getBytes());
+            return 1;
+        }
+        else
+        {
+            Log.i("DORIS","get id found");
+            int id=Integer.parseInt(sid);
+            return id;
+        }
+    }
+
+    static private void IncID(Uri uri) {
+        String sid=LoadData(uri);
+        if (sid=="") {
+            Log.i("DORIS","get id firsttime");
+            SaveData(uri,"1\0".getBytes());
+        }
+        else
+        {
+            Log.i("DORIS","get id found");
+            int id=Integer.parseInt(sid);
+            id++;
+            String temp=""+id+"\0";
+            SaveData(uri,temp.getBytes());
+        }
+    }
+
+    static private void SaveData(Uri uri, byte[] data) {
         try {
             File file = new File(new URI(uri.toString()));
             
@@ -1239,5 +1293,36 @@ public class AddReportActivity extends
         } catch (Exception e) {
         }
     }
+
+    static private String LoadData(Uri uri) {
+        try {
+            File file = new File(new URI(uri.toString()));
+            
+            if (file == null) {
+                return "";
+            }
+            try {
+                FileInputStream fis = new FileInputStream(file);
+                String ret="";
+                StringBuffer fileContent = new StringBuffer("");
+                byte[] buffer = new byte[1024];
+                int length;
+                if ((length = fis.read(buffer)) != -1) {
+                    String t=new String(buffer).split("\0")[0]; // hacky null terminator
+                    Log.i("DORIS",t);
+                    ret=t;
+                }
+                fis.close();
+                return ret;
+                
+            } catch (FileNotFoundException e) {           
+            } catch (IOException e) {
+            }
+        } catch (Exception e) {
+        }
+
+        return "";
+    }
+
 
 }
