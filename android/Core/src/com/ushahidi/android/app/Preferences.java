@@ -23,7 +23,7 @@ public class Preferences {
 
 	public static String LobsterId = "0";
 
-	public static String StringId = "1";
+	public static String StringId = "0";
 
 	public static final int NOTIFICATION_ID = 1;
 
@@ -75,6 +75,13 @@ public class Preferences {
 	public static String phonenumber = "";
 	public static String ogsPluginVersion = "";
 	public static String openGeoSmsUrl = "http://maps.google.com/";
+
+    public static void loadIDs(SharedPreferences settings) {
+		firstname = settings.getString("first_name_preference", "Trip001");
+        Log.i("DORIS","set firstname to "+firstname);
+		LobsterId = settings.getString("lobster_id_preference", "0");
+		StringId = settings.getString("string_id_preference", "0");
+    }
 
 	public static void loadSettings(Context context) {
 		final SharedPreferences settings = context.getSharedPreferences(

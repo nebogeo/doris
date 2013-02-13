@@ -237,8 +237,7 @@ public class Settings extends PreferenceActivity implements
 
 	}
 
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
         Log.i("DORIS","changed pref "+key);
 
@@ -246,6 +245,27 @@ public class Settings extends PreferenceActivity implements
             Log.i("DORIS","ID RESET");
             AddReportActivity.ResetID();
         }
+
+        if (key.equals("lobster_id_preference")) {
+            try {
+                int v = Integer.parseInt(sharedPreferences.getString(key, "1"));
+                Log.i("DORIS","ID SETTING LOBSTER "+v);
+                AddReportActivity.SetLobster(v);
+            }
+            catch (Exception e) {
+            }
+        }
+
+        if (key.equals("string_id_preference")) {
+            try {
+                int v = Integer.parseInt(sharedPreferences.getString(key, "1"));
+                Log.i("DORIS","ID SETTING STRING "+v);
+                AddReportActivity.SetString(v);
+            }
+            catch (Exception e) {
+            }
+        }
+
 
 		// photo size
 		if (key.equals(PHOTO_SIZE_PREFERENCE)) {
@@ -266,6 +286,7 @@ public class Settings extends PreferenceActivity implements
 */
 		// save changes
 		this.saveSettings();
+        Preferences.loadIDs(sharedPreferences);
 
 	}
 

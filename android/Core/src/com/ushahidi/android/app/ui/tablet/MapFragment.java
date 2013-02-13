@@ -181,7 +181,7 @@ public class MapFragment<ReportMapItemOverlay> extends BaseFragment {
 						.loadReportByCategory(filterCategory);
 				if (loaded) {
 					mReportModel = mListReportModel.getReports(getActivity());
-					populateMap();
+					//populateMap();
 				}
 			} catch (Exception e) {
 				return;
@@ -197,7 +197,7 @@ public class MapFragment<ReportMapItemOverlay> extends BaseFragment {
 			try {
 				mListReportModel.load();
 				mReportModel = mListReportModel.getReports(getActivity());
-				populateMap();
+				//populateMap();
 				showCategories();
 			} catch (Exception e) {
 				return;
@@ -291,7 +291,7 @@ public class MapFragment<ReportMapItemOverlay> extends BaseFragment {
 	// put this stuff in a seperate thread
 	final Runnable mMarkersOnMap = new Runnable() {
 		public void run() {
-			populateMap();
+			//populateMap();
 		}
 	};
 
@@ -303,6 +303,7 @@ public class MapFragment<ReportMapItemOverlay> extends BaseFragment {
 	 * add marker to the map
 	 */
 	public void populateMap() {
+/*
 		Drawable marker = getResources().getDrawable(R.drawable.map_marker_red);
 		marker.setBounds(0, 0, marker.getIntrinsicWidth(),
 				marker.getIntrinsicHeight());
@@ -325,7 +326,7 @@ public class MapFragment<ReportMapItemOverlay> extends BaseFragment {
 					itemOverlay.getLonSpanE6() +50);
 			map.getOverlays().add(itemOverlay);
 		}
-
+*/
 	}
 
 	public void launchAddReport() {
@@ -417,7 +418,7 @@ public class MapFragment<ReportMapItemOverlay> extends BaseFragment {
 				} else if (status == 0) {
 					log("successfully fetched");
 					mReportModel = mListReportModel.getReports(getActivity());
-					populateMap();
+					//populateMap();
 					showCategories();
 
 				}

@@ -17,12 +17,14 @@ import com.ushahidi.android.app.ui.tablet.MapFragment;
 import com.ushahidi.android.app.ui.phone.AddReportActivity;
 import android.view.KeyEvent;
 import android.widget.TextView;
+import android.util.Log;
 
 public class ReportTabActivity extends FragmentMapActivity {
 
     private ReportViewPager mViewPager;
-
     private TabsAdapter mTabsAdapter;
+    private Boolean mKeyPressed = false;
+    private long mStartTime=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,14 @@ public class ReportTabActivity extends FragmentMapActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) 
     { 
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN  
-            /*keyCode == KeyEvent.KEYCODE_VOLUME_UP*/) { 
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) return true;
+
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            if (mKeyPressed==false) {
+                mKeyPressed=true;
+                mStartTime = System.currentTimeMillis();
+            }
+
             return true;
         } else {
             return super.onKeyDown(keyCode, event); 
@@ -78,13 +86,23 @@ public class ReportTabActivity extends FragmentMapActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (//keyCode == KeyEvent.KEYCODE_VOLUME_UP ||
-            keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
-            ) {
-            Intent intent = new Intent(this,AddReportActivity.class);            
-            startActivityForResult(intent, 2);
-            overridePendingTransition(R.anim.home_enter,
-                                      R.anim.home_exit);
+
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) return true;
+
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            if (mKeyPressed==true) {
+                long elapsed = System.currentTimeMillis() - mStartTime;
+                mKeyPressed=false;
+                
+                Log.i("DORIS",""+elapsed);
+
+                if (elapsed>1000) {
+                    Intent intent = new Intent(this,AddReportActivity.class);            
+                    startActivityForResult(intent, 2);
+                    overridePendingTransition(R.anim.home_enter,
+                                              R.anim.home_exit);
+                }
+            }
             return true;
         }
         else {
