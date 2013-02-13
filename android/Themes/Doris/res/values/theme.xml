@@ -34,7 +34,8 @@
     <color name="title_color">#7C2811</color>
     <color name="date_color">#262321</color>
     <color name="report_table">#f6f6ee</color>
-    <color name="header_color">#3E51BC</color>    <color name="background_color">#ede7d1</color>
+    <color name="header_color">#3E51BC</color>    
+    <color name="background_color">#ede7d1</color>
     <color name="thick_background_color">#DDD0A3</color>
     <color name="button_background_color">#ffffff</color>
     <color name="button_stroke_color">#cac7c0</color>
