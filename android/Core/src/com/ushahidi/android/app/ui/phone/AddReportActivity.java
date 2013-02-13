@@ -322,11 +322,22 @@ public class AddReportActivity extends
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN //|| 
             //keyCode == KeyEvent.KEYCODE_VOLUME_UP
             ) { 
-
+            
             if (!mKeyPressed) {
                 Log.i("DORIS","keydown");
                 mKeyPressed = true;
                 mStartTime = System.currentTimeMillis();
+            }
+            else
+            {
+                long elapsed = System.currentTimeMillis() - mStartTime;
+                if (elapsed>1000) {
+                    // increment string id
+                    IncString();
+                    Log.i("DORIS","TAKING PICTURE -------->");
+                    mPictureTaker.TakePicture(mCameraPreview,mPicture);
+                    Log.i("DORIS","TAKEN PICTURE <--------");
+                } 
             }
 
             return true;
@@ -347,28 +358,22 @@ public class AddReportActivity extends
                 long elapsed = System.currentTimeMillis() - mStartTime;
 
                 Log.i("DORIS","elapsed:"+elapsed);
+                
+                if (elapsed>10) {
 
-                if (elapsed>1000) {
-                    // increment string id
-                    IncString();
-/*                    int id=Integer.parseInt(Preferences.StringId);
-                    id++;
-                    Preferences.StringId=""+id;
-                    Preferences.LobsterId="1";*/
-                } 
-                else
-                {
-                    // increment the lobster id
-                    IncLobster();
-
-/*                    int id=Integer.parseInt(Preferences.LobsterId);
-                    id++;
-                    Preferences.LobsterId=""+id;*/
+                    if (elapsed>1000) {
+                        return true;
+                    } 
+                    else
+                    {
+                        // increment the lobster id
+                        IncLobster();
+                    }
+                    
+                    Log.i("DORIS","TAKING PICTURE -------->");
+                    mPictureTaker.TakePicture(mCameraPreview,mPicture);
+                    Log.i("DORIS","TAKEN PICTURE <--------");
                 }
-   
-                Log.i("DORIS","TAKING PICTURE -------->");
-                mPictureTaker.TakePicture(mCameraPreview,mPicture);
-                Log.i("DORIS","TAKEN PICTURE <--------");
             }
             return true;
         }
@@ -1231,7 +1236,14 @@ public class AddReportActivity extends
         Uri LobsterUri = PhotoUtils.getIDUri("Lobster.txt");
         Uri StringUri = PhotoUtils.getIDUri("String.txt");
 
-        return Preferences.firstname+"-"+GetID(LobsterUri)+"-"+GetID(StringUri);
+        return Preferences.firstname+"-"+GetID(StringUri)+"-"+GetID(LobsterUri);
+    }
+
+    static public void ResetID() {
+        Uri LobsterUri = PhotoUtils.getIDUri("Lobster.txt");
+        Uri StringUri = PhotoUtils.getIDUri("String.txt");
+        SetID(LobsterUri,0);
+        SetID(StringUri,1);
     }
 
     static private void IncLobster() {
@@ -1240,8 +1252,10 @@ public class AddReportActivity extends
     }
 
     static private void IncString() {
+        Uri LobsterUri = PhotoUtils.getIDUri("Lobster.txt");
         Uri StringUri = PhotoUtils.getIDUri("String.txt");
         IncID(StringUri);
+        SetID(LobsterUri,1);
     }
 
 
@@ -1275,6 +1289,13 @@ public class AddReportActivity extends
             SaveData(uri,temp.getBytes());
         }
     }
+
+    static private void SetID(Uri uri, int v) {
+        Log.i("DORIS","setting id");
+        String t=""+v+"\0";
+        SaveData(uri,t.getBytes());
+    }
+
 
     static private void SaveData(Uri uri, byte[] data) {
         try {

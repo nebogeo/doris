@@ -32,6 +32,9 @@ import android.text.InputType;
 
 import com.ushahidi.android.app.ui.SeekBarPreference;
 import com.ushahidi.android.app.util.Util;
+import com.ushahidi.android.app.ui.phone.AddReportActivity;
+import android.util.Log;
+
 
 public class Settings extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener {
@@ -236,6 +239,13 @@ public class Settings extends PreferenceActivity implements
 
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
+
+        Log.i("DORIS","changed pref "+key);
+
+        if (key.equals("first_name_preference")) {
+            Log.i("DORIS","ID RESET");
+            AddReportActivity.ResetID();
+        }
 
 		// photo size
 		if (key.equals(PHOTO_SIZE_PREFERENCE)) {

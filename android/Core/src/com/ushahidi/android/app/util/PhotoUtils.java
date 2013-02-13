@@ -243,7 +243,7 @@ public class PhotoUtils {
 			float ratio = (float) options.outHeight / (float) options.outWidth;
 			//int width = Preferences.photoWidth > 0 ? Preferences.photoWidth
 			//		: 500;
-            int width = 200;//options.outWidth;
+            int width = 50;//options.outWidth;
 			new Util().log("1 Scaling image to " + width + " x " + ratio);
 			options.inSampleSize = calculateInSampleSize(options, width,
 					(int) (width * ratio));
