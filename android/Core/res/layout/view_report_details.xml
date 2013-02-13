@@ -19,6 +19,6 @@
         android:layout_width="0px"
         android:layout_height="fill_parent"
         android:layout_weight="30"
-        class="com.ushahidi.android.app.fragments.ViewReportFragment" />
+        class="foam.doris.android.app.fragments.ViewReportFragment" />
 
 </FrameLayout>

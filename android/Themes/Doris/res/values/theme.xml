@@ -13,10 +13,10 @@
     <string name="contact_url">http://ushahidi.com/contact-us</string>
 
     <!-- DEPLOYMENT PROVIDER AUTHORITIES. USUALLY PACKAGE NAME AND CLASS NAME Eg. com.ushahidi.android.app.data.deploymentprovider -->
-    <string name="provider_authorities">com.ushahidi.android.app.data.deploymentprovider</string>
+    <string name="provider_authorities">foam.doris.android.app.data.deploymentprovider</string>
 
     <!-- NAMESPACE  -->
-    <string name="rounded_corner">http://schemas.android.com/apk/res/com.ushahidi.android.app</string>
+    <string name="rounded_corner">http://schemas.android.com/apk/res/foam.doris.android.app</string>
     <!-- ICON IMAGES -->
     <drawable name="app_icon">@drawable/icon</drawable>
     <drawable name="logo_icon">@drawable/logo</drawable>
@@ -58,10 +58,18 @@
     <color name="background2">#ffd5ddeb</color>
     <color name="background3">#ffe3e8f1</color>
     <color name="list_view_date">#90544a</color>
+<!--
     <color name="table_background">#f6f6ee</color>
     <color name="table_odd_row_color">#f2eddc</color>
     <color name="table_even_row_color">#efdbad</color>
     <color name="table_selected_row_color">#e6ddbe</color>
+-->
+    <color name="table_background">#f6f6ee</color>
+    <color name="table_odd_row_color">#f2eddc</color>
+    <color name="table_even_row_color">#efdbad</color>
+    <color name="table_selected_row_color">#e6ddbe</color>
+
+
     <color name="table_header_color">#e6ddbe</color>
     <color name="verified_text_color">#99CC99</color>
     <color name="unverified_text_color">#CC6666</color>
