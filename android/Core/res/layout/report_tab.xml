@@ -10,7 +10,9 @@
     If you have questions regarding the use of this file, please contact Ushahidi 
     developers at team@ushahidi.com.
 -->
-<com.ushahidi.android.app.helpers.ReportViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+
+<foam.doris.android.app.helpers.ReportViewPager xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
+

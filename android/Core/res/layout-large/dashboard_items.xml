@@ -22,7 +22,7 @@
         android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_weight="30"
-        class="com.ushahidi.android.app.ui.tablet.ListMapFragment"
+        class="foam.doris.android.app.ui.tablet.ListMapFragment"
         android:paddingRight="2dip" />
 
     <FrameLayout
