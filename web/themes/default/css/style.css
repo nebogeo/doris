@@ -667,7 +667,7 @@ div.report-details{
 .report_detail .r_location { background: transparent url(../images/icon_sprite.png) -5px -163px no-repeat; }
 .report_detail .r_date { background: transparent url(../images/icon_sprite.png) -4px -133px no-repeat; }
 
-.report-when-where { color:#908B88; margin-bottom:10px; }
+.report-when-where { margin-bottom:10px; }
 .report-when-where span { padding:3px 5px 3px 18px;  } 
 
 div.report-category-list {

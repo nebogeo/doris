@@ -15,7 +15,7 @@ Author Email: caleb@ushahidi.com
   table.table-list tbody tr td a,
   .hover .r_details h3 a.r_title,
   div.footermenu ul li a,
-  div.search-form input.text  { color: #ffffff; }
+  div.search-form input.text  { color: #000; }
   div.search-form input.text:focus { border-color: #d24836; }
   div.submit-incident a, .btn_submit,
   div.filters ul li a:hover, div.filters ul li a.active,
@@ -36,7 +36,7 @@ div#mainmenu {
 }
 
   .r_details h3 a.r_title {
-    color: #eea06b;
+    color: #000;
     font-size: 14px;
   }
 
@@ -46,12 +46,12 @@ h1.doris_title {
 
 h1 {
     font-family: 'Wellfleet', cursive;
-    color:#ffffff;  
+    color:#000;  
 }
 
 h2 {
     font-family: 'Wellfleet', cursive;
-    color:#ffffff;  
+    color:#000;  
 }
 
 /* general styles */
@@ -64,10 +64,16 @@ div.report-category-list {
     border-top: 0px dotted #C0C2B8;
 }
 
-body { color:#ffffff; }
+.site-message {
+    display: table-cell;
+    height: 190px;
+    vertical-align: middle;
+}
+
+body { color:#000000; }
 
 /* structural divs */
-body#page { background:#1a695c url(../images/bg_transparent-lines.png) repeat; }
+body#page { background:#e6eafd; }
 
 div#middle { background:transparent url(../images/bg_top-cap.png) top no-repeat; }
 
@@ -252,7 +258,7 @@ table.table-list thead th.date { width:20%; }
 #content .big-block { border:0px solid #fff; border-top:0; margin:0 10px; background:#e6eafd; padding:18px; }
 #reports-box { }
 #rb_list-view .rb_report {
-  background: #1a695c;
+  background: #5ab9ac;
   border-width: 0px;
 }
 
@@ -264,10 +270,10 @@ a.ic-time { color:#000000; }
 
 /* single report page */
 div#main { padding:15px 10px; }
-#main .left-col { background:#1a695c; position:relative; padding:35px 10px 10px; margin:4px 0 0 18px; width:525px; }
+#main .left-col { background:#5ab9ac; position:relative; padding:10px 10px 10px; border-radius: 5px 5px 5px 5px; margin:4px 0 0 18px; width:525px; }
 
 
-.left-col h1.report-title { float:left; position:absolute; top:-18px; left:-18px; padding:5px; border:2px solid #fff; background:#dd5900; color:#fff; }
+.left-col h1.report-title { }
 
 .report_detail .r_verified { position:absolute; top:10px; right:18px;  }
 

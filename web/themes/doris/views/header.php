@@ -50,23 +50,26 @@
 			<?php if ($banner == NULL): ?>
 			<div id="logo">
 				<h1><a href="<?php echo url::site();?>"><?php echo $site_name; ?></a></h1>
-				<span><?php echo $site_tagline; ?></span>
+				<span><?php echo $site_tagline; ?></span> 
 			</div>
 			<?php else: ?>
-			<a href="<?php echo url::site();?>"><img src="<?php echo $banner; ?>" alt="<?php echo $site_name; ?>" align="right" /></a>
+			<a href="<?php echo url::site();?>"><img src="<?php echo $banner; ?>" alt="<?php echo $site_name; ?>" align="left" style="margin:15px"/></a>
 			<?php endif; ?>
 			<!-- / logo -->
 
-				<h1 class="doris_title"><a href="<?php echo url::site();?>"><?php echo $site_name; ?></a></h1>
-				<h2><span><?php echo $site_tagline; ?></span></h2>
+				
 
-        <?php if(isset($site_message) AND $site_message != '') { ?>
-				<div><span><?php echo $site_message; ?></span></div>
-		<?php } ?>
+				<?php if(isset($site_message) AND $site_message != '') { ?> 
+
+			<div class="site-message">
+			  <h2><span><?php echo $site_tagline; ?></span></h2> 
+			  <span><?php echo $site_message; ?></span>
+			</div>
+			<?php } ?> 
 
 
 			<!-- submit incident -->
-			<?php echo $submit_btn; ?>
+<!--			<?php echo $submit_btn; ?> -->
 			<!-- / submit incident -->
 
 			<?php

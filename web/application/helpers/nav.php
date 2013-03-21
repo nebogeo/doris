@@ -40,7 +40,7 @@ class nav_Core {
 			$menu .= ($this_page == 'reports') ? " class=\"active\"" : "";
 		 	$menu .= ">".Kohana::lang('ui_main.reports')."</a></li>";
 		 }
-		
+/*		
 		// Reports Submit
 		if( ! in_array('reports_submit',$dontshow))
 		{
@@ -51,7 +51,7 @@ class nav_Core {
 			 	$menu .= ">".Kohana::lang('ui_main.submit')."</a></li>";
 			}
 		}
-		
+*/		
 		// Alerts
 		if(! in_array('alerts',$dontshow))
 		{
