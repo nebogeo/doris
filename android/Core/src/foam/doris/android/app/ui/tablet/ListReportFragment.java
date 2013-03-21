@@ -742,7 +742,7 @@ public class ListReportFragment
 					}
 
 					// delete everything before updating with a new one
-					//deleteFetchedReport();
+					deleteFetchedReport();
 
 					// fetch categories -- assuming everything will go just
 					// right!

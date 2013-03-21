@@ -2,10 +2,10 @@
 	<div class="content-bg">
 		<!-- start reports block -->
 		<div class="big-block">
-			<h1 class="heading">
+			<h2 class="heading2">
 				<?php echo Kohana::lang('ui_main.showing_reports_from', array(date('M d, Y', $oldest_timestamp), date('M d, Y', $latest_timestamp))); ?> 
 				<a href="#" class="btn-change-time ic-time"><?php echo Kohana::lang('ui_main.change_date_range'); ?></a>
-			</h1>
+			</h2>
 			
 			<div id="tooltip-box">
 				<div class="tt-arrow"></div>
