@@ -1,7 +1,7 @@
 <div id="main" class="report_detail">
 
 	<div class="left-col">
-
+	<!--
   	  <?php
     	  if ($incident_verified)
     		{
@@ -12,6 +12,7 @@
     			echo '<p class="r_unverified">'.Kohana::lang('ui_main.unverified').'</p>';
     		}
   	  ?>
+-->	  
 
 		<h1 class="report-title"><?php
 			echo htmlentities($incident_title, ENT_QUOTES, "UTF-8");
@@ -22,7 +23,7 @@
 				echo " [&nbsp;<a href=\"".url::site()."admin/reports/edit/".$incident_id."\">"
 				    .Kohana::lang('ui_main.edit')."</a>&nbsp;]";
 			}
-		?></h1>
+		?></h1><br/>
 
 		<p class="report-when-where">
 			<span class="r_date"><?php echo $incident_time.' '.$incident_date; ?> </span>
@@ -153,7 +154,7 @@
 						"<div class=\"feature_comment\">$feature->geometry_comment</div>" : "";
 				}
 			}?>
-
+<!--
 			<div class="credibility">
 				<table class="rating-table" cellspacing="0" cellpadding="0" border="0">
           <tr>
@@ -165,6 +166,7 @@
           </tr>
         </table>
 			</div>
+-->
 		</div>
 
 		<?php
@@ -204,7 +206,7 @@
 			// Action::report_view_sidebar - This gives plugins the ability to insert into the sidebar (below the map and above additional reports)
 			Event::run('ushahidi_action.report_view_sidebar', $incident_id);
 		?>
-
+<!--
 		<div class="report-additional-reports">
 			<h4><?php echo Kohana::lang('ui_main.additional_reports');?></h4>
 			<?php foreach($incident_neighbors as $neighbor) { ?>
@@ -215,7 +217,7 @@
   			</div>
       <?php } ?>
 		</div>
-
+-->
 	</div>
 
 	<div style="clear:both;"></div>
