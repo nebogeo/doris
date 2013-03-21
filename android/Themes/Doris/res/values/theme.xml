@@ -35,7 +35,7 @@
     <color name="date_color">#262321</color>
     <color name="report_table">#f6f6ee</color>
     <color name="header_color">#3E51BC</color>    
-    <color name="background_color">#ede7d1</color>
+    <color name="background_color">#e6eafd</color>
     <color name="thick_background_color">#DDD0A3</color>
     <color name="button_background_color">#ffffff</color>
     <color name="button_stroke_color">#cac7c0</color>
@@ -43,7 +43,7 @@
     
      <!-- Report listing screen -->
     <color name="filter_by_text_color">#7C2811</color>
-    <color name="filter_by_background_color">#e6ddbe</color> <!-- Report listing screen -->
+    <color name="filter_by_background_color">#e6eafd</color> <!-- Report listing screen -->
     
     <color name="verified_color">#25991C</color>
     <color name="black_color">#000000</color>
@@ -64,13 +64,14 @@
     <color name="table_even_row_color">#efdbad</color>
     <color name="table_selected_row_color">#e6ddbe</color>
 -->
-    <color name="table_background">#f6f6ee</color>
-    <color name="table_odd_row_color">#f2eddc</color>
-    <color name="table_even_row_color">#efdbad</color>
-    <color name="table_selected_row_color">#e6ddbe</color>
+
+    <color name="table_background">#005b4c</color>
+    <color name="table_odd_row_color">#7ad9cc</color>
+    <color name="table_even_row_color">#9af9ec</color>
+    <color name="table_selected_row_color">#005b4c</color>
 
 
-    <color name="table_header_color">#e6ddbe</color>
+    <color name="table_header_color">#005b4c</color>
     <color name="verified_text_color">#99CC99</color>
     <color name="unverified_text_color">#CC6666</color>
     <color name="tab_background">#1a1a1a</color>
