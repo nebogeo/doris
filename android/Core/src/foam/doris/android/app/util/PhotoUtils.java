@@ -93,6 +93,7 @@ public class PhotoUtils {
 	public static Uri getBackupUri(String filename, Activity activity) {
 		File path = new File(Environment.getExternalStorageDirectory(),
 				activity.getPackageName() + BACKUP);
+        Log.i("DORIS","might be making dir...");        
 		if (!path.exists() && path.mkdir()) {
 			return Uri.fromFile(new File(path, filename));
 		}
@@ -102,6 +103,7 @@ public class PhotoUtils {
 	public static Uri getIDUri(String filename) {
 		File path = new File(Environment.getExternalStorageDirectory(),
 				"foam.doris.android.app/" + "IDS");
+        Log.i("DORIS","might be making dir...");        
 		if (!path.exists() && path.mkdir()) {
 			return Uri.fromFile(new File(path, filename));
 		}
@@ -111,6 +113,7 @@ public class PhotoUtils {
 	public static Uri getPhotoUri(String filename, Activity activity) {
 		File path = new File(Environment.getExternalStorageDirectory(),
 				activity.getPackageName() + PENDING);
+        Log.i("DORIS","might be making dir...");        
 		if (!path.exists() && path.mkdir()) {
 			return Uri.fromFile(new File(path, filename));
 		}
@@ -124,6 +127,7 @@ public class PhotoUtils {
 
         Log.i("DORIS",""+path.getAbsolutePath());
         if (!path.exists()) {
+            Log.i("DORIS","making dir...");        
             path.mkdir();
         }
 

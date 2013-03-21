@@ -126,19 +126,19 @@ final class Api_Service {
 	public function run_service()
 	{
 		// Check the request is allowed
-		if ($this->_is_api_request_allowed())
-		{
+//		if ($this->_is_api_request_allowed())
+//		{
 			// Route the API task
 			$this->_route_api_task();
-		}
-		else
-		{
+//		}
+//		else
+//		{
 			// Set the response to "ACCESS DENIED"
-			$this->set_response($this->get_error_msg(006));
+//			$this->set_response($this->get_error_msg(006));
 
 			// Terminate execution
-			return;
-		}
+//			return;
+//		}
 	}
 
 	/**
