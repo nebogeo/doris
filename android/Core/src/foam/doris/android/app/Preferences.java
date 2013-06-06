@@ -23,7 +23,7 @@ public class Preferences {
 
 	public static String LobsterId = "0";
 
-	public static String StringId = "0";
+	public static String StringId = "1";
 
 	public static final int NOTIFICATION_ID = 1;
 
@@ -80,7 +80,7 @@ public class Preferences {
 		firstname = settings.getString("first_name_preference", "Trip001");
         Log.i("DORIS","set firstname to "+firstname);
 		LobsterId = settings.getString("lobster_id_preference", "0");
-		StringId = settings.getString("string_id_preference", "0");
+		StringId = settings.getString("string_id_preference", "1");
     }
 
 	public static void loadSettings(Context context) {
@@ -101,7 +101,7 @@ public class Preferences {
 		countries = settings.getInt("Countries", 0);
 
 		LobsterId = settings.getString("LobsterId", "0");
-		StringId = settings.getString("StringId", "0");
+		StringId = settings.getString("StringId", "1");
 		AutoUpdateDelay = settings.getInt("AutoUpdateDelay", 5);
 		AutoFetch = settings.getBoolean("AutoFetch", false);
 		totalReports = settings.getString("TotalReports", "20");

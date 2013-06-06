@@ -688,7 +688,10 @@ public class ListReportFragment
 		@Override
 		protected Boolean doInBackground(String... args) {
 			// delete pending reports
-			return uploadPendingReports();
+            Boolean ret = uploadPendingReports();
+            // delete everything before updating with a new one
+            deleteFetchedReport();
+			return ret;
 		}
 
 		@Override
@@ -736,13 +739,6 @@ public class ListReportFragment
 			try {
 				// check if there is internet
 				if (apiUtils.isConnected()) {
-					// upload pending reports.
-					if (!pendingReportAdapter.isEmpty()) {
-						uploadPendingReports();
-					}
-
-					// delete everything before updating with a new one
-					deleteFetchedReport();
 
 					// fetch categories -- assuming everything will go just
 					// right!

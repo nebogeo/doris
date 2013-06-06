@@ -18,7 +18,7 @@
  **
  **/
 
-package foam.doris.android.app.net;
+package foam.nebogeo.doris_evolved;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,93 +37,34 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 
+import android.os.Environment;
 import android.content.Context;
 import android.text.TextUtils;
 import com.google.gson.JsonSyntaxException;
 import android.util.Log;
 
-import foam.doris.android.app.ImageManager;
-import foam.doris.android.app.Preferences;
-import foam.doris.android.app.json.GsonHelper;
-import foam.doris.android.app.json.UshahidiApiResponse;
-import foam.doris.android.app.util.ApiUtils;
-import foam.doris.android.app.util.ReportsApiUtils;
+import foam.nebogeo.doris_evolved.GsonHelper;
+import foam.nebogeo.doris_evolved.UshahidiApiResponse;
 
 /**
  * @author eyedol
  */
-public class ReportsHttpClient extends MainHttpClient {
+public class DorisHttpClient extends BaseHttpClient {
 
 	private static MultipartEntity entity;
+
+    public int totalReports = 20;
 
 	/**
 	 * @param context
 	 */
 	private Context context;
 
-	private ApiUtils apiUtils;
-
-	public ReportsHttpClient(Context context) {
-		super(context);
+	public DorisHttpClient(Context context, String domain) {
+		super(context,domain);
 		this.context = context;
-		apiUtils = new ApiUtils(context);
 	}
 
-	public int getAllReportFromWeb() {
-		HttpResponse response;
-		String incidents = "";
-
-		// get the right domain to work with
-		apiUtils.updateDomain();
-
-		StringBuilder uriBuilder = new StringBuilder(Preferences.domain);
-		uriBuilder.append("/api?task=incidents");
-		uriBuilder.append("&by=all");
-		uriBuilder.append("&limit=" + Preferences.totalReports);
-		uriBuilder.append("&resp=json");
-
-		try {
-			response = GetURL(uriBuilder.toString());
-
-			if (response == null) {
-				// Network is down
-				return 100;
-			}
-
-			final int statusCode = response.getStatusLine().getStatusCode();
-			if (statusCode == 200) {
-
-				incidents = GetText(response);
-				ReportsApiUtils reportsApiUtils = new ReportsApiUtils(incidents);
-				if (reportsApiUtils.saveReports(context)) {
-					return 0; // return success even if geographic fails
-				}
-
-				// bad json string
-				return 99;
-			}
-			return 100; // network down?
-		} catch (SocketTimeoutException e) {
-			log("SocketTimeoutException e", e);
-			return 110;
-		} catch (ConnectTimeoutException e) {
-			log("ConnectTimeoutException", e);
-			return 110;
-		} catch (MalformedURLException ex) {
-			log("PostFileUpload(): MalformedURLException", ex);
-			// invalid URL
-			return 111;
-		} catch (IllegalArgumentException ex) {
-			log("IllegalArgumentException", ex);
-			// invalid URI
-			return 120;
-		} catch (IOException e) {
-			log("IOException", e);
-			// connection refused
-			return 112;
-		}
-
-	}
 
 	/**
 	 * Upload files to server 0 - success, 1 - missing parameter, 2 - invalid
@@ -133,8 +74,7 @@ public class ReportsHttpClient extends MainHttpClient {
 	public boolean PostFileUpload(String URL, HashMap<String, String> params)
         throws IOException {
 		Log.i("DORIS","PostFileUpload(): upload file to server.");
-        
-		apiUtils.updateDomain();
+
 		entity = new MultipartEntity();
 		// Dipo Fix
 		try {
@@ -159,19 +99,20 @@ public class ReportsHttpClient extends MainHttpClient {
 
 					if (!TextUtils.isEmpty(val)) {
 						String filenames[] = val.split(",");
-						log("filenames "
-								+ ImageManager.getPhotoPath(context,
-										filenames[0]));
+						log("filenames "+filenames[0]);
 						for (int i = 0; i < filenames.length; i++) {
-							if (ImageManager
-									.getPhotoPath(context, filenames[i]) != null) {
-								File file = new File(ImageManager.getPhotoPath(
-										context, filenames[i]));
-								if (file.exists()) {
-									entity.addPart("incident_photo[]",
-											new FileBody(file));
-								}
-							}
+                            File file = new File(Environment.getExternalStorageDirectory(),
+                                                 "foam.nebogeo.doris_evolved/backup/"+filenames[i]);
+                            Log.i("DORIS",file.getPath());
+                            if (file.exists()) {
+                                Log.i("DORIS","adding file...");
+                                entity.addPart("incident_photo[]",
+                                               new FileBody(file));
+                            }
+                            else
+                            {
+                                Log.i("DORIS","couldn't find file");
+                            }
 						}
 					}
 				}
@@ -190,7 +131,7 @@ public class ReportsHttpClient extends MainHttpClient {
 				HttpResponse response = httpClient.execute(httpost);
                 Log.i("DORIS","4");
 
-				Preferences.httpRunning = false;				
+				httpRunning = false;
                 HttpEntity respEntity = response.getEntity();
                 Log.i("DORIS","5");
 
@@ -200,13 +141,13 @@ public class ReportsHttpClient extends MainHttpClient {
 				if (respEntity != null) {
 
                     try{
-                        UshahidiApiResponse resp = GsonHelper.fromString(res, UshahidiApiResponse.class);				
+                        UshahidiApiResponse resp = GsonHelper.fromString(res, UshahidiApiResponse.class);
                         return resp.getErrorCode() == 0;
-                        
+
                     } catch (JsonSyntaxException e) {
                         log("JsonSyntaxException", e);
                         return false;
-                    } 
+                    }
 
 				}
 			}

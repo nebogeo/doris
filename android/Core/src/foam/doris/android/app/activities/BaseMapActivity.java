@@ -172,7 +172,7 @@ public abstract class BaseMapActivity<V extends View> extends
 
 	protected void placeMarker(int markerLatitude, int markerLongitude) {
 
-		Drawable marker = getResources().getDrawable(R.drawable.map_marker_red);
+		Drawable marker = getResources().getDrawable(R.drawable.marker);
 
 		marker.setBounds(0, 0, marker.getIntrinsicWidth(),
 				marker.getIntrinsicHeight());
