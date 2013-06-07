@@ -129,7 +129,7 @@ public class DorisCameraActivity extends Activity {
                 long elapsed = System.currentTimeMillis() - mStartTime;
                 if (elapsed>1000) {
                     // increment string id
-                    IncString();
+                    DorisIDs.IncString();
                     Log.i("DORIS","TAKING PICTURE -------->");
                     mPictureTaker.TakePicture(mCameraPreview,mPicture);
                     Log.i("DORIS","TAKEN PICTURE <--------");
@@ -165,7 +165,7 @@ public class DorisCameraActivity extends Activity {
                     else
                     {
                         // increment the lobster id
-                        IncLobster();
+                        DorisIDs.IncLobster();
                     }
 
                     Log.i("DORIS","TAKING PICTURE -------->");
@@ -193,22 +193,20 @@ public class DorisCameraActivity extends Activity {
             Log.i("DORIS","ON PICTURE TAKEN2");
 
             String bakdata=
-                GetIDString()+"\n"+
+                DorisIDs.GetIDString()+"\n"+
                 locationListener.mLatitude+"\n"+
                 locationListener.mLongitude+"\n"+
                 datetime;
 
-            Log.i("DORIS","ON PICTURE TAKEN3 "+GetIDString());
+            Log.i("DORIS","ON PICTURE TAKEN3 "+DorisIDs.GetIDString());
 
-            Uri uri = getUri(photoName,"backup");
-            Uri data_uri  = getUri(dataName,"backup");
+            Uri uri = DorisIDs.getUri(photoName,"backup");
+            Uri data_uri  = DorisIDs.getUri(dataName,"backup");
 
             DorisFileUtils.SaveData(uri,data);
             DorisFileUtils.SaveData(data_uri,bakdata.getBytes());
 
             Log.i("DORIS","ON PICTURE TAKEN4");
-
-
 
             setResult(RESULT_OK);
             finish();
@@ -222,130 +220,6 @@ public class DorisCameraActivity extends Activity {
 		return df.format(new Date());
 	}
 
-    public void checkStorage() {
-        boolean mExternalStorageAvailable = false;
-        boolean mExternalStorageWriteable = false;
-        String state = Environment.getExternalStorageState();
-
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            // We can read and write the media
-            mExternalStorageAvailable = mExternalStorageWriteable = true;
-        } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            // We can only read the media
-            mExternalStorageAvailable = true;
-            mExternalStorageWriteable = false;
-        } else {
-            // Something else is wrong. It may be one of many other states, but all we need
-            //  to know is we can neither read nor write
-            mExternalStorageAvailable = mExternalStorageWriteable = false;
-        }
-
-        Log.i("DORIS", "storage check: availible:"+mExternalStorageAvailable+
-              " writable:"+mExternalStorageWriteable);
-    }
-
-	public Uri getUri(String filename, String dir) {
-		File path = new File(Environment.getExternalStorageDirectory(),
-				getPackageName() + "/" + dir);
-        Log.i("DORIS","might be making dir...");
-
-        Log.i("DORIS",getPackageName() + "/" + dir);
-
-		if (!path.exists() && path.mkdirs()) {
-            Log.i("DORIS","path not there and made dir");
-			return Uri.fromFile(new File(path, filename));
-		}
-        Log.i("DORIS",""+path.mkdir()+" "+path.exists());
-
-        Log.i("DORIS","path there or not made dir");
-
-		return Uri.fromFile(new File(path, filename));
-	}
-
-    public String GetIDString() {
-        Uri TripUri = getUri("Trip.txt","IDS");
-        Uri LobsterUri = getUri("Lobster.txt","IDS");
-        Uri StringUri = getUri("String.txt","IDS");
-
-        return GetID(TripUri)+"-"+GetID(StringUri)+"-"+GetID(LobsterUri);
-    }
-
-    public void ResetID() {
-        Uri LobsterUri = getUri("Lobster.txt","IDS");
-        Uri StringUri = getUri("String.txt","IDS");
-        SetID(LobsterUri,0);
-        SetID(StringUri,0);
-    }
-
-    private void IncLobster() {
-        Uri LobsterUri = getUri("Lobster.txt","IDS");
-        IncID(LobsterUri);
-    }
-
-    private void IncString() {
-        Uri LobsterUri = getUri("Lobster.txt","IDS");
-        Uri StringUri = getUri("String.txt","IDS");
-        IncID(StringUri);
-        SetID(LobsterUri,1);
-    }
-
-    public void SetTrip(String trip) {
-        Uri TripUri = getUri("Trip.txt","IDS");
-        SetText(TripUri,trip);
-    }
-
-    public void SetLobster(int v) {
-        Uri LobsterUri = getUri("Lobster.txt","IDS");
-        SetID(LobsterUri,v);
-    }
-
-    public void SetString(int v) {
-        Uri StringUri = getUri("String.txt","IDS");
-        SetID(StringUri,v);
-    }
-
-    private int GetID(Uri uri) {
-        String sid=DorisFileUtils.LoadData(uri);
-        if (sid=="") {
-            Log.i("DORIS","get id firsttime");
-            DorisFileUtils.SaveData(uri,"1\0".getBytes());
-            return 1;
-        }
-        else
-        {
-            Log.i("DORIS","get id found");
-            int id=Integer.parseInt(sid);
-            return id;
-        }
-    }
-
-    private void IncID(Uri uri) {
-        String sid=DorisFileUtils.LoadData(uri);
-        if (sid=="") {
-            Log.i("DORIS","get id firsttime");
-            DorisFileUtils.SaveData(uri,"1\0".getBytes());
-        }
-        else
-        {
-            Log.i("DORIS","get id found");
-            int id=Integer.parseInt(sid);
-            id++;
-            String temp=""+id+"\0";
-            DorisFileUtils.SaveData(uri,temp.getBytes());
-        }
-    }
-
-    private void SetText(Uri uri, String v) {
-        Log.i("DORIS","setting id");
-        String t=v+"\0";
-        DorisFileUtils.SaveData(uri,t.getBytes());
-    }
-
-    private void SetID(Uri uri, int v) {
-        Log.i("DORIS","setting id");
-        String t=""+v+"\0";
-        DorisFileUtils.SaveData(uri,t.getBytes());
-    }
 
 
 }

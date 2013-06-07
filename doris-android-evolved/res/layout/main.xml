@@ -20,18 +20,29 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/background_color"
     >
 
-<Button
-    android:id="@+id/send_button"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:text="Send lobsters to doris db" />
+  <Button
+      style="@style/SendButton"
+      android:id="@+id/send_button"
+      android:layout_height="wrap_content" />
 
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/listview"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+  <TextView
+      android:id="@+id/incident_next_id"
+      android:textSize="40dip"
+      style="@style/TextView.Title"
+      android:text="Last photo ID: No ID yet" />
+
+
+  <ListView
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/listview"
+      android:padding="10dip"
+      style="@style/ListView"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content" />
+
 
 
 </LinearLayout>

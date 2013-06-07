@@ -25,7 +25,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -41,8 +40,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import android.widget.ListView;
+import android.widget.TextView;
 import java.util.Locale;
-
 
 public class DorisEvolved extends Activity {
 
@@ -61,12 +60,15 @@ public class DorisEvolved extends Activity {
     private DorisHttpClient httpClient;
 
     private ListView lobsterList;
+    private TextView mID;
 
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
         setContentView(R.layout.main);
+
+        DorisIDs.SetPackageName(getPackageName());
 
         httpClient = new DorisHttpClient(this,"http://dorismap.exeter.ac.uk/");
         assetManager = getAssets();
@@ -81,46 +83,28 @@ public class DorisEvolved extends Activity {
 
         lobsterList = (ListView) findViewById(R.id.listview);
         UpdateLobsterList();
+
+        mID = (TextView) findViewById(R.id.incident_next_id);
+        mID.setText(DorisIDs.GetIDString());
+
     }
 
     private void UpdateLobsterList() {
         File dir = new File(Environment.getExternalStorageDirectory(),
 				getPackageName()+"/backup");
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<HashMap> list = new ArrayList<HashMap>();
         for (File child : dir.listFiles()) {
             String fname = child.getName();
             if (fname.endsWith(".txt")) {
                 String data[]=DorisFileUtils.LoadDataFromFile(child).split("\n");
-                list.add(data[0]);
+                HashMap hm = new HashMap();
+                hm.put("title",data[LOBSTER_DATA_ID]);
+                hm.put("date",data[LOBSTER_DATA_TIME]);
+                list.add(hm);
             }
         }
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+        final DorisLobsterAdapter adapter = new DorisLobsterAdapter(this,android.R.layout.simple_list_item_1, list);
         lobsterList.setAdapter(adapter);
-    }
-
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
-        }
-
-        @Override
-            public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
-        }
-
-        @Override
-            public boolean hasStableIds() {
-            return true;
-        }
-
     }
 
 
@@ -137,8 +121,6 @@ public class DorisEvolved extends Activity {
             }
         }
     }
-
-
 
     private void UploadLobster(String data[], String photo) {
         Log.i("DORIS","uploading a lobster");
@@ -162,7 +144,7 @@ public class DorisEvolved extends Activity {
 //                        Locale.US).split(" ");
 
         String dates[] = DorisFileUtils
-            .formatDate("yyyy_mm_dd_hh_mm_ss",
+            .formatDate("yyyy_MM_dd_hh_mm_ss",
                         data[LOBSTER_DATA_TIME], "MM/dd/yyyy hh:mm a", null,
                         Locale.US).split(" ");
 
@@ -196,6 +178,10 @@ public class DorisEvolved extends Activity {
         try {
             if (httpClient.PostFileUpload(urlBuilder.toString(), mParams)) {
                 Log.i("DORIS","upload success!");
+
+                Toast.makeText(this, "Uploaded "+data[LOBSTER_DATA_ID],
+                               Toast.LENGTH_LONG).show();
+
             } else {
                 retVal = false;
             }
@@ -222,6 +208,14 @@ public class DorisEvolved extends Activity {
     protected void onDestroy()
     {
 //        shutdown();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        mID.setText(DorisIDs.GetIDString());
+        UpdateLobsterList();
         super.onDestroy();
     }
 
