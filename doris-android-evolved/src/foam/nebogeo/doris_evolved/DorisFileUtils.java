@@ -43,6 +43,13 @@ public class DorisFileUtils {
 		return formatted;
 	}
 
+    static public void MoveFile(File from, Uri to) {
+        try {
+            from.renameTo(new File(new URI(to.toString())));
+        } catch(Exception e)
+        {
+        }
+    }
 
     static public void SaveData(Uri uri, byte[] data) {
         try {

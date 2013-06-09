@@ -23,11 +23,6 @@
     android:background="@color/background_color"
     >
 
-  <Button
-      style="@style/SendButton"
-      android:id="@+id/send_button"
-      android:layout_height="wrap_content" />
-
   <TextView
       android:id="@+id/incident_next_id"
       android:textSize="40dip"

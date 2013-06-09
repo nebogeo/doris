@@ -102,7 +102,7 @@ public class DorisHttpClient extends BaseHttpClient {
 						log("filenames "+filenames[0]);
 						for (int i = 0; i < filenames.length; i++) {
                             File file = new File(Environment.getExternalStorageDirectory(),
-                                                 "foam.nebogeo.doris_evolved/backup/"+filenames[i]);
+                                                 "foam.nebogeo.doris_evolved/pending/"+filenames[i]);
                             Log.i("DORIS",file.getPath());
                             if (file.exists()) {
                                 Log.i("DORIS","adding file...");

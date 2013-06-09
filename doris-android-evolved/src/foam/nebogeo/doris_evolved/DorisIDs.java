@@ -54,14 +54,14 @@ class DorisIDs {
         Uri LobsterUri = getUri("Lobster.txt","IDS");
         Uri StringUri = getUri("String.txt","IDS");
 
-        return GetID(TripUri)+"-"+GetID(StringUri)+"-"+GetID(LobsterUri);
+        return GetText(TripUri)+"-"+GetID(StringUri)+"-"+GetID(LobsterUri);
     }
 
     static public void ResetID() {
         Uri LobsterUri = getUri("Lobster.txt","IDS");
         Uri StringUri = getUri("String.txt","IDS");
         SetID(LobsterUri,0);
-        SetID(StringUri,0);
+        SetID(StringUri,1);
     }
 
     static public void IncLobster() {
@@ -79,6 +79,11 @@ class DorisIDs {
     static public void SetTrip(String trip) {
         Uri TripUri = getUri("Trip.txt","IDS");
         SetText(TripUri,trip);
+    }
+
+    static public String GetTrip() {
+        Uri TripUri = getUri("Trip.txt","IDS");
+        return GetText(TripUri);
     }
 
     static public void SetLobster(int v) {
@@ -103,6 +108,20 @@ class DorisIDs {
             Log.i("DORIS","get id found");
             int id=Integer.parseInt(sid);
             return id;
+        }
+    }
+
+    static private String GetText(Uri uri) {
+        String sid=DorisFileUtils.LoadData(uri);
+        if (sid=="") {
+            Log.i("DORIS","get text firsttime");
+            DorisFileUtils.SaveData(uri,"Trip\0".getBytes());
+            return "Trip";
+        }
+        else
+        {
+            Log.i("DORIS","get text found");
+            return sid;
         }
     }
 

@@ -17,7 +17,7 @@
  */
 -->
 <resources>
-    <string name="app_name">doris evolved</string>
+    <string name="app_name">Doris Evolved V1.0</string>
     <string name="camera_label">The Doris Camera</string>
 
     <color name="background_color">#e6eafd</color>

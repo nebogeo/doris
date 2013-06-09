@@ -30,11 +30,12 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.net.URI;
-import android.net.Uri;
 import android.widget.FrameLayout;
 import android.content.pm.ActivityInfo;
 import android.widget.Button;
+import java.net.URI;
+import android.net.Uri;
+
 
 import foam.nebogeo.doris_evolved.PictureTaker;
 import foam.nebogeo.doris_evolved.DorisLocationListener;
@@ -184,13 +185,9 @@ public class DorisCameraActivity extends Activity {
         public void onPictureTaken(byte[] data, Camera camera) {
 			// get a file name for the photo to be uploaded
 
-            Log.i("DORIS","ON PICTURE TAKEN");
-
             String datetime = getDateTime();
 			String photoName = datetime + ".jpg";
 			String dataName = datetime + ".txt";
-
-            Log.i("DORIS","ON PICTURE TAKEN2");
 
             String bakdata=
                 DorisIDs.GetIDString()+"\n"+
@@ -198,15 +195,11 @@ public class DorisCameraActivity extends Activity {
                 locationListener.mLongitude+"\n"+
                 datetime;
 
-            Log.i("DORIS","ON PICTURE TAKEN3 "+DorisIDs.GetIDString());
-
-            Uri uri = DorisIDs.getUri(photoName,"backup");
-            Uri data_uri  = DorisIDs.getUri(dataName,"backup");
+            Uri uri = DorisIDs.getUri(photoName,"pending");
+            Uri data_uri  = DorisIDs.getUri(dataName,"pending");
 
             DorisFileUtils.SaveData(uri,data);
             DorisFileUtils.SaveData(data_uri,bakdata.getBytes());
-
-            Log.i("DORIS","ON PICTURE TAKEN4");
 
             setResult(RESULT_OK);
             finish();
