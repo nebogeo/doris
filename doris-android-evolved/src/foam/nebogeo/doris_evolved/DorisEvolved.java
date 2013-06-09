@@ -45,7 +45,12 @@ import java.util.ArrayList;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.Locale;
+import org.acra.*;
+import org.acra.annotation.*;
 
+@ReportsCrashes(
+    formKey = "" // This is required for backward compatibility but not used
+)
 public class DorisEvolved extends Activity {
 
     static final int LOBSTER_DATA_ID = 0;
@@ -78,6 +83,7 @@ public class DorisEvolved extends Activity {
         DorisIDs.SetPackageName(getPackageName());
         DorisIDs.getUri("","pending");
         DorisIDs.getUri("","sent");
+        DorisIDs.getUri("","crashes");
 
         httpClient = new DorisHttpClient(this,"http://dorismap.exeter.ac.uk/");
         assetManager = getAssets();
@@ -87,7 +93,6 @@ public class DorisEvolved extends Activity {
 
         mID = (TextView) findViewById(R.id.incident_next_id);
         mID.setText(DorisIDs.GetIDString());
-
     }
 
 	@Override
@@ -158,6 +163,7 @@ public class DorisEvolved extends Activity {
         }
 
         protected void onProgressUpdate(String... name) {
+            UpdateLobsterList();
             Toast.makeText(DorisEvolved.this, "Uploaded "+name[0],
                            Toast.LENGTH_SHORT).show();
         }

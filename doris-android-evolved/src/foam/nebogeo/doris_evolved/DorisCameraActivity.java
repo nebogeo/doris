@@ -131,9 +131,7 @@ public class DorisCameraActivity extends Activity {
                 if (elapsed>1000) {
                     // increment string id
                     DorisIDs.IncString();
-                    Log.i("DORIS","TAKING PICTURE -------->");
                     mPictureTaker.TakePicture(mCameraPreview,mPicture);
-                    Log.i("DORIS","TAKEN PICTURE <--------");
                     mKeyPressed=false;
                 }
             }
@@ -169,9 +167,7 @@ public class DorisCameraActivity extends Activity {
                         DorisIDs.IncLobster();
                     }
 
-                    Log.i("DORIS","TAKING PICTURE -------->");
                     mPictureTaker.TakePicture(mCameraPreview,mPicture);
-                    Log.i("DORIS","TAKEN PICTURE <--------");
                 }
             }
             return true;
@@ -197,9 +193,15 @@ public class DorisCameraActivity extends Activity {
 
             Uri uri = DorisIDs.getUri(photoName,"pending");
             Uri data_uri  = DorisIDs.getUri(dataName,"pending");
-
             DorisFileUtils.SaveData(uri,data);
             DorisFileUtils.SaveData(data_uri,bakdata.getBytes());
+
+            // paranoid
+            Uri bak_uri = DorisIDs.getUri(photoName,"backup");
+            Uri bak_data_uri  = DorisIDs.getUri(dataName,"backup");
+            DorisFileUtils.SaveData(bak_uri,data);
+            DorisFileUtils.SaveData(bak_data_uri,bakdata.getBytes());
+
 
             setResult(RESULT_OK);
             finish();

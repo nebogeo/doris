@@ -76,7 +76,7 @@ class Imap_Core {
 								 $date_format="Y-m-d H:i:s")
 	{
 		global $htmlmsg,$plainmsg,$attachments;
-		
+
 		// If our imap connection failed earlier, return no messages
 
 		if($this->imap_stream == false)
@@ -98,7 +98,7 @@ class Imap_Core {
 		//   the number of messages we want to allow. If there are too many messages, it
 		//   can fail and that's no good.
 		$msg_to_pull = sizeof($new_msgs);
-		
+
 		// This check has had problems in the past
 		if($msg_to_pull > $max_imap_messages)
 		{
@@ -116,7 +116,7 @@ class Imap_Core {
 			{
 				continue;
 			}
-			
+
 			// Skip messages that aren't new/unseen
 			// not sure we need this check now we use imap_search to pull only UNSEEN
 			if ($header->Unseen != 'U' AND $header->Recent != 'N')
@@ -169,7 +169,7 @@ class Imap_Core {
 
 			// Fetch Body
 			$this->_getmsg($this->imap_stream, $msgno);
-			
+
 			if ($htmlmsg)
 			{
 				// Convert HTML to Text
@@ -177,7 +177,7 @@ class Imap_Core {
 				$htmlmsg = $html2text->get_text();
 			}
 			$body = ($plainmsg) ? $plainmsg : $htmlmsg;
-			
+
 			// Fetch Attachments
 			$attachments = $this->_extract_attachments($this->imap_stream, $msgno);
 
@@ -223,7 +223,7 @@ class Imap_Core {
 	 */
 	public function close()
 	{
-		// Dump imap errors to avoid 'Mailbox is empty' errors 
+		// Dump imap errors to avoid 'Mailbox is empty' errors
 		$error = imap_errors();
 		@imap_close($this->imap_stream);
 	}
@@ -235,19 +235,19 @@ class Imap_Core {
 
 		foreach ($elements as $element)
 		{
-			
+
 			// Make sure Arabic characters can be passed through as UTF-8
-			
+
 			if(strtoupper($element->charset) == 'WINDOWS-1256'){
 				$element->text = iconv("windows-1256", "UTF-8", $element->text);
 			}
-			
+
 			$text.= $element->text;
 		}
 
 		return $text;
 	}
-	
+
 	/**
 	 * Extract Attachments from Email
 	 */
@@ -274,7 +274,7 @@ class Imap_Core {
 				// different carriers (when sending MMS to email), and different email clients
 				// do not reliably add extensions or even provide a sane filename.
 				// However, they all set the content type correctly and PHP was able to identify the mime type as image/*.
-				
+
 				$attachments[$i]['type'] = $structure->parts[$i]->type;
 				$attachments[$i]['subtype'] = $structure->parts[$i]->subtype;
 
@@ -309,23 +309,23 @@ class Imap_Core {
 			}
 
 		}
-		
+
 		$valid_attachments = array();
 		foreach ($attachments as $attachment)
 		{
 			$file_content = $attachment['attachment'];
-			
+
 			// Don't accept images smaller that 12.5k
 			// When MMS is sent to an email address, sometimes the source
-			// carrier wraps the message and the image into html with some 
+			// carrier wraps the message and the image into html with some
 			// embedded GIFs. This tries to filter them out
 			if (strlen($file_content) < 12500) {
 				continue;
 			}
-			
+
 			$file_type = $attachment['type'];
 			$file_extension = $attachment['subtype'];
-			
+
 			if ($file_extension == 'JPEG')
 			{
 				$file_extension = '.JPG';
@@ -334,7 +334,7 @@ class Imap_Core {
 			{
 				$file_extension = '.' . $file_extension;
 			}
-			
+
 			$new_file_name = time()."_".$this->_random_string(10); // Included rand so that files don't overwrite each other
 			$valid_attachments[] = $this->_save_attachments($file_type, $new_file_name, $file_content, $file_extension);
 		}
@@ -342,12 +342,12 @@ class Imap_Core {
 		// Remove Nulls
 		return array_filter($valid_attachments);
 	}
-	
-	
+
+
 	/**
 	 * Save Attachments to Upload Folder
 	 * Right now we only accept gif, png and jpg files
-	 */	
+	 */
 	private function _save_attachments($file_type,$file_name,$file_content,$file_extension)
 	{
 	  // $file_type == 5 is image, == 6 is video...  see:
@@ -359,9 +359,9 @@ class Imap_Core {
 			$fp = fopen($file, "w");
 			fwrite($fp, $file_content);
 			fclose($fp);
-			
+
 			// IMAGE SIZES: 800X600, 400X300, 89X59
-			
+
 			// Large size
 			Image::factory($file)->resize(800,600,Image::AUTO)
 				->save(Kohana::config('upload.directory', TRUE).$file_name.$file_extension);
@@ -369,11 +369,11 @@ class Imap_Core {
 			// Medium size
 			Image::factory($file)->resize(400,300,Image::HEIGHT)
 				->save(Kohana::config('upload.directory', TRUE).$file_name."_m".$file_extension);
-			
+
 			// Thumbnail
 			Image::factory($file)->resize(89,59,Image::HEIGHT)
 				->save(Kohana::config('upload.directory', TRUE).$file_name."_t".$file_extension);
-				
+
 			$attachments[] = array(
 					$file_name.$file_extension,
 					$file_name."_m".$file_extension,
@@ -386,7 +386,7 @@ class Imap_Core {
 			return null;
 		}
 	}
-	
+
 	// Random Character String
 	private function _random_string($length)
 	{
@@ -401,10 +401,10 @@ class Imap_Core {
 		{
 			$random .= substr($char_list,(rand()%(strlen($char_list))), 1);
 		}
-		
+
 		return $random;
 	}
-	
+
 	private function _getmsg($mbox,$mid)
 	{
 		// input $mbox = IMAP stream, $mid = message id

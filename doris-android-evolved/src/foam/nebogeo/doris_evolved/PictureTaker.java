@@ -5,7 +5,11 @@ import android.view.SurfaceView;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.Parameters;
+import android.hardware.Camera.Size;
 import android.util.Log;
+import java.util.List;
+
 
 class PictureTaker
 {
@@ -33,6 +37,24 @@ class PictureTaker
                 return;
             }
             mCam.setPreviewDisplay(view.getHolder());
+            Parameters parameters = mCam.getParameters();
+            parameters.set("jpeg-quality", 90);
+
+            parameters.setPictureSize(800, 600);
+            // change resise in application/libraries/Imap.php
+
+/*            List<Size> sl = parameters.getSupportedPictureSizes();
+
+            int w=0,h=0;
+            for(Size s : sl){
+                if (w<s.width) w = s.width;
+                if (h<s.height) h = s.height;
+            }
+            parameters.setPictureSize(w, h);
+
+            Log.i("DORIS","setting picture size to "+w+" "+h);
+*/
+            mCam.setParameters(parameters);
             mCam.startPreview();
         }
         catch (Exception e) {
